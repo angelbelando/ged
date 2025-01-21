@@ -1,0 +1,42 @@
+# version: "3"
+services:
+  # Serveur web Django
+
+  # Base de donnée Postgres
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=bd_ged
+      - POSTGRES_USER=angel
+      - POSTGRES_PASSWORD=angel
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    environment:
+      - PG_USER=angel
+      - PG_PASSWORD=angel
+      - PG_DB=bd_ged
+      - PG_PORT=5432
+      - PG_HOST=db
+    depends_on:
+      - db
+volumes:
+  postgres_data:
+
+  
+
+# adminer:
+#     image: adminer
+#     restart: always
+#     ports:
+#       - 8080:8080
+
