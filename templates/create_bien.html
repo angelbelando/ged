@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Créer un Bien{% endblock %}
+
+{% block content %}
+<h1>Créer un Bien Boostrap 5</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="button" class="btn btn-primary">Enregistrer</button>
+</form>
+{% endblock %}
