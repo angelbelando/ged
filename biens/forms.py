@@ -14,5 +14,5 @@ class PhotoForm(forms.ModelForm):
 class BienForm(forms.ModelForm):
     class Meta:
         model = Bien
-        fields = ['name', 'rubrique', 'categorie', 'achat_at', 'document', 'photo']
+        fields = ['name', 'rubrique', 'categorie', 'montant', 'achat_at', 'document', 'photo']
   

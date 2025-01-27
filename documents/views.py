@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 
 def hello(request):
-    return HttpResponse('<h1>Hello Django! - success</h1>')
+    return render(request, 'Hello.html')
