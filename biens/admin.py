@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bien, Categorie, Photo, Doc
+from .models import Objet, Categorie
 
 # class DocInline(admin.TabularInline):
 #     model = Bien.document.through
@@ -8,20 +8,20 @@ from .models import Bien, Categorie, Photo, Doc
 #     extra = 0
 
 
-class BienAdmin(admin.ModelAdmin):
+class ObjetAdmin(admin.ModelAdmin):
     list_display = ('name', 'rubrique', 'categorie', 'created_at', 'achat_at','montant', 'document', 'photo')
     list_filter = ('rubrique', 'categorie', 'montant', 'created_at', 'achat_at')
     search_fields = ['name','rubrique', 'categorie', 'montant', 'created_at', 'achat_at']
     # filter_horizontal = ("document","photo",)
-admin.site.register(Bien, BienAdmin)
+admin.site.register(Objet, ObjetAdmin)
 
-class PhotoAdmin(admin.ModelAdmin):
-    search_fields = ['name',]
-admin.site.register(Photo, PhotoAdmin) 
+# class PhotoAdmin(admin.ModelAdmin):
+#     search_fields = ['name',]
+# admin.site.register(Photo, PhotoAdmin) 
 
-class DocAdmin(admin.ModelAdmin):
-    search_fields = ['name',]
-admin.site.register(Doc, DocAdmin) 
+# class DocAdmin(admin.ModelAdmin):
+#     search_fields = ['name',]
+# admin.site.register(Doc, DocAdmin) 
 
 class CategorieAdmin(admin.ModelAdmin):
     search_fields = ['name',]

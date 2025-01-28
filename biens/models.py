@@ -36,8 +36,8 @@ class Doc(models.Model):
     def __str__(self):
         return self.name
 
-class Bien(models.Model):
-    name = models.CharField('Description du bien', max_length=96, unique=True)
+class Objet(models.Model):
+    name = models.CharField("Description de l'objet", max_length=96, unique=True)
     rubrique = models.CharField(choices=RUBRIQUE, max_length=15, default='Autre')
     categorie=models.ForeignKey(Categorie, on_delete=models.CASCADE)
     created_at = models.DateTimeField('date de création', auto_now_add=True)
@@ -46,7 +46,7 @@ class Bien(models.Model):
     document = models.FileField('document pdf', upload_to=DIR_DOCUMENTS_PDF, default='pdfs/defaut.pdf')
     photo = models.ImageField("Photo", upload_to=DIR_PHOTOS, default='Photos/defaut.jpg')
     class Meta:
-            verbose_name = "bien"
+            verbose_name = "objet"
     def __str__(self):
         return self.name
     

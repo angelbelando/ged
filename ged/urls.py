@@ -20,11 +20,13 @@ from django.conf.urls import include
 from django.urls import path
 from django.views.generic import TemplateView
 from documents import views as documents_views
-from biens import views as biens_views
+from biens import views as biens_views 
 from django.conf.urls.static import static
+from django.views import generic
 
 urlpatterns = [
-    path('bien', biens_views.create_bien, name='create_bien'),
+    path('objet', biens_views.create_objet, name='create_objet'),
+    path('objets/', include('biens.urls', namespace='objets')),
     path('', documents_views.hello, name='hello'),
     path('admin/', admin.site.urls),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS

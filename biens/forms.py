@@ -1,5 +1,5 @@
 from django import forms
-from .models import Bien, Doc, Photo
+from .models import Objet, Doc, Photo
 
 class DocForm(forms.ModelForm):
     class Meta:
@@ -11,8 +11,8 @@ class PhotoForm(forms.ModelForm):
         model = Photo
         fields = ['image']
 
-class BienForm(forms.ModelForm):
+class ObjetForm(forms.ModelForm):
     class Meta:
-        model = Bien
+        model = Objet
         fields = ['name', 'rubrique', 'categorie', 'montant', 'achat_at', 'document', 'photo']
   
