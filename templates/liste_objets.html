@@ -1,14 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Liste des Objets{% endblock %}
+{% block content %}
+    <h1>Liste des Objets</h1>
+    <ul>
+        {% for objet in objets %}
+            <li><a href="{% url 'objets:detail_objet' objet.id %}">{{ objet.name }}</a></li>
+        {% endfor %}
+    </ul>
+	{% endblock %}
 
-<h1 class="text-center">Liste des objets</h1>
-	<p>{{objets}}</p>
-		
-					{% comment %} {% if objet %} {% endcomment %}
-					{% for objet in objets %}
-					
-						<!-- <div class="">
-							<div class=""> -->
-								<h2>{{ objet.name }}</h2>		
-					
-					{% endfor %}
 			
 	
