@@ -4,10 +4,9 @@ from . import views
 
 app_name = 'biens'
 urlpatterns = [
-    
-    path('objets/', views.ObjetListView.as_view(), name='liste_objets'),
-    
+    path('objets/', views.ObjetListView.as_view(), name='liste_objets'), 
     path('objets/<int:pk>/', views.ObjetDetailView.as_view(), name='detail_objet'),
-    
-    # path('<pk>', views.DetailFilm.as_view(), name='detail'),
+    path('thumbnail/<int:objet_id>/', views.generate_thumbnail, name='generate_thumbnail'),
+    path('tableau_bord/', views.TableauBordView.as_view(), name='tableau_bord'),
+    path('barchart/', views.barchart_view, name='barchart'),
 ]

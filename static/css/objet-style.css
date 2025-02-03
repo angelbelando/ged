@@ -1,0 +1,31 @@
+.scroll-objet {
+    overflow:auto; 
+    height: 800px;
+}
+.bg-objet {
+    background-color: white;
+}
+.bg-nav-objet {
+    background-color:#346edb ;
+}
+.bg-image { 
+	background-image: url(../img/Objet-home.JPG); 
+    /* background-color: rgb(233, 9, 39); */
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh; /* Assurez-vous que l'image couvre toute la hauteur de la page */
+    width: 100%;
+}
+.bg-news {
+    background-color: gainsboro;
+}
+.blank {
+    color: white;
+}
+.line-height-acteur {
+    line-height:30px;
+}
+.border-3 {
+    border-width:2.5px !important;
+}

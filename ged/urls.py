@@ -25,10 +25,8 @@ from django.conf.urls.static import static
 from django.views import generic
 
 urlpatterns = [
-    path('objet', biens_views.create_objet, name='create_objet'),
+    path('', biens_views.home, name='home'),
     path('objets/', include('biens.urls', namespace='objets')),
-    path('', documents_views.hello, name='hello'),
     path('admin/', admin.site.urls),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
-]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

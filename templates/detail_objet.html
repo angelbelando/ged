@@ -1,14 +1,18 @@
+<!--detail_objet.html-->
+
 {% extends 'base.html' %}
 {% block title %}Détail objet{% endblock %}
 
 {% block content %}
+    
     <h1>{{ objet.name }}</h1>
+    <p>Photo :</p>
+    <a href="{{ objet.photo.url }}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="200" height="200"></a>
     <p>Rubrique : {{ objet.rubrique }}</p>
     <p>Catégorie : {{ objet.categorie }}</p>
     <p>Date d'achat : {{ objet.achat_at }}</p>
     <p>Montant : {{ objet.montant }}</p>
     <p>Date de création : {{ objet.created_at }}</p>
-    <embed src="{{ objet.document.url }}" width="600" height="400" type="application/pdf">
-    <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="200" height="200">
-{% endblock %}
+    <a href="{{ objet.document.url }}"><img src="{% url 'objets:generate_thumbnail' objet.id %}" alt="Miniature du PDF" width="200" height="200"></a>
 
+{% endblock %}

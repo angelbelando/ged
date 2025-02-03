@@ -1,10 +1,17 @@
+<!--liste_objet.html-->
 {% extends 'base.html' %}
 {% block title %}Liste des Objets{% endblock %}
 {% block content %}
-    <h1>Liste des Objets</h1>
+<ul>    
+<h1 >Liste des Objets </h1>
+    <form>
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </form>
+</ul>    
     <ul>
         {% for objet in objets %}
-            <li><a href="{% url 'objets:detail_objet' objet.id %}">{{ objet.name }}</a></li>
+        <a href="{% url 'objets:detail_objet' objet.id %}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="200" height="200"></a>
+        <li>{{ objet.name }}</li>
         {% endfor %}
     </ul>
 	{% endblock %}
