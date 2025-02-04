@@ -71,7 +71,7 @@ class TableauBordView(ListView):
         x = range(len(categories))
 
         plt.figure(figsize=(10, 5))
-        plt.bar(x, total_montant, width=0.4, label='Montant consommé', color='blue', align='center')
+        plt.bar(x, total_montant, width=0.4, label='Montant consommé', color='red', align='center')
         plt.bar([p + 0.4 for p in x], montant_assu, width=0.4, label='Montant d\'assurance', color='green', align='center')
         plt.xlabel('Rubrique Assurance')
         plt.ylabel('Montant')
