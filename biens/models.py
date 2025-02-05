@@ -41,6 +41,7 @@ class Objet(models.Model):
     document = models.FileField('document pdf', upload_to=DIR_DOCUMENTS_PDF, default='pdfs/defaut.pdf')
     photo = models.ImageField("Photo", upload_to=DIR_PHOTOS, default='Photos/defaut.jpg')
     piece = models.CharField('pièce', choices=PIECE, max_length=20, default='Autre')
+    created_user = models.CharField("utilisateur qui a créé l'objet", max_length=32, default='admin')
     
     class Meta:
         verbose_name = "objet"

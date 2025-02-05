@@ -4,15 +4,39 @@
 {% block title %}Détail objet{% endblock %}
 
 {% block content %}
+    <div class="container">
+        <div class="row justify-content-center align-items-center g-2">
+            <div class="col-12">
+                <h1 class="text-center">{{ objet.name }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <a href="{{ objet.photo.url }}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="300" height="300"></a>
+            </div>
+            <div class="col-6">
+                <a href="{{ objet.document.url }}"><img src="{% url 'objets:generate_thumbnail' objet.id %}" alt="Miniature du PDF" width="300" height="300"></a>
+            </div>
+        </div>
+        <div class="row">
+         <p>
+        <p>
+        </div>
+        
+        <div class="row">
+            
+            <div class="col-6">
+                <p><b>Rubrique contrat assurance : </b>{{ objet.rubrique }}</p>
+                <p><b>Catégorie du bien          : </b>{{ objet.categorie }}</p>
+                <p><b>Pièce : </b>{{ objet.piece }}</p>
+            </div>
+       
+            <div class="col-6">
+                <p><b>Date de l'achat : </b>{{ objet.achat_at }}</p>
+                <p><b>Prix d'achat ou estimé : </b>{{ objet.montant }}</p> 
+            </div>
+        </div>
+    </div>
     
-    <h1>{{ objet.name }}</h1>
-    <p>Photo :</p>
-    <a href="{{ objet.photo.url }}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="200" height="200"></a>
-    <p>Rubrique : {{ objet.rubrique }}</p>
-    <p>Catégorie : {{ objet.categorie }}</p>
-    <p>Date d'achat : {{ objet.achat_at }}</p>
-    <p>Montant : {{ objet.montant }}</p>
-    <p>Date de création : {{ objet.created_at }}</p>
-    <a href="{{ objet.document.url }}"><img src="{% url 'objets:generate_thumbnail' objet.id %}" alt="Miniature du PDF" width="200" height="200"></a>
 
 {% endblock %}
