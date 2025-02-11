@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+     <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <div class="container">
+                    <div class="col-lg-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Veuillez vous authentifier, merci.</h3></div>
+                                <div class="card-body">
+                                <form class="form-floating" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="form-control btn btn-primary" type="submit">Se connecter</button>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+
+{% endblock %}

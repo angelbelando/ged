@@ -2,8 +2,12 @@
 
 {% extends 'base.html' %}
 {% block title %}Répartation Contrat Assurance{% endblock %}
+
 {% load custom_filters %}
+{% load static %}
 {% block content %}
+
+
 <div
     class="container">
     <div class="row">
@@ -13,12 +17,13 @@
 </div>
 
 
-<div class="container">
+<div class="container container-fluid">
     <div class="row">
-        <div class="col-6">   
+        <div class="col-7">   
             <h2 class="text-center">Répartition contrat assurance</h2>
             <div class="table-responsive" >
-                <table class="table table-primary">
+              
+                <table class="table table-light">
                     <thead>
                    
                     <tr>
@@ -34,9 +39,12 @@
                     {% for rubrique in rubriques %}
                     <tr class="">
                         <td scope="row">{{ rubrique.name }} </td>
-                        <td>{{ rubrique.montant_assu }}</td>
-                        <td>{{ rubrique.total_montant }}</td>
-                        <td>{{ rubrique.montant_assu|subtract:rubrique.total_montant }}</td>
+                        <td>{{ rubrique.montant_assu|format_currency }}</td>
+                        <td>{{ rubrique.total_montant|format_currency }}</td>
+                        <td class="{% if rubrique.montant_assu|subtract:rubrique.total_montant < 0 %}negative-amount{% else %}positive-amount{% endif %}">
+                          <b>{{ rubrique.montant_assu|subtract:rubrique.total_montant|format_currency }}</b>
+
+                        </td>
                     </tr>
                     {% endfor %} 
             
@@ -45,11 +53,45 @@
         </div>
         
         </div>
-        <div class="col-6">
-    
-      
-    <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres">
+        <div class="col-5" >
+        <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres" width="600" height="400">
         </div>
+        
+    </div>
+</div>
+<div class="container container-fluid">
+    <div class="row">
+        <div class="col-12">   
+            <h2 class="text-center">Répartition par pièce</h2>
+            <div class="table-responsive" >
+               
+                <table class="table table-light">
+                    <thead>
+                   
+                    <tr>
+                        <th scope="col">Piéce</th>
+                    
+                        <th scope="col">Total pièce</th>
+                    </tr>
+                
+                    </thead>
+                    <tbody>
+                    
+                    {% for piece in pieces %}
+                    <tr class="">
+                        <td scope="row">{{ piece.piece }} </td>
+                      
+                        <td>{{ piece.total_montant|format_currency }}</td>
+                        
+                    </tr>
+                    {% endfor %} 
+            
+                    </tbody>
+                </table>
+        </div>
+        
+        </div>
+        
         
     </div>
 </div>

@@ -8,4 +8,5 @@ urlpatterns = [
     path('objets/<int:pk>/', views.ObjetDetailView.as_view(), name='detail_objet'),
     path('thumbnail/<int:objet_id>/', views.generate_thumbnail, name='generate_thumbnail'),
     path('tableau_bord/', views.TableauBordView.as_view(), name='tableau_bord'),
+    path('encours/', views.page_encours, name='encours'),
 ]

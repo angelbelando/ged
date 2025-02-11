@@ -2,40 +2,50 @@
 
 {% extends 'base.html' %}
 {% block title %}Détail objet{% endblock %}
+{% load custom_filters %}
 
 {% block content %}
     <div class="container">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col-12">
-                <h1 class="text-center">{{ objet.name }}</h1>
+                <h1 class="text-center bg-light">{{ objet.name }}</h1>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
-                <a href="{{ objet.photo.url }}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="300" height="300"></a>
-            </div>
-            <div class="col-6">
-                <a href="{{ objet.document.url }}"><img src="{% url 'objets:generate_thumbnail' objet.id %}" alt="Miniature du PDF" width="300" height="300"></a>
-            </div>
-        </div>
-        <div class="row">
-         <p>
-        <p>
+    </div>
+        <div class="table-responsive">
+            <table
+                class="table table-light">
+           
+                <tbody>
+                    <tr class="">
+                        <td scope="row"> <a href="{{ objet.photo.url }}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="300" height="300"></a></td>
+                        <td><a href="{{ objet.document.url }}"><img src="{% url 'objets:generate_thumbnail' objet.id %}" alt="Miniature du PDF" width="300" height="300"></a></td>
+                    </tr>
+                  
+                    <tr class="">
+                        <td scope="row"><b>Rubrique contrat assurance</b></td>
+                        <td>{{ objet.rubrique }}</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row"><b>Catégorie du bien</b></td>
+                        <td>{{ objet.categorie }}</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row"><b>Pièce</b></td>
+                        <td>{{ objet.piece }}</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row"><b>Date de l'achat</b></td>
+                        <td>{{ objet.achat_at }}</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row bg-primary"><b>Prix d'achat ou estimé</b></td>
+                        <td>{{ objet.montant|format_currency }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         
-        <div class="row">
-            
-            <div class="col-6">
-                <p><b>Rubrique contrat assurance : </b>{{ objet.rubrique }}</p>
-                <p><b>Catégorie du bien          : </b>{{ objet.categorie }}</p>
-                <p><b>Pièce : </b>{{ objet.piece }}</p>
-            </div>
-       
-            <div class="col-6">
-                <p><b>Date de l'achat : </b>{{ objet.achat_at }}</p>
-                <p><b>Prix d'achat ou estimé : </b>{{ objet.montant }}</p> 
-            </div>
-        </div>
     </div>
     
 

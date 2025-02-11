@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django_filters.views import FilterView
 from django.shortcuts import render
 from .models import Objet, Categorie, Rubrique
 from .forms import ObjetForm  
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 import fitz  # PyMuPDF
 from PIL import Image
 from io import BytesIO
 from django.db.models import Sum
 import matplotlib.pyplot as plt
 import base64
-
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db.models import Q
 
 
 def generate_thumbnail(request, objet_id):
@@ -29,10 +31,18 @@ def generate_thumbnail(request, objet_id):
 def home(request):
     return render(request, 'home.html')
 
-class TableauBordView(ListView):
+def page_encours(request):
+    return render(request, 'Encours_construction.html')
+
+class ProtectedView(LoginRequiredMixin, TemplateView):
+    template_name = 'protected.html'
+    
+
+class TableauBordView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Objet
     template_name = 'tableau_bord.html'
     context_object_name = 'objets'
+    permission_required = 'Admin_GED'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -74,22 +84,29 @@ class TableauBordView(ListView):
         image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
         
         context['barchart'] = image_base64
+        context['pieces'] = Objet.objects.values('piece').annotate(total_montant=Sum('montant'))
         return context
 
-
-class ObjetListView(ListView):
+class ObjetListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Objet
     context_object_name = "objets"
     template_name = 'liste_objets.html'
+    permission_required = 'Admin_GED'
     paginate_by = 10
     
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            return Objet.objects.filter(name__icontains=query)
+            return Objet.objects.filter(
+                Q(name__icontains=query) | Q(rubrique__name__icontains=query)
+                | Q(categorie__name__icontains=query)
+                | Q(piece__icontains=query)
+            )
         return Objet.objects.all()
         
 class ObjetDetailView(DetailView):
     model = Objet
     template_name = 'detail_objet.html'
+    
+
 

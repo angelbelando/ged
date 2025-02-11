@@ -5,18 +5,19 @@ from django.core.files import File
 from PIL import Image
 import fitz  # PyMuPDF
 from io import BytesIO
+from django.contrib.auth.models import User
 
 DIR_PHOTOS = 'Photos/'
 DIR_DOCUMENTS_PDF = 'pdfs/'
 PIECE = (
-    ('SALON', 'Salon'),
-    ('CUISINE', 'Cuisine'),
-    ('TERRASSES', 'Terrasses'),   
-    ('CHAMBRE_J', 'Chambre Jérémy'),
-    ('CHAMBRE_P', 'Chambre Parents'),
-    ('BUREAU', 'Bureau'),    
-    ('GARAGE', 'Garage'),   
-    ('AUTRE', 'Autre'),
+    ('Salon', 'Salon'),
+    ('Cuisine', 'Cuisine'),
+    ('Terrasses', 'Terrasses'),   
+    ('Chambre_Jérémy', 'Chambre Jérémy'),
+    ('Chambre_Parents', 'Chambre Parents'),
+    ('Bureau', 'Bureau'),    
+    ('Garage', 'Garage'),   
+    ('Autre', 'Autre'),
 )
 
 class Categorie(models.Model):
@@ -41,7 +42,7 @@ class Objet(models.Model):
     document = models.FileField('document pdf', upload_to=DIR_DOCUMENTS_PDF, default='pdfs/defaut.pdf')
     photo = models.ImageField("Photo", upload_to=DIR_PHOTOS, default='Photos/defaut.jpg')
     piece = models.CharField('pièce', choices=PIECE, max_length=20, default='Autre')
-    created_user = models.CharField("utilisateur qui a créé l'objet", max_length=32, default='admin')
+    utilisateur = models.ForeignKey(User, related_name='Objet_User', on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = "objet"

@@ -23,10 +23,15 @@ from documents import views as documents_views
 from biens import views as biens_views 
 from django.conf.urls.static import static
 from django.views import generic
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', biens_views.home, name='home'),
     path('objets/', include('biens.urls', namespace='objets')),
     path('admin/', admin.site.urls),
-    path('grappelli/', include('grappelli.urls')), # grappelli URLS
+    path('grappelli/', include('grappelli.urls')),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('protected/', biens_views.ProtectedView.as_view(), name='protected'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,7 +9,7 @@
     background-color:#346edb ;
 }
 .bg-image { 
-	background-image: url(../img/Objet-home.JPG); 
+    background-image: url(../img/Objet-home.JPG); 
     /* background-color: rgb(233, 9, 39); */
     background-size: cover; 
     background-repeat: no-repeat;
@@ -17,8 +17,19 @@
     height: 100vh; /* Assurez-vous que l'image couvre toute la hauteur de la page */
     width: 100%;
 }
+
+.travaux { 
+    background-image: url(../img/construction.jpg); 
+    /* background-color: rgb(233, 9, 39); */
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh; /* Assurez-vous que l'image couvre toute la hauteur de la page */
+    width: 100%;
+}
+
 .bg-news {
-    background-color: gainsboro;
+    background-color: rgb(46, 21, 192);
 }
 .blank {
     color: white;
@@ -28,4 +39,11 @@
 }
 .border-3 {
     border-width:2.5px !important;
+}
+.positive-amount {
+    color: green;
+}
+
+.negative-amount {
+    color: red;
 }

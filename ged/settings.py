@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-a&)ny8jy#ew^#v*)!4cwxg!dv*a1l_w^bx_rph6x(+%=oan$lb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','serveur','192.168.1.24' ]
 
 
 # Application definition
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'documents',
-    'biens'
+    'biens',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +109,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -138,3 +143,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# settings.py
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/protected/'
+LOGOUT_REDIRECT_URL = '/'
+

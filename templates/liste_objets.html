@@ -1,52 +1,68 @@
 <!--liste_objet.html-->
 {% extends 'base.html' %}
 {% block title %}Liste Objets{% endblock %}
+{% load custom_filters %}
 {% block content %}
  <div class="container">
     <div class="row justify-content-center align-items-center g-2">
-        <div class="col-12"> <h1 > Liste des objets toujours présents dans l'appartement </h1></div>
+        <div class="col-12 text-center"> <h1 > Liste des objets toujours présents dans l'appartement </h1></div>
     </div>
 </div>
-     
 <div class="container">
-    <form method="GET" action="">
-        <input class="form" name="q" type="text" placeholder="Recherche" aria-label="Search" value="{{ request.GET.q }}">
-        <button type="submit" class="btn btn-primary">
-            Rechercher
-        </button>
- 
-    </form>
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+        </div>
+        <ul class="navbar-nav ms-auto text-end">
+            <form method="GET" action="">
+                <input class="form-control-sm" name="q" type="text" placeholder="Recherche" aria-label="Search" value="{{ request.GET.q }}">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+         
+            </form>
+        </ul>
+        </div>
+    </div>
 </div>
-
-
 <main>
-        <div class="container">
+    
+        <div class="container container-fluid">
+        <div class="table-responsive">
+        <table
+        class="table table-light">
+        <thead>       
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Description</th>
+                <th scope="col">Assurance</th>       
+                <th scope="col">catégorie</th>  
+                <th scope="col">Pièce</th>
+                <th scope="col">Prix d'achat</th>
+                <th scope="col">Date Achat</th>
+            </tr>
+            </thead>
         {% for objet in objets %}
-           
-            <div class="row justify-content-center align-items-center g-2">
-                <div class="col-2">
-                    <a href="{% url 'objets:detail_objet' objet.id %}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="150" height="150"></a>
-                </div>
-            
-                <div class="col-4">
-                    <p><b>Description de l'objet     : </b>{{ objet.name }}<p>
-                    <p><b>Rubrique contrat assurance : </b>{{ objet.rubrique }}</p>
-                    <p><b>Catégorie du bien          : </b>{{ objet.categorie }}</p>
-                 
-                </div>
-                <div class="col-6">
-                    <p><b>Date de l'achat   : </b>{{ objet.achat_at }}</p>
-                    <p><b>Prix d'achat ou estimé     : </b>{{ objet.montant }}</p> 
-                </div>
-            <div class="row justify-content-center align-items-center g-2">
-                    <div class="col-12 text-decoration-underline" >
-                      <p> ___________________________________________________________________________________________________________________________________________________________________________</p>
-                    </div>
-                    
-                    </div>
-            </div>  
-     
+                <tbody>
+                    <tr class="">
+                        <td scope="row"><a href="{% url 'objets:detail_objet' objet.id %}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="100" height="100"></a></td>
+                        <td scope="row">{{ objet.name }}</td>
+                        <td scope="row">{{ objet.rubrique }}</td>
+                        <td scope="row">{{ objet.categorie }}</td>
+                        <td scope="row">{{ objet.piece }}</td>
+                        <td scope="row">{{ objet.montant|format_currency }}</td>
+                        <td scope="row">{{ objet.achat_at }}</td>         
+                    </tr>
+                </tbody>    
         {% endfor %}
+    </table>
+    </div>
+
     </div>
 </main>
 {% if is_paginated %}
