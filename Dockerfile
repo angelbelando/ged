@@ -19,12 +19,12 @@ RUN pip install -r requirements.txt
 # Copie du projet
 COPY . .
 
-# Collecter les fichiers statiques
-RUN python manage.py collectstatic --noinput
+# # Collecter les fichiers statiques
+# RUN python manage.py collectstatic --noinput
 
 # Exposition du port 8000
 EXPOSE 8000
 
 # Commande pour lancer le serveur Django
 # Commande pour lancer Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "ged.wsgi:application"]
+# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "ged.wsgi:application"]
