@@ -3,20 +3,29 @@
 {% block content %}
 
 <body>
-     <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <div class="container">
-                    <div class="col-lg-5">
-                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Veuillez vous authentifier, merci.</h3></div>
-                                <div class="card-body">
-                                <form class="form-floating" method="post">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <button class="form-control btn btn-primary" type="submit">Se connecter</button>
-                                </form>
-                        </div>
-                    </div>
-                </div>
+    <div class="container">
+        <h2 class="mt-5 text-center">Veuillez vous connectez</h2>
+        <form method="post" class="mt-3">
+            {% csrf_token %}
+            <div
+                class="table-responsive">
+                <table class="table table-fw-light">
+
+                    <tbody>
+                        <tr class="">
+                            <td scope="row">{{ form.username.label_tag }}</td>
+                            <td> {{ form.username }}</td>
+                        </tr>
+                        <tr class="">
+                            <td scope="row">{{ form.password.label_tag }}</td>
+                            <td>{{ form.password }}</td>
+                        </tr>
+                        <tr class="">
+                            <td></td>
+                            <td scope="row"><button type="submit" class="btn btn-primary">Se connecter</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
     </div>
 </body>
