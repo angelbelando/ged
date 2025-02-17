@@ -1,6 +1,6 @@
 from django.db.models import Sum
-from biens.models import Bien
+from biens.models import Objet
 
-resultats = Bien.objects.values('rubrique').annotate(total_montant=Sum('montant'))
+resultats = Objet.objects.values('rubrique').annotate(total_montant=Sum('montant'))
 for resultat in resultats:
     print(f"Rubrique: {resultat['rubrique']}, Total: {resultat['total_montant']}")

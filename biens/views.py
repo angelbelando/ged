@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django_filters.views import FilterView
 from django.shortcuts import render
 from .models import Objet, Categorie, Rubrique
-from .forms import ObjetForm  
 from django.views.generic import ListView, DetailView, TemplateView
 import fitz  # PyMuPDF
 from PIL import Image

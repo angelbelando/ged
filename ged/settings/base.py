@@ -29,6 +29,13 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1','serveur','192.168.1.24' ]
 
 
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+
+# DEBUG = bool(os.environ.get("DEBUG", default=0))
+
+# # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
+# # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
+# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS")
 # Application definition
 
 INSTALLED_APPS = [
@@ -79,12 +86,12 @@ WSGI_APPLICATION = 'ged.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+        'default': {
         'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
         'NAME': 'bd_ged', # le nom de notre base de donnees creee precedemment
         'USER': 'angel', # attention : remplacez par votre nom d'utilisateur
         'PASSWORD': 'angel',
-        'HOST': 'db',
+        'HOST': '',
         'PORT': '5432',
     }
 }
@@ -148,3 +155,4 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/protected/'
 LOGOUT_REDIRECT_URL = '/'
 
+# CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
