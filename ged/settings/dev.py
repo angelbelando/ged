@@ -4,7 +4,7 @@ SECRET_KEY = '2oct_bcq26rqqawm%7t9p+tbxnr674@c6#v1$)dr7tzf312c0c'
 
 DEBUG = True
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','serveur','192.168.1.24' ]
 
 # INSTALLED_APPS += ['debug_toolbar', 'django_extensions',]
 
