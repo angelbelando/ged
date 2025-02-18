@@ -5,3 +5,4 @@ Save_essai/
 ged/settings/__pycache__/
 .vscode/
 .vscodeenv
+ged/settings/prod.py
