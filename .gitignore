@@ -1,8 +1,10 @@
+ged/settings/prod.py
 biens/__pycache__/
 ged/__pycache__/
+venv/
 Sources_py/
 Save_essai/
 ged/settings/__pycache__/
 .vscode/
 .vscodeenv
-ged/settings/prod.py
+
