@@ -4,7 +4,7 @@ SECRET_KEY = 'q1eXSi5`IVn\\drJr[\x0c)5{xc!'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['159.65.202.150']
+ALLOWED_HOSTS = ['164.92.250.136']
 
 DATABASES = {
     'default': {
