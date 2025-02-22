@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django_filters.views import FilterView
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Objet, Categorie, Rubrique
 from django.views.generic import ListView, DetailView, TemplateView
 import fitz  # PyMuPDF
@@ -26,7 +27,7 @@ def generate_thumbnail(request, objet_id):
     thumbnail_io.seek(0)
     return HttpResponse(thumbnail_io, content_type='image/jpeg')
 
-
+@login_required
 def home(request):
     return render(request, 'home.html')
 
