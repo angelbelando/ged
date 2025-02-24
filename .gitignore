@@ -1,4 +1,4 @@
-ged/settings/prod.py
+prod.py
 biens/__pycache__/
 ged/__pycache__/
 venv/

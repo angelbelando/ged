@@ -42,7 +42,7 @@ class TableauBordView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Objet
     template_name = 'tableau_bord.html'
     context_object_name = 'objets'
-    permission_required = 'Admin_GED'
+    permission_required = 'biens.view_Objet'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -91,7 +91,7 @@ class ObjetListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Objet
     context_object_name = "objets"
     template_name = 'liste_objets.html'
-    permission_required = 'Admin_GED'
+    permission_required = 'biens.view_Objet'
     paginate_by = 10
     
     def get_queryset(self):
