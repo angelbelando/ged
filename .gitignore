@@ -2,7 +2,8 @@ ged/settings/prod.py
 biens/__pycache__/
 ged/__pycache__/
 venv/
-media/
+media/pdfs/
+media/Photos/
 Sources_py/
 Save_essai/
 ged/settings/__pycache__/
