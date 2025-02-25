@@ -12,12 +12,14 @@ DIR_DOCUMENTS_PDF = 'pdfs/'
 PIECE = (
     ('Salon', 'Salon'),
     ('Cuisine', 'Cuisine'),
-    ('Terrasses', 'Terrasses'),   
+    ('Terrasse SO', 'Terrasse SO'),   
+    ('Terrasse NE', 'Terrasse NE'),
     ('Chambre_Jérémy', 'Chambre Jérémy'),
     ('Chambre_Parents', 'Chambre Parents'),
     ('Bureau', 'Bureau'),    
     ('Garage', 'Garage'),   
     ('Bureau', 'Bureau'), 
+    ('Couloirs', 'Couloirs'), 
     ('Autre', 'Autre'),
 )
 
