@@ -50,7 +50,7 @@
         {% for objet in objets %}
                 <tbody>
                     <tr class="">
-                        <td scope="row"><a href="{% url 'objets:detail_objet' objet.id %}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="100" height="100"></a></td>
+                        <td scope="row"><a href="{% url 'objets:detail_objet' objet.id %}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="133" height="100"></a></td>
                         <td scope="row">{{ objet.name }}</td>
                         <td scope="row">{{ objet.rubrique }}</td>
                         <td scope="row">{{ objet.categorie }}</td>
