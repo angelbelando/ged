@@ -17,6 +17,7 @@ PIECE = (
     ('Chambre_Parents', 'Chambre Parents'),
     ('Bureau', 'Bureau'),    
     ('Garage', 'Garage'),   
+    ('Bureau', 'Bureau'), 
     ('Autre', 'Autre'),
 )
 
