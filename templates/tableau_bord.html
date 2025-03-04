@@ -81,7 +81,7 @@
                     <tr class="">
                         <td scope="row">{{ piece.piece }} </td>
                       
-                        <td>{{ piece.total_montant|format_currency }}</td>
+                        <td class="text-right">{{ piece.total_montant|format_currency }}</td>
                         
                     </tr>
                     {% endfor %} 
@@ -111,7 +111,7 @@
                     <tr class="">
                         <td scope="row">{{ categorie.categorie__name }} </td>
                       
-                        <td>{{ categorie.total_montant|format_currency }}</td>
+                        <td class="text-right">{{ categorie.total_montant|format_currency }}</td>
                         
                     </tr>
                     {% endfor %} 
