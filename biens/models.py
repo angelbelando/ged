@@ -11,6 +11,7 @@ DIR_PHOTOS = 'Photos/'
 DIR_DOCUMENTS_PDF = 'pdfs/'
 PIECE = (
     ('Salon', 'Salon'),
+    ('Salle à manger','Salle à manger')
     ('Cuisine', 'Cuisine'),
     ('Terrasse SO', 'Terrasse SO'),   
     ('Terrasse NE', 'Terrasse NE'),
