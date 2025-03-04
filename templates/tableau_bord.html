@@ -89,6 +89,36 @@
                     </tbody>
                 </table>
         </div>
+        </div>
+        <div class="row">
+        <div class="col-12">   
+            <h2 class="text-center">Répartition par Catégorie</h2>
+            <div class="table-responsive" >
+               
+                <table class="table table-light">
+                    <thead>
+                   
+                    <tr>
+                        <th scope="col">Catégorie</th>
+                    
+                        <th scope="col">Total Catégorie</th>
+                    </tr>
+                
+                    </thead>
+                    <tbody>
+                    
+                    {% for categorie in categories %}
+                    <tr class="">
+                        <td scope="row">{{ categorie.categorie__name }} </td>
+                      
+                        <td>{{ categorie.total_montant|format_currency }}</td>
+                        
+                    </tr>
+                    {% endfor %} 
+            
+                    </tbody>
+                </table>
+        </div>
         
         </div>
         

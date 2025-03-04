@@ -19,7 +19,10 @@ PIECE = (
     ('Bureau', 'Bureau'),    
     ('Garage', 'Garage'),   
     ('Bureau', 'Bureau'), 
+    ('Devant Entrée', 'Devant Entrée'),
     ('Couloirs', 'Couloirs'), 
+    ('Salle de Bain', 'Salle de Bain'), 
+    ('Toilettes', 'Toilettes-WC'), 
     ('Autre', 'Autre'),
 )
 

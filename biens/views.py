@@ -85,6 +85,7 @@ class TableauBordView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         
         context['barchart'] = image_base64
         context['pieces'] = Objet.objects.values('piece').annotate(total_montant=Sum('montant'))
+        context['categories'] = Objet.objects.values('categorie__name').annotate(total_montant=Sum('montant'))
         return context
 
 class ObjetListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
