@@ -26,6 +26,7 @@ class Document(models.Model):
     annee = models.IntegerField('année', default=date.today().year)
 
     Document_pdf = models.FileField('document pdf', upload_to=DIR_DOCUMENTS_PDF,default='pdfs/defaut.pdf')
+    url = models.URLField(default='url')
     commentaire = models.TextField('commentaire', blank=True)
    
     class Meta:
