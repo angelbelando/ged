@@ -12,9 +12,9 @@ from .admin_forms import ObjetAdminForm
 class ObjetAdmin(admin.ModelAdmin):
     form = ObjetAdminForm
     list_display = ('name',  'categorie', 'created_at', 'achat_at','montant', 'document', 'photo')
-    list_filter = ('rubrique', 'categorie','piece', 'montant', 'achat_at', 'utilisateur', 'created_at')
+    list_filter = ('rubrique', 'categorie','piece', 'montant','estimation', 'achat_at', 'utilisateur', 'created_at')
     search_fields = ['name', 'montant', 'achat_at','piece']
-    fields = ['name', 'rubrique', 'piece', 'categorie', 'achat_at', 'montant', 'document', 'photo','utilisateur', 'created_at']
+    fields = ['name', 'rubrique', 'piece', 'categorie', 'achat_at', 'montant','estimation', 'document', 'photo','utilisateur', 'created_at']
 
     readonly_fields = ['utilisateur', 'created_at']
     def get_form(self, request, obj=None, **kwargs):

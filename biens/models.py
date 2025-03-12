@@ -50,6 +50,7 @@ class Objet(models.Model):
     photo = models.ImageField("Photo", upload_to=DIR_PHOTOS, default='Photos/defaut.jpg')
     piece = models.CharField('pièce', choices=PIECE, max_length=20, default='Autre')
     utilisateur = models.ForeignKey(User, related_name='Objet_User', on_delete=models.CASCADE)
+    estimation = models.BooleanField('Montant Estimé', default=False)
     
     class Meta:
         verbose_name = "objet"
