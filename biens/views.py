@@ -142,8 +142,8 @@ class ObjetListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
                 | Q(categorie__name__icontains=query)
                 | Q(piece__icontains=query)
             )
-        return Objet.objects.all()
-        
+        return Objet.objects.all().order_by('piece','rubrique__name','name')
+        # return Objet.objects.all()
 class ObjetDetailView(DetailView):
     model = Objet
     template_name = 'detail_objet.html'
