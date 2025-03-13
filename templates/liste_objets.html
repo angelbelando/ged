@@ -11,6 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-3">
+            <a href="{% url 'objets:export_to_excel' %}" class="btn btn-primary">Exporter vers Excel</a>
         </div>
         <div class="col-3">
         </div>
@@ -19,6 +20,7 @@
         <div class="col-3">
         </div>
         <ul class="navbar-nav ms-auto text-end">
+           
             <form method="GET" action="">
                 <input class="form-control-sm" name="q" type="text" placeholder="Recherche" aria-label="Search" value="{{ request.GET.q }}">
                 <button type="submit" class="btn btn-primary">

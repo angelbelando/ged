@@ -13,7 +13,9 @@ import matplotlib.pyplot as plt
 import base64
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
-
+import openpyxl
+from openpyxl.utils import get_column_letter
+# from openpyxl.drawing.image import Image
 
 def generate_thumbnail(request, objet_id):
     objet = get_object_or_404(Objet, id=objet_id)
@@ -26,6 +28,43 @@ def generate_thumbnail(request, objet_id):
     img.save(thumbnail_io, format='JPEG')
     thumbnail_io.seek(0)
     return HttpResponse(thumbnail_io, content_type='image/jpeg')
+
+def export_to_excel(request):
+    # Créer un classeur Excel
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.title = "Objets"
+
+    # Ajouter les en-têtes de colonnes
+    columns = ['Pièce', 'ID', 'Nom', 'Rubrique', 'Catégorie','Prix']
+    for col_num, column_title in enumerate(columns, 1):
+        col_letter = get_column_letter(col_num)
+        sheet[f"{col_letter}1"] = column_title
+
+    # Ajouter les données
+    objets = Objet.objects.all().order_by('piece','rubrique__name','name')
+    for row_num, objet in enumerate(objets, start=2):
+        sheet[f"A{row_num}"] = objet.piece
+        sheet[f"B{row_num}"] = objet.id
+        sheet[f"C{row_num}"] = objet.name
+        sheet[f"D{row_num}"] = objet.rubrique.name if objet.rubrique else ''
+        sheet[f"E{row_num}"] = objet.categorie.name if objet.categorie else '' 
+        sheet[f"F{row_num}"] = objet.montant
+
+            # Ajouter la photo
+        # if objet.photo:  # Assurez-vous que votre modèle Objet a un champ 'photo' avec le chemin de l'image
+        #     image_path = objet.photo.path
+        #     img = Image(image_path)
+        #     img.height = 150  # Ajustez la hauteur de l'image
+        #     img.width = 100   # Ajustez la largeur de l'image
+        #     cell_coordinates = f"G{row_num}"  # Colonne G pour les photos
+        #     sheet.add_image(img, cell_coordinates)
+    # Préparer la réponse HTTP
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = 'attachment; filename="objets.xlsx"'
+
+    workbook.save(response)
+    return response
 
 @login_required
 def home(request):
