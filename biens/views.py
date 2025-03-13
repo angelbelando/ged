@@ -87,7 +87,7 @@ class TableauBordView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         
         # Annoter les objets avec les sous-totaux par rubrique
-        context['rubriques'] = Objet.objects.values('rubrique_id').annotate(total_montant=Sum('montant'))
+        context['rubriques'] = Objet.objects.values('rubrique_id').annotate(total_montant=Sum('montant')).order_by('rubrique_id')
         
         # Ajouter les noms des rubriques
         context['detail_rubriques'] = Rubrique.objects.filter(id__in=[r['rubrique_id'] for r in context['rubriques']])
