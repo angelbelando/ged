@@ -19,7 +19,6 @@ PIECE = (
     ('Chambre_Parents', 'Chambre Parents'),
     ('Bureau', 'Bureau'),    
     ('Garage', 'Garage'),   
-    ('Bureau', 'Bureau'), 
     ('Devant Entrée', 'Devant Entrée'),
     ('Couloirs', 'Couloirs'), 
     ('Salle de Bain', 'Salle de Bain'), 

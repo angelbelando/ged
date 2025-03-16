@@ -68,17 +68,25 @@
     </div>
 </main>
 {% if is_paginated %}
-   <nav>
-      <ul class="pagination justify-content-center">
-        {% if page_obj.has_previous %}
-          <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo;</a></li>
-        {% endif %}
-          <li class="page-item active"><a href="#" class="page-link">{{ page_obj.number }}/ {{ page_obj.paginator.num_pages }} </a></li>
-        {% if page_obj.has_next %}
-          <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
-        {% endif %}
-      </ul>
-   </nav>
+<nav>
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" class="page-link">&laquo;</a>
+        </li>
+      {% endif %}
+      <li class="page-item active">
+        <a href="#" class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a>
+      </li>
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" class="page-link">&raquo;</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+  
+
 {% endif %}
 
 {% endblock %}
