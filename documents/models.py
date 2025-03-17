@@ -11,13 +11,15 @@ MOIS = [
 ]
                  
 RUBRIQUE = (
+    ('Doc. Notaire', 'Documents Notaire'),
+    ('Doc. Banque', 'Documents de la Banque'),
     ('BS', 'Bulletin de salaire'),
     ('Retraite', 'Attestation de paiement de retraite'),
     ('Impôts', 'Déclaration d\'impôts'),
     ('Autre', 'Autre')
 )
 
-DIR_DOCUMENTS_PDF = 'pdfs/'
+DIR_DOCUMENTS_PDF = 'pdfs_doc/'
 class Document(models.Model):
     document = models.CharField('description', max_length=96, unique=True)
     rubrique = models.CharField(choices=RUBRIQUE, max_length=15, default='Autre')
@@ -25,7 +27,7 @@ class Document(models.Model):
     
     annee = models.IntegerField('année', default=date.today().year)
 
-    Document_pdf = models.FileField('document pdf', upload_to=DIR_DOCUMENTS_PDF,default='pdfs/defaut.pdf')
+    Document_pdf = models.FileField('document pdf', upload_to=DIR_DOCUMENTS_PDF,default='pdfs_doc/defaut.pdf')
     url = models.URLField('Lien vers document sur le Cloud',default='https://absite.fr')
     commentaire = models.TextField('commentaire', blank=True)
    

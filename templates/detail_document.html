@@ -1,0 +1,49 @@
+<!--detail_objet.html-->
+
+{% extends 'base.html' %}
+{% block title %}Détail document{% endblock %}
+{% load custom_filters %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center align-items-center g-2">
+            <div class="col-12">
+                <h1 class="text-center bg-light">{{ objet.name }}</h1>
+            </div>
+        </div>
+    </div>
+        <div class="table-responsive">
+            <table
+                class="table table-light">
+           
+                <tbody>
+                    <tr class="">
+                        <td scope="row"><h1><b>{{document.document}}</b></h1></td>
+                        <td><a href="{{ document.Document_pdf.url }}"><img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" width="300" height="400"></a></td>
+                    </tr>
+                  
+                    <tr class="">
+                        <td scope="row"><b>Rubrique</b></td>
+                        <td>{{ document.rubrique }}</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row"><b>Mois/année</b></td>
+                        <td>{{ document.mois }}/{{ document.annee }}</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row"><b>Lien vers document Cloud</b></td>
+                        <td><a href="{{ document.url }}"> {{ document.url }}</a></td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row"><b>Commentaire</b></td>
+                        <td>{{ document.commentaire }}</td>
+                    </tr>
+            
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,91 @@
+<!--liste_objet.html-->
+{% extends 'base.html' %}
+{% block title %}Liste des documents{% endblock %}
+{% load custom_filters %}
+{% block content %}
+ <div class="container">
+    <div class="row justify-content-center align-items-center g-2">
+        <div class="col-12 text-center"> <h1 > Liste des documents archivés </h1></div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+        </div>
+        <ul class="navbar-nav ms-auto text-end">
+           
+            <form method="GET" action="">
+                <input class="form-control-sm" name="q" type="text" placeholder="Recherche" aria-label="Search" value="{{ request.GET.q }}">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+         
+            </form>
+        </ul>
+        </div>
+    </div>
+</div>
+<main>
+    
+        <div class="container container-fluid">
+        <div class="table-responsive">
+        <table
+        class="table table-light">
+        <thead>       
+            <tr>
+                <th scope="col">Document</th>
+                <th scope="col">Rubrique</th>
+                <th scope="col">Mois/Année</th>       
+                <th scope="col">Document_PDF</th>
+                <th scope="col">Lien vers document</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+        {% for document in documents %}
+                <tbody>
+                    <tr class="">
+                        <td scope="row"><a href="{% url 'documents:detail_document' document.id %}">{{document.document}}</a></td>
+                        <td scope="row">{{ document.rubrique }}</td>
+                        <td scope="row">{{ document.mois }}/{{document.annee}}</td>
+                        <td scope="row">{{ document.Document_PDF }}</td>
+                        <td scope="row"><a href="{{ document.url }}"> {{ document.url }}</a></td>
+                        <td scope="row">{{ document.commentaire}}</td>     
+                    </tr>
+                </tbody>    
+        {% endfor %}
+    </table>
+    </div>
+
+    </div>
+</main>
+{% if is_paginated %}
+<nav>
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" class="page-link">&laquo;</a>
+        </li>
+      {% endif %}
+      <li class="page-item active">
+        <a href="#" class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a>
+      </li>
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" class="page-link">&raquo;</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+  
+
+{% endif %}
+
+{% endblock %}
+
+
+	
