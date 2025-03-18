@@ -18,10 +18,13 @@
            
                 <tbody>
                     <tr class="">
-                        <td scope="row"><h1><b>{{document.document}}</b></h1></td>
+                        <td scope="row"><h3><b>{{document.document}}</b></h3></td>
+                        <td scope="row"><a class="nav-link active" aria-current="page" href="{{ document.url }}">Lien vers document Cloud</a></td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row"><b>Ou document PDF</b></td>
                         <td><a href="{{ document.Document_pdf.url }}"><img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" width="300" height="400"></a></td>
                     </tr>
-                  
                     <tr class="">
                         <td scope="row"><b>Rubrique</b></td>
                         <td>{{ document.rubrique }}</td>
@@ -30,10 +33,7 @@
                         <td scope="row"><b>Mois/année</b></td>
                         <td>{{ document.mois }}/{{ document.annee }}</td>
                     </tr>
-                    <tr class="">
-                        <td scope="row"><b>Lien vers document Cloud</b></td>
-                        <td><a href="{{ document.url }}"> {{ document.url }}</a></td>
-                    </tr>
+                   
                     <tr class="">
                         <td scope="row"><b>Commentaire</b></td>
                         <td>{{ document.commentaire }}</td>

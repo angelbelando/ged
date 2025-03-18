@@ -13,6 +13,7 @@ MOIS = [
 RUBRIQUE = (
     ('Doc. Notaire', 'Documents Notaire'),
     ('Doc. Banque', 'Documents de la Banque'),
+    ('Factures','Factures'),
     ('BS', 'Bulletin de salaire'),
     ('Retraite', 'Attestation de paiement de retraite'),
     ('Impôts', 'Déclaration d\'impôts'),
