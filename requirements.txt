@@ -5,7 +5,10 @@ diff-match-patch==20241021
 Django==5.1.4
 django-filter==24.3
 django-grappelli==4.0.1
+django-photologue==3.17
+django-sortedm2m==4.0.0
 et_xmlfile==2.0.0
+ExifRead==3.0.0
 fonttools==4.55.8
 gunicorn==23.0.0
 kiwisolver==1.4.8
