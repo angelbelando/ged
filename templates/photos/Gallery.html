@@ -1,0 +1,16 @@
+<!--liste_objet.html-->
+{% extends 'base.html' %}
+{% block title %}Mes photos{% endblock %}
+{% load custom_filters %}
+{% block content %}
+{% for gallery in galleries %}
+<h2 class="text-primary">{{ gallery.title }}</h2>
+<p>{{ gallery.description }}</p>
+{% for photo in gallery.public %}
+    <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
+{% endfor %}
+{% endfor %}
+{% endblock %}
+
+
+	

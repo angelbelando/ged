@@ -11,14 +11,23 @@ MOIS = [
 ]
                  
 RUBRIQUE = (
-    ('Doc. Notaire', 'Documents Notaire'),
-    ('Doc. Banque', 'Documents de la Banque'),
-    ('Doc. Epargne','Doc. Epargne'),
-    ('Factures','Factures'),
+    ('Taxe Foncière', 'Taxe Foncière'),
+    ('Avis Imposition', 'Avis d\'Imposition'),
+    ('Décl. revenus', 'Déclarations de revenus'),
+    ('Militaire', 'Attestation des services accomplis'),
+    ('Logement', 'Logement - Propriété'),
+    ('Banque', 'Banque'),
+    ('Véhicule','Véhicule'),
+    ('Consommation', 'Consommation - Apparail Ménager'),
+    ('Famille', 'Famille'),
+    ('Factures', 'Factures'),
     ('BS', 'Bulletin de salaire'),
-    ('Retraite', 'Attestation de paiement de retraite'),
-    ('Impôts', 'Déclaration d\'impôts'),
-    ('Autre', 'Autre')
+    ('Travail', 'Contrat de travail'),
+    ('Sld tout compte', 'Solde de tout compte'),
+    ('Retraite', 'Retraite - Titre de pension'),
+    ('Assurance', 'Assurance'),
+    ('Santé', 'Santé'),
+    ('Autre', 'Autre'),
 )
 
 DIR_DOCUMENTS_PDF = 'pdfs_doc/'

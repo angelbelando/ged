@@ -51,11 +51,14 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'documents',
     'biens',
     'django_filters',
+    'photologue',
+    'sortedm2m',
 ]
 
 MIDDLEWARE = [
@@ -163,3 +166,4 @@ LOGIN_REDIRECT_URL = '/protected/'
 LOGOUT_REDIRECT_URL = '/'
 
 # CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
+SITE_ID = 1

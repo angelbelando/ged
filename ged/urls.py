@@ -29,10 +29,13 @@ urlpatterns = [
     path('', biens_views.home, name='home'),
     path('objets/', include('biens.urls', namespace='objets')),
     path('documents/', include('documents.urls', namespace='documents')),
+    path('photos', include('photos.urls', namespace='photos')),
     path('admin/', admin.site.urls),
     path('grappelli/', include('grappelli.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('protected/', biens_views.ProtectedView.as_view(), name='protected'),
+    path('photologue/', include('photologue.urls', namespace='photologue')),
+    
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
