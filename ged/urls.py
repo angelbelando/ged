@@ -19,17 +19,18 @@ from django.conf import settings
 from django.conf.urls import include
 from django.urls import path
 from django.views.generic import TemplateView
-from documents import views as documents_views
 from biens import views as biens_views 
 from django.conf.urls.static import static
 from django.views import generic
 from django.contrib.auth import views as auth_views
+from photologue.sitemaps import GallerySitemap, PhotoSitemap
+
 
 urlpatterns = [
     path('', biens_views.home, name='home'),
     path('objets/', include('biens.urls', namespace='objets')),
-    path('documents/', include('documents.urls', namespace='documents')),
-    path('photos', include('photos.urls', namespace='photos')),
+    path('documents/', include('papiers.urls', namespace='documents')),
+    path('photos/', include('photos.urls', namespace='photos')),
     path('admin/', admin.site.urls),
     path('grappelli/', include('grappelli.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
@@ -39,3 +40,8 @@ urlpatterns = [
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+sitemaps = {
+            'photologue_galleries': GallerySitemap,
+            'photologue_photos': PhotoSitemap,
+            }

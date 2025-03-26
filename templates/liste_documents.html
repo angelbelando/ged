@@ -40,8 +40,9 @@
             <tr>
                 <th scope="col">Document</th>
                 <th scope="col">Rubrique</th>
-                <th scope="col">Mois/Année</th>       
+                <th scope="col">date de référence</th>       
                 <th scope="col">Lien vers le Cloud</th>
+                <th scope="col">ou Document PDF</th>
                 <th scope="col">Commentaire</th>
                 <th scope="col"></th>
             </tr>
@@ -51,8 +52,9 @@
                     <tr class="">
                         <td scope="row"><a href="{% url 'documents:detail_document' document.id %}">{{document.document}}</a></td>
                         <td scope="row">{{ document.rubrique }}</td>
-                        <td scope="row">{{ document.mois }}/{{document.annee}}</td>
+                        <td scope="row">{{ document.date_reference }}</td>
                         <td scope="row"><a class="nav-link active" aria-current="page" href="{{ document.url }}">Document sur le Cloud</a></td>
+                        <td><a href="{{ document.Document_pdf.url }}"><img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" width="50" height="60" target="_blank"></a></td>
                         <td scope="row">{{ document.commentaire}}</td>     
                     </tr>
                 </tbody>    
