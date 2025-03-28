@@ -1,6 +1,6 @@
 <!--detail_objet.html-->
-
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Détail document{% endblock %}
 {% load custom_filters %}
 
@@ -19,12 +19,13 @@
                 <tbody>
                     <tr class="">
                         <td scope="row"><h3><b>{{document.document}}</b></h3></td>
-                        <td scope="row"></td>
+                        {% if not document.url %}
+                        <td><a href="{{ document.Document_pdf.url }}"><img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" width="300" height="400" target="_blank"></a></td>
+                        {% else %}
+                        <td scope="row"><a class="nav-link active" aria-current="page" href="{{ document.url }}"><img src="{% static 'img/onedrive.jpg' %}" alt="oneDrive" width="300" height="400" target="_blank"></a></td>
+                        {% endif %}
                     </tr>
-                    <tr class="">
-                        <td scope="row"><a class="nav-link active" aria-current="page" href="{{ document.url }}" target="_blank">Lien vers document Cloud</a></td>
-                        <td><a href="{{ document.Document_pdf.url }}"><img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" width="300" height="400"></a></td>
-                    </tr>
+                 
                     <tr class="">
                         <td scope="row"><b>Rubrique</b></td>
                         <td>{{ document.rubrique }}</td>
@@ -48,7 +49,19 @@
                     </tr>
                     <tr class="">
                         <td scope="row"><b>Age du document</b></td>
-                        <td>{{ document.age_document }} ans
+                        <td>{{ document.age_document }} 
+                            {% if document.age_document > 1 %}
+                            ans
+                            {% else %}
+                            an
+                            {% endif %}
+                            {% if not document.type_document.permanente %}
+                            sur
+                            {{ document.type_document.duree_conservation }}
+                            {% endif %}
+                            {% if document.type_document.permanente %}
+                            <b>(à conserver en permanence)</b>
+                            {% endif %}
                         </td>
                     </tr>
                     <tr class="">
@@ -59,7 +72,6 @@
                             {% else %}
                             <p class='negative-amount'>Le document dépasse la période de conservation, vous pouvez le détruire.</p>
                             {% endif %}
-    
                         </b></td>
                         <td></td>
                         

@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 {% block title %}Liste des documents{% endblock %}
 {% load custom_filters %}
+{% load static %}
 {% block content %}
  <div class="container">
     <div class="row justify-content-center align-items-center g-2">
@@ -41,10 +42,9 @@
                 <th scope="col">Document</th>
                 <th scope="col">Rubrique</th>
                 <th scope="col">date de référence</th>       
-                <th scope="col">Lien vers le Cloud</th>
-                <th scope="col">ou Document PDF</th>
+                <th scope="col">Document</th>
                 <th scope="col">Commentaire</th>
-                <th scope="col"></th>
+                <th scope="col">Conservation</th>
             </tr>
             </thead>
         {% for document in documents %}
@@ -53,9 +53,17 @@
                         <td scope="row"><a href="{% url 'documents:detail_document' document.id %}">{{document.document}}</a></td>
                         <td scope="row">{{ document.rubrique }}</td>
                         <td scope="row">{{ document.date_reference }}</td>
-                        <td scope="row"><a class="nav-link active" aria-current="page" href="{{ document.url }}">Document sur le Cloud</a></td>
+                        {% if not document.url %}
                         <td><a href="{{ document.Document_pdf.url }}"><img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" width="50" height="60" target="_blank"></a></td>
-                        <td scope="row">{{ document.commentaire}}</td>     
+                        {% else %}
+                        <td scope="row"><a class="nav-link active" aria-current="page" href="{{ document.url }}"><img src="{% static 'img/onedrive.jpg' %}" alt="oneDrive" width="50" height="60" target="_blank"></a></td>
+                        {% endif %}
+                        <td scope="row">{{ document.commentaire}}</td> 
+                        {% if document.est_conserve %}
+                        <td class='positive-amount'>Dans période</td>
+                        {% else %}
+                        <td class='negative-amount'>Hors période</td>
+                        {% endif %}   
                     </tr>
                 </tbody>    
         {% endfor %}
