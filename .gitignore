@@ -8,6 +8,5 @@ Sources_py/
 Save_essai/
 ged/settings/__pycache__/
 staticfiles/
-ged/recettes/
 .vscode/
 .vscodeenv

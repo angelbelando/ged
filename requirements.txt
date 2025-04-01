@@ -26,4 +26,5 @@ python-dotenv==1.0.1
 six==1.17.0
 sqlparse==0.5.3
 tablib==3.7.0
+tailwindcss==0.0.1
 tzdata==2024.2
