@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'biens',
     'papiers',
+    'recettes',
     'django_filters',
     'photologue',
     'sortedm2m',

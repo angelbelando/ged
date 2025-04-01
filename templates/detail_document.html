@@ -73,7 +73,9 @@
                             <p class='negative-amount'>Le document dépasse la période de conservation, vous pouvez le détruire.</p>
                             {% endif %}
                         </b></td>
-                        <td></td>
+                        <td>
+                            {{ document.type_document.precision}}
+                        </td>
                         
                     </tr>
                 </tbody>

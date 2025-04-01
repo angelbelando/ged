@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Profil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            Blue: '#2c7373',
+            Red: '#ff7f50',
+            LightGray: '#f7f8fa',
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-LightGray text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-Blue text-white py-6 shadow-md">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <!-- Logo et Titre -->
+      <div>
+        <h1 class="text-3xl font-extrabold tracking-wide">Mon Profil</h1>
+        <p class="text-sm font-light mt-1">Vos informations personnelles en un coup d'œil</p>
+      </div>
+
+      <!-- Connexion/Déconnexion -->
+      <div>
+        {% if request.user.is_authenticated %}
+          <div class="flex items-center space-x-4">
+            <span class="font-semibold">Bonjour, {{ request.user.username }} !</span>
+            <a href="{% url 'recettes:logout' %}" 
+               class="bg-Red text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition">
+              Déconnexion
+            </a>
+          </div>
+        {% else %}
+          <a href="{% url 'recettes:login' %}" 
+             class="bg-Red text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition">
+            Connexion
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex flex-col items-center justify-center p-6 min-h-screen">
+    <div class="bg-white p-8 shadow-lg rounded-lg w-full max-w-lg">
+      <h2 class="text-2xl font-bold text-center text-Blue mb-6">Informations du Profil</h2>
+
+      {% if request.user.is_authenticated %}
+        <!-- Informations Utilisateur -->
+        <div class="space-y-6">
+          <!-- Nom d'utilisateur -->
+          <div>
+            <span class="block text-sm font-medium text-gray-700">Nom d'utilisateur :</span>
+            <p class="text-lg font-semibold mt-1">{{ request.user.username }}</p>
+          </div>
+
+          <!-- Adresse e-mail -->
+          <div>
+            <span class="block text-sm font-medium text-gray-700">Adresse e-mail :</span>
+            <p class="text-lg font-semibold mt-1">{{ request.user.email }}</p>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-8 flex flex-col sm:flex-row sm:justify-between items-center space-y-4 sm:space-y-0">
+          <!-- Bouton Retour -->
+          <a href="/" 
+             class="w-full sm:w-auto bg-Blue text-white text-center py-2 px-6 rounded-md shadow hover:bg-teal-700 transition">
+            Retour à l'accueil
+          </a>
+        </div>
+      {% else %}
+        <!-- Non connecté -->
+        <p class="text-gray-500 italic text-center">Vous n'êtes pas connecté.</p>
+        <div class="mt-6 text-center">
+          <a href="{% url 'recettes:login' %}" 
+             class="inline-block bg-Blue text-white px-4 py-2 rounded-md shadow hover:bg-teal-700 transition">
+            Se connecter
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+
+</body>
+</html>

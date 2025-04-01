@@ -30,6 +30,7 @@ urlpatterns = [
     path('', biens_views.home, name='home'),
     path('objets/', include('biens.urls', namespace='objets')),
     path('documents/', include('papiers.urls', namespace='documents')),
+    path('recettes/', include('recettes.urls', namespace='recettes')),
     path('photos/', include('photos.urls', namespace='photos')),
     path('admin/', admin.site.urls),
     path('grappelli/', include('grappelli.urls')),

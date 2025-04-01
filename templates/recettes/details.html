@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ recette.titre }} - Détails de la recette</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            Blue: '#2c7373', /* Bleu inspiré du logo */
+            Red: '#ff7f50',  /* Rouge inspiré du logo */
+            LightGray: '#f7f8fa',
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-LightGray text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-Blue text-white py-6 shadow-md">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl font-extrabold tracking-wide">{{ recette.titre }}</h1>
+      <p class="text-lg font-light mt-2">Découvrez tous les détails de cette recette</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto my-10 px-4">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      
+      <!-- Image -->
+      {% if recette.image %}
+      <div class="w-full">
+        <img src="{{ recettes:recette.image.url }}" alt="Image de {{ recette.titre }}" 
+             class="w-full h-64 object-cover">
+      </div>
+      {% endif %}
+      
+      <!-- Contenu Principal -->
+      <div class="p-6">
+        <!-- Description -->
+        <section class="mb-6">
+          <h2 class="text-2xl font-bold text-Blue mb-2">Description</h2>
+          <p class="text-gray-700 leading-relaxed">{{ recette.description }}</p>
+        </section>
+
+        <!-- Ingrédients -->
+        <section class="mb-6">
+          <h2 class="text-2xl font-bold text-Blue mb-2">Ingrédients</h2>
+          <ul class="list-disc pl-5 text-gray-700">
+            {% for ingredient in recette.ingredients.splitlines %}
+              <li>{{ ingredient }}</li>
+            {% empty %}
+              <li class="text-gray-500 italic">Aucun ingrédient spécifié.</li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <!-- Étapes -->
+        <section class="mb-6">
+          <h2 class="text-2xl font-bold text-Blue mb-2">Étapes</h2>
+          <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ recette.etapes }}</p>
+        </section>
+
+        <!-- Informations Temps -->
+        <section class="grid grid-cols-2 gap-4 mb-6">
+          <div class="bg-LightGray p-4 rounded-md shadow-sm">
+            <h3 class="text-lg font-semibold text-Blue">Temps de Préparation</h3>
+            <p class="text-gray-700">{{ recette.temps_preparation }} minutes</p>
+          </div>
+          <div class="bg-LightGray p-4 rounded-md shadow-sm">
+            <h3 class="text-lg font-semibold text-Blue">Temps de Cuisson</h3>
+            <p class="text-gray-700">{{ recette.temps_cuisson }} minutes</p>
+          </div>
+        </section>
+
+        <!-- Catégorie -->
+        <section class="mb-6">
+          <h2 class="text-2xl font-bold text-Blue mb-2">Catégorie</h2>
+          <p class="text-gray-700">{{ recette.categorie.nom }}</p>
+        </section>
+        
+        <!-- Note -->
+        <section class="mb-6">
+          <h2 class="text-2xl font-bold text-Blue mb-2">Note</h2>
+          <p class="text-gray-700">{{ recette.note }}</p>
+        </section>
+
+        <form method="POST" action="{% url 'recettes:ajouter_note' recette.id %}" class="mt-4">
+          {% csrf_token %}
+          <label for="note" class="block text-lg font-medium text-gray-700">Note :</label>
+          <select name="note" id="note" required
+                  class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-Blue focus:outline-none mb-4">
+              <option value="" disabled selected>Choisir une note</option>
+              <option value="1">1 étoile</option>
+              <option value="2">2 étoiles</option>
+              <option value="3">3 étoiles</option>
+              <option value="4">4 étoiles</option>
+              <option value="5">5 étoiles</option>
+          </select>
+          <button type="submit" class="bg-Blue text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition">
+              Soumettre
+          </button>
+        </form>
+      
+        
+        <!-- Bouton Retour -->
+        <div class="text-center mt-6">
+          <a href="/" 
+             class="inline-block bg-Blue text-white px-6 py-2 rounded-md shadow hover:bg-teal-700 transition">
+            Retour à la liste des recettes
+          </a>
+        </div>
+        <!-- Bouton Modifier -->
+        <div class="text-center mt-6">
+          <a href="{% url 'recettes:modifier_recette' recette.id %}" 
+            class="inline-block bg-Red text-white px-4 py-2 rounded-md shadow hover:bg-red-600 transition">
+            Modifier la Recette
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Sélection des étoiles
+    const stars = document.querySelectorAll('.rating label');
+    const form = document.getElementById('rating-form');
+  
+    stars.forEach((star, index) => {
+      star.addEventListener('mouseover', () => {
+        // Appliquer la classe active à toutes les étoiles précédentes
+        stars.forEach((s, i) => {
+          s.classList.toggle('text-yellow-400', i <= index);
+          s.classList.toggle('text-gray-400', i > index);
+        });
+      });
+  
+      star.addEventListener('mouseleave', () => {
+        // Réinitialiser les couleurs si aucune étoile n'est sélectionnée
+        const selected = form.querySelector('input:checked');
+        stars.forEach((s, i) => {
+          s.classList.toggle('text-yellow-400', selected && i <= selected.value - 1);
+          s.classList.toggle('text-gray-400', !selected || i > selected.value - 1);
+        });
+      });
+  
+      star.addEventListener('click', () => {
+        // Marquer l'étoile sélectionnée
+        stars.forEach((s, i) => {
+          s.classList.toggle('text-yellow-400', i <= index);
+          s.classList.toggle('text-gray-400', i > index);
+        });
+      });
+    });
+  </script>  
+</body>
+</html>

@@ -3,14 +3,23 @@
 {% block title %}Mes photos{% endblock %}
 {% load custom_filters %}
 {% block content %}
-{% for gallery in galleries %}
-<h2 class="text-primary">{{ gallery.title }}</h2>
-<p>{{ gallery.description }}</p>
-{% for photo in gallery.public %}
-    <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
-{% endfor %}
-{% endfor %}
+
+<div class="container">
+    <div class="row">
+        {% for gallery in galleries %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                {% for photo in gallery.public %}
+                <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
+                {% endfor %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ gallery.title }}</h5>
+                    <p class="card-text">{{ gallery.description }}</p>
+                    <a href="{% url 'photos:gallery_view' gallery.id %}" class="btn btn-primary">Voir les photos</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
-
-
-	
