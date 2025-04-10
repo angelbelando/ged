@@ -22,7 +22,7 @@
 <body class="bg-LightGray text-gray-800">
 
   <!-- Header -->
-  <header class="bg-Blue text-white py-6 shadow-md">
+  <header class="bg-blue-500 text-white py-6 shadow-md">
     <div class="container mx-auto px-4 text-center">
       <h1 class="text-4xl font-extrabold tracking-wide">{{ recette.titre }}</h1>
       <p class="text-lg font-light mt-2">Découvrez tous les détails de cette recette</p>
@@ -36,7 +36,7 @@
       <!-- Image -->
       {% if recette.image %}
       <div class="w-full">
-        <img src="{{ recettes:recette.image.url }}" alt="Image de {{ recette.titre }}" 
+        <img src="{{ recette.image.url }}" alt="Image de {{ recette.titre }}" 
              class="w-full h-64 object-cover">
       </div>
       {% endif %}

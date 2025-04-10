@@ -38,14 +38,14 @@ def manage(request):
         # Vérifie que tous les champs obligatoires sont renseignés
         if not titre or not description or not ingredients or not etapes or not temps_preparation or not categorie_id:
             messages.error(request, 'Tous les champs obligatoires doivent être remplis.')
-            return redirect('manage')
+            return redirect('/recettes/manage')
 
         # Récupère l'objet catégorie
         try:
             categorie = Categorie.objects.get(id=categorie_id)
         except Categorie.DoesNotExist:
             messages.error(request, "La catégorie sélectionnée n'existe pas.")
-            return redirect('manage')
+            return redirect('/recettes/manage')
 
         # Crée et sauvegarde la recette
         recette = Recette(
@@ -60,7 +60,7 @@ def manage(request):
         )
         recette.save()
         messages.success(request, 'Recette ajoutée avec succès !')
-        return redirect('home')  # Redirige vers la page d'accueil après ajout
+        return redirect('recettes/home')  # Redirige vers la page d'accueil après ajout
 
     # Si GET, affiche le formulaire
     categories = Categorie.objects.all()
@@ -73,7 +73,7 @@ def add_category(request):
         if nom:
             Categorie.objects.create(nom=nom)
             messages.success(request, 'Catégorie ajoutée avec succès !')
-            return redirect('manage')
+            return redirect('/recettes/manage')
         else:
             messages.error(request, 'Le nom de la catégorie est obligatoire.')
 

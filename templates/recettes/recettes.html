@@ -64,7 +64,7 @@
 
   <!-- Section d'accueil avec l'image -->
   <section class="relative">
-    <img src="../images/Acceuil.png" alt="Cuisine moderne" class="w-full h-[50vh] object-cover">
+    <img src="Acceuil.png" alt="Cuisine moderne" class="w-full h-[50vh] object-cover">
     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
       <div class="text-center text-white px-4">
         <h2 class="text-4xl font-bold">Bienvenue sur Recettes</h2>
@@ -108,7 +108,7 @@
             <td class="px-4 py-4 text-center">{{ row.description }}</td>
             <td class="px-4 py-4 text-center">{{ row.temps_preparation }} min</td>
             <td class="px-4 py-4 text-center">
-              {% if row.id in favoris_ids %}
+              {% comment %} {% if row.id in favoris_ids %}
                 <span class="text-Red font-semibold">Oui</span>
                 <a href="{% url 'toggle_favoris' row.pk %}" 
                    class="text-Red font-semibold hover:text-red-600 transition">
@@ -120,7 +120,7 @@
                    class="text-Blue font-semibold hover:text-teal-700 transition">
                   Ajouter
                 </a>
-              {% endif %}
+              {% endif %} {% endcomment %}
             </td>
             <td class="px-4 py-4 text-center">
               <p class="text-lg font-bold text-Blue">Note moyenne :</p>
@@ -162,10 +162,10 @@
 
     <!-- Liens additionnels -->
     <div class="container mx-auto flex justify-center mt-6 space-x-6">
-      <a href="/manage" class="text-Blue font-semibold underline hover:text-teal-700 transition">
+      <a href="/recettes/manage" class="text-Blue font-semibold underline hover:text-teal-700 transition">
         Ajouter une recette
       </a>
-      <a href="/favoris" class="text-Blue font-semibold underline hover:text-teal-700 transition">
+      <a href="/recettes/favoris" class="text-Blue font-semibold underline hover:text-teal-700 transition">
         Afficher uniquement les favoris
       </a>
       <a href="{% url 'recettes:recettes_tendances' %}" class="text-Blue font-semibold underline hover:text-blue-600">
