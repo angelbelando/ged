@@ -1,52 +1,52 @@
-<!--detail_objet.html-->
+<!-- detail_objet.html -->
 
 {% extends 'base.html' %}
 {% block title %}Détail objet{% endblock %}
 {% load custom_filters %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center align-items-center g-2">
-            <div class="col-12">
-                <h1 class="text-center bg-light">{{ objet.name }}</h1>
-            </div>
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-center items-center">
+            <h1 class="text-center bg-gray-100 text-3xl font-bold p-4 rounded-md">{{ objet.name }}</h1>
         </div>
-    </div>
-        <div class="table-responsive">
-            <table
-                class="table table-light">
-           
+
+        <div class="overflow-x-auto mt-6">
+            <table class="min-w-full bg-gray-100 border border-gray-300">
                 <tbody>
-                    <tr class="">
-                        <td scope="row"> <a href="{{ objet.photo.url }}">  <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" width="400" height="300"></a></td>
-                        <td><a href="{{ objet.document.url }}"><img src="{% url 'objets:generate_thumbnail' objet.id %}" alt="Miniature du PDF" width="300" height="400"></a></td>
+                    <tr>
+                        <td class="border px-4 py-2">
+                            <a href="{{ objet.photo.url }}">
+                                <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" class="w-96 h-auto object-cover rounded-xl">
+                            </a>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <a href="{{ objet.document.url }}">
+                                <img src="{% url 'objets:generate_thumbnail' objet.id %}" alt="Miniature du PDF" class="w-96 h-auto object-cover rounded-xl">
+                            </a>
+                        </td>
                     </tr>
-                  
-                    <tr class="">
-                        <td scope="row"><b>Rubrique contrat assurance</b></td>
-                        <td>{{ objet.rubrique }}</td>
+                    <tr>
+                        <td class="border px-4 py-2 font-bold">Rubrique contrat assurance</td>
+                        <td class="border px-4 py-2">{{ objet.rubrique }}</td>
                     </tr>
-                    <tr class="">
-                        <td scope="row"><b>Catégorie du bien</b></td>
-                        <td>{{ objet.categorie }}</td>
+                    <tr>
+                        <td class="border px-4 py-2 font-bold">Catégorie du bien</td>
+                        <td class="border px-4 py-2">{{ objet.categorie }}</td>
                     </tr>
-                    <tr class="">
-                        <td scope="row"><b>Pièce</b></td>
-                        <td>{{ objet.piece }}</td>
+                    <tr>
+                        <td class="border px-4 py-2 font-bold">Pièce</td>
+                        <td class="border px-4 py-2">{{ objet.piece }}</td>
                     </tr>
-                    <tr class="">
-                        <td scope="row"><b>Date de l'achat</b></td>
-                        <td>{{ objet.achat_at }}</td>
+                    <tr>
+                        <td class="border px-4 py-2 font-bold">Date de l'achat</td>
+                        <td class="border px-4 py-2">{{ objet.achat_at }}</td>
                     </tr>
-                    <tr class="">
-                        <td scope="row bg-primary"><b>Prix d'achat ou estimé</b></td>
-                        <td>{{ objet.montant|format_currency }}</td>
+                    <tr>
+                        <td class="border px-4 py-2 font-bold">Prix d'achat ou estimé</td>
+                        <td class="border px-4 py-2">{{ objet.montant|format_currency }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        
     </div>
-    
-
 {% endblock %}

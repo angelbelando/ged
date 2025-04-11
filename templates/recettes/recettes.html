@@ -110,13 +110,15 @@
             <td class="px-4 py-4 text-center">
               {% if row.id in favoris_ids %}
                 <span class="text-Red font-semibold">Oui</span>
-                <a href="{% url 'toggle_favoris' row.pk %}" 
+                {% comment %} <a href="{% url 'toggle_favoris' row.pk %}"  {% endcomment %}
+                <a href=""
                    class="text-Red font-semibold hover:text-red-600 transition">
                   Retirer
                 </a>
               {% else %}
                 <span class="text-gray-400 font-semibold">Non</span>
-                <a href="{% url 'toggle_favoris' row.pk %}" 
+                {% comment %} <a href="{% url 'toggle_favoris' row.pk %}"  {% endcomment %}
+                <a href="" 
                    class="text-Blue font-semibold hover:text-teal-700 transition">
                   Ajouter
                 </a>
