@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100">
   <header>
-    <nav class="bg-blue-500 text-white text-lg font-bold py-4">
+    <nav class="bg-blue-500 text-white text-lg font-bold py-3">
        <div class="container mx-auto flex items-center justify-between">
           <a class="text-lg font-bold" href="{% url 'home' %}"><i class="fas fa-home"></i></a>
           <button class="lg:hidden text-white focus:outline-none">
@@ -55,8 +55,8 @@
     {% endblock %}
 </main>
 
-<footer class="text-center py-4 bg-gray-200">
-    <p>Copyright &copy; <a href="" target="_blank"></a></p>
+<footer class="text-center py-4 rounded-b-xl bg-gray-200">
+    {% comment %} <p>Copyright &copy; <a href="" target="_blank"></a></p> {% endcomment %}
 </footer>
 
 <script src="{% static 'js/fontawesome-all.min.js' %}"></script>

@@ -1,129 +1,100 @@
-<!--tableau_bord.html-->
-
 {% extends 'base.html' %}
-{% block title %}Répartation Contrat Assurance{% endblock %}
+{% block title %}Répartition Contrat Assurance{% endblock %}
 
 {% load custom_filters %}
 {% load static %}
 {% block content %}
 
 
-<div
-    class="container">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Tableau de bord</h1>
-        </div>
-</div>
-
-
-<div class="container container-fluid">
-    <div class="row">
-        <div class="col-7">   
-            <h2 class="text-center">Répartition contrat assurance</h2>
-            <div class="table-responsive" >
-              
-                <table class="table table-light">
-                    <thead>
-                   
-                    <tr>
-                        <th scope="col">Rubrique Assurance</th>
-                        <th scope="col">Couverture Assurance</th>
-                        <th scope="col">Montant consommé</th>
-                        <th scope="col">Montant restant</th>
-                    </tr>
-                
-                    </thead>
-                    <tbody>
-                    
-                    {% for rubrique in rubriques %}
-                    <tr class="">
-                        <td scope="row">{{ rubrique.name }} </td>
-                        <td>{{ rubrique.montant_assu|format_currency }}</td>
-                        <td>{{ rubrique.total_montant|format_currency }}</td>
-                        <td class="{% if rubrique.montant_assu|subtract:rubrique.total_montant < 0 %}negative-amount{% else %}positive-amount{% endif %}">
-                          <b>{{ rubrique.montant_assu|subtract:rubrique.total_montant|format_currency }}</b>
-
-                        </td>
-                    </tr>
-                    {% endfor %} 
-            
-                    </tbody>
-                </table>
-        </div>
-        
-        </div>
-        <div class="col-5" >
-        <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres" width="600" height="400">
-        </div>
-        
+<div class="container mx-full p-3 bg-blue-400 rounded-2xl">
+    <div class="flex justify-center">
+        <h1 class="text-4xl font-bold text-center text-white shadow-3xl">Tableau de bord</h1>
     </div>
 </div>
-<div class="container container-fluid">
-    <div class="row">
-        <div class="col-12">   
-            <h2 class="text-center">Répartition par pièce de l'appartement</h2>
-            <div class="table-responsive" >
-               
-                <table class="table table-light">
+
+
+<div class="container mx-auto px-4 mt-2">
+    <div class="flex flex-wrap">
+        <div class="w-7/12">
+            <h2 class="text-center text-lg font-semibold">Répartition contrat assurance</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-gray-100 border border-gray-300 mt-2">
                     <thead>
-                   
-                    <tr>
-                        <th scope="col">Piéce</th>
-                    
-                        <th scope="col">Total pièce</th>
-                    </tr>
-                
+                        <tr class="bg-gray-200">
+                            <th class="px-4 py-2 border rounded-tl-xl">Rubrique Assurance</th>
+                            <th class="px-4 py-2 border">Couverture Assurance</th>
+                            <th class="px-4 py-2 border">Montant consommé</th>
+                            <th class="px-4 py-2 border rounded-tr-xl">Montant restant</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    
-                    {% for piece in pieces %}
-                    <tr class="">
-                        <td scope="row">{{ piece.piece }} </td>
-                      
-                        <td class="text-right">{{ piece.total_montant|format_currency }}</td>
-                        
-                    </tr>
-                    {% endfor %} 
-            
+                        {% for rubrique in rubriques %}
+                        <tr>
+                            <td class="px-4 py-2 border">{{ rubrique.name }}</td>
+                            <td class="px-4 py-2 border">{{ rubrique.montant_assu|format_currency }}</td>
+                            <td class="px-4 py-2 border">{{ rubrique.total_montant|format_currency }}</td>
+                            <td class="px-4 py-2 border {% if rubrique.montant_assu|subtract:rubrique.total_montant < 0 %}text-red-600{% else %}text-green-600{% endif %}">
+                                <b>{{ rubrique.montant_assu|subtract:rubrique.total_montant|format_currency }}</b>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
+            </div>
         </div>
+   
+        <div class="w-5/12 flex justify-center mt-2">
+            <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres" class="w-192 h-auto rounded-2xl ml-8">
         </div>
-        <div class="row">
-        <div class="col-12">   
-            <h2 class="text-center">Répartition par Catégorie</h2>
-            <div class="table-responsive" >
-               
-                <table class="table table-light">
-                    <thead>
-                   
-                    <tr>
-                        <th scope="col">Catégorie</th>
-                    
-                        <th scope="col">Total Catégorie</th>
-                    </tr>
-                
-                    </thead>
-                    <tbody>
-                    
-                    {% for categorie in categories %}
-                    <tr class="">
-                        <td scope="row">{{ categorie.categorie__name }} </td>
-                      
-                        <td class="text-right">{{ categorie.total_montant|format_currency }}</td>
-                        
-                    </tr>
-                    {% endfor %} 
-            
-                    </tbody>
-                </table>
-        </div>
-        
-        </div>
-        
-        
     </div>
+</div>
+
+<div class="container mx-auto px-4 mt-12">
+    <div class="flex flex-wrap">
+  
+    <div class="overflow-x-auto ml-60 ">
+        <h2 class="text-center text-lg font-semibold">Répartition par pièce de l'appartement</h2>
+        <table class="min-w-full bg-gray-100 border border-gray-300 mt-2">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 border rounded-tl-xl">Pièce</th>
+                    <th class="px-4 py-2 border rounded-tr-xl">Total pièce</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for piece in pieces %}
+                <tr>
+                    <td class="px-4 py-2 border">{{ piece.piece }}</td>
+                    <td class="px-4 py-2 border text-right">{{ piece.total_montant|format_currency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="overflow-x-auto ml-60 ">
+       
+        <h2 class="text-center text-lg font-semibold">Répartition par Catégorie</h2>
+        <table class="min-w-full bg-gray-100 border border-gray-300 mt-2">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 border rounded-tl-xl">Catégorie</th>
+                    <th class="px-4 py-2 border rounded-tr-xl">Total Catégorie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categorie in categories %}
+                <tr>
+                    <td class="px-4 py-2 border">{{ categorie.categorie__name }}</td>
+                    <td class="px-4 py-2 border text-right">{{ categorie.total_montant|format_currency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+</div>
+</div>
 </div>
 
 {% endblock %}

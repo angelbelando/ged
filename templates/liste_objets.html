@@ -2,16 +2,17 @@
 {% block title %}Liste Objets{% endblock %}
 {% load custom_filters %}
 {% block content %}
-<div class="container mx-auto p-6">
+<div class="container mx-full p-3 bg-blue-400 rounded-2xl">
     <div class="flex justify-center">
-        <h1 class="text-4xl font-bold text-center">Liste des objets toujours présents dans l'appartement</h1>
+        <h1 class="text-4xl font-bold text-center text-white shadow-3xl">Liste des objets toujours présents dans l'appartement</h1>
     </div>
 </div>
 
 <div class="container mx-auto p-6">
     <div class="grid grid-cols-2">
         <div>
-            <a href="{% url 'objets:export_to_excel' %}" class="px-2 py-3 bg-blue-500 text-white text-sm font-bold rounded-2xl shadow-2xl shadow-blue-900">Exporter vers Excel</a>
+            <a href="{% url 'objets:export_to_excel' %}" class="px-2 py-3 bg-blue-500 text-white text-xl font-bold rounded-2xl shadow-2xl shadow-blue-900">Exporter <i class="fas fa-file-excel"></i></a>
+            
         </div>
        
         <div class="flex justify-end">
@@ -28,18 +29,18 @@
 <main>
    {% comment %} <div class="container mx-auto p-6">
         <div class="overflow-auto">  {% endcomment %}
-            <table class="w-full border-collapse border border-gray-300 bg-gray-100">
+            <table class="w-full border-collapse border-gray-300 bg-gray-100">
 
-                <thead class="bg-blue-500 text-white rounded-full"
+                <thead class="min-w-full bg-gray-200  border-gray-300 rounded-full">
 
                     <tr>
-                        <th class="p-3 border rounded-tl-xl">Photo</th>
+                        <th class="p-3 rounded-tl-xl">Photo</th>
                         <th class="p-3 border">Description</th>
                         <th class="p-3 border">Assurance</th>
                         <th class="p-3 border">Catégorie</th>
                         <th class="p-3 border">Pièce</th>
                         <th class="p-3 border">Prix d'achat</th>
-                        <th class="p-3 border rounded-tr-xl">Date Achat</th>
+                        <th class="p-3 rounded-tr-xl">Date Achat</th>
                     </tr>
                 </thead>
                 {% for objet in objets %}
@@ -47,7 +48,7 @@
                     <tr class="border border-gray-300">
                         <td class="p-3 border text-center">
                             <a href="{% url 'objets:detail_objet' objet.id %}">
-                                <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" class="w-32 h-auto object-cover mx-auto rounded-lg">
+                                <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" class="w-12 h-auto object-cover mx-auto rounded-lg">
                             </a>
                         </td>
                         <td class="p-3 border">{{ objet.name }}</td>
@@ -66,21 +67,20 @@
 
 {% if is_paginated %}
 <nav>
-    <ul class="flex justify-center space-x-2">
+    <div class="flex justify-center space-x-0">
         {% if page_obj.has_previous %}
-        <li>
-            <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" class="px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300">&laquo;</a>
-        </li>
+     
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" class="px-3 py-1 rounded-l-lg bg-gray-200 hover:bg-gray-300">&laquo;</a>
+       
         {% endif %}
-        <li class="px-3 py-1 border rounded-lg bg-blue-500 text-white">
+        <div class="px-3 py-2 bg-blue-500 text-white">
             <a href="#" class="">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a>
-        </li>
+        </div>
         {% if page_obj.has_next %}
-        <li>
-            <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" class="px-3 py-1 border rounded-lg bg-gray-200 hover:bg-gray-300">&raquo;</a>
-        </li>
+     
+            <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" class="px-3 py-1 rounded-r-lg bg-gray-200 hover:bg-gray-300">&raquo;</a>
         {% endif %}
-    </ul>
+    </div>
 </nav>
 
 

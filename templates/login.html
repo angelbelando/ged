@@ -3,31 +3,33 @@
 {% block content %}
 
 <body>
-    <div class="container">
-        <h2 class="mt-5 text-center">Veuillez vous connecter, merci.</h2>
+    <div class="container mx-auto px-4">
+        <h2 class="mt-5 text-center text-lg font-semibold">Veuillez vous connecter, merci.</h2>
         <form method="post" class="mt-3">
             {% csrf_token %}
-            <div
-                class="table-responsive">
-                <table class="table table-fw-light">
-
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-gray-100 border border-gray-300 rounded">
                     <tbody>
-                        <tr class="">
-                            <td scope="row">{{ form.username.label_tag }}</td>
-                            <td> {{ form.username }}</td>
+                        <tr>
+                            <td class="px-4 py-2 border">{{ form.username.label_tag }}</td>
+                            <td class="px-4 py-2 border">{{ form.username }}</td>
                         </tr>
-                        <tr class="">
-                            <td scope="row">{{ form.password.label_tag }}</td>
-                            <td>{{ form.password }}</td>
+                        <tr>
+                            <td class="px-4 py-2 border">{{ form.password.label_tag }}</td>
+                            <td class="px-4 py-2 border">{{ form.password }}</td>
                         </tr>
-                        <tr class="">
+                        <tr>
                             <td></td>
-                            <td scope="row"><button type="submit" class="btn btn-primary">Se connecter</button></td>
+                            <td class="px-4 py-2 border">
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Se connecter</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+        </form>
     </div>
 </body>
 
 {% endblock %}
+
