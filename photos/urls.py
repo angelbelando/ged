@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'photos'
 urlpatterns = [
-    path('photos/', views.gallery_view, name='gallery_photos'), 
-    path('photos/<int:gallery_id>/', views.une_gallery_view, name='gallery_view'),
-    
+    path('galleries/', views.GalleryListView.as_view(), name="gallery_list"),
+    path('galleries/<slug:slug>/', views.GalleryDetailView.as_view(), name="gallery_detail"),
+    path('photos/<int:pk>/', views.PhotoDetailView.as_view(), name="photo_detail"),
 ]

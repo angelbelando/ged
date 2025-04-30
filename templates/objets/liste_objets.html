@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Liste Objets{% endblock %}
+{% load custom_filters %}
+{% block content %}
+
+<!-- En-tête -->
+<div class="container mx-auto p-3 bg-blue-400 rounded-2xl">
+    <div class="flex justify-center">
+        <h1 class="text-4xl md:text-4xl font-bold text-center text-white shadow-lg">
+            Liste des objets toujours présents dans l'appartement
+        </h1>
+    </div>
+</div>
+
+<!-- Boutons et Recherche -->
+<div class="container mx-auto p-2 md:p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <a href="{% url 'objets:export_to_excel' %}" 
+            class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition">
+                Exporter <i class="fas fa-file-excel"></i>
+            </a>
+        </div>
+       
+        <div class="flex justify-end">
+            <form method="GET" action="" class="flex items-center space-x-2">
+                <input class="border border-gray-300 rounded-xl px-2 py-2 md:py-3 shadow w-full md:w-auto" 
+                       name="q" type="text" placeholder="Recherche" value="{{ request.GET.q }}">
+                <button type="submit" class="px-3 py-2 bg-blue-500 text-white rounded-xl">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Tableau responsive -->
+<main>
+    {% comment %} <div class="container mx-auto p-2 md:p-6 overflow-x-auto"> {% endcomment %}
+        <div class="container mx-auto  shadow-md rounded-lg overflow-hidden mt-6">
+        <table class="w-full border-collapse border-gray-300 bg-gray-100 text-sm md:text-base">
+            <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
+                <tr>
+                    <th class="p-2 md:p-3 rounded-tl-xl">Photo</th>
+                    <th class="p-2 md:p-3 border">Description</th>
+                    <th class="p-2 md:p-3 border">Assurance</th>
+                    <th class="p-2 md:p-3 border">Catégorie</th>
+                    <th class="p-2 md:p-3 border">Pièce</th>
+                    <th class="p-2 md:p-3 border">Prix d'achat</th>
+                    <th class="p-2 md:p-3 rounded-tr-xl">Date Achat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objet in objets %}
+                <tr class="border border-gray-300">
+                    <td class="p-2 md:p-3 border text-center">
+                        <a href="{% url 'objets:detail_objet' objet.id %}">
+                            <img src="{{ objet.photo.url }}" 
+                                 alt="{{ objet.name }}" 
+                                 class="w-12 md:w-16 h-auto object-cover mx-auto rounded-lg">
+                        </a>
+                    </td>
+                    <td class="p-2 md:p-3 border">{{ objet.name }}</td>
+                    <td class="p-2 md:p-3 border">{{ objet.rubrique }}</td>
+                    <td class="p-2 md:p-3 border">{{ objet.categorie }}</td>
+                    <td class="p-2 md:p-3 border">{{ objet.piece }}</td>
+                    <td class="p-2 md:p-3 border">{{ objet.montant|format_currency }}</td>
+                    <td class="p-2 md:p-3 border">{{ objet.achat_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- Pagination responsive -->
+{% if is_paginated %}
+<nav class="mt-4 flex justify-center">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" 
+           class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-lg">&laquo;</a>
+    {% endif %}
+    
+    <div class="px-3 py-2 bg-blue-500 text-white">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </div>
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" 
+           class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-lg">&raquo;</a>
+    {% endif %}
+</nav>
+{% endif %}
+
+{% endblock %}

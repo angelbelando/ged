@@ -130,7 +130,7 @@ class TableauBordView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class ObjetListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Objet
     context_object_name = "objets"
-    template_name = 'liste_objets.html'
+    template_name = 'objets/liste_objets.html'
     permission_required = 'biens.view_Objet'
     paginate_by = 10
     
@@ -146,7 +146,7 @@ class ObjetListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         # return Objet.objects.all()
 class ObjetDetailView(DetailView):
     model = Objet
-    template_name = 'detail_objet.html'
+    template_name = 'objets/detail_objet.html'
     
 
 

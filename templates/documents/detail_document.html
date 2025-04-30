@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Détail document{% endblock %}
+{% load custom_filters %}
+
+{% block content %}
+    
+<div class="overflow-x-auto">
+    <table class="table-auto min-w-full bg-gray-100 border">
+        <tbody>
+            <tr>
+                <td><h3 class="text-4xl font-bold">{{ document.document }}</h3></td>
+                <td>
+                    {% if not document.url %}
+                        <a href="{{ document.Document_pdf.url }}">
+                            <img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" class="w-64 max-w-xs sm:max-w-sm md:max-w-md object-cover rounded-xl">
+                        </a>
+                    {% else %}
+                        <a href="{{ document.url }}">
+                            <img src="{% static 'img/onedrive.jpg' %}" alt="OneDrive" class="w-64 max-w-xs sm:max-w-sm md:max-w-md object-cover rounded-xl">
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 font-bold">Rubrique</td>
+                <td class="border px-4 py-2 whitespace-normal">{{ document.rubrique }}</td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 font-bold">Type de document</td>
+                <td class="border px-4 py-2 whitespace-normal">{{ document.type_document }}</td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 font-bold">Date de référence</td>
+                <td class="border px-4 py-2 whitespace-normal">{{ document.date_reference }}</td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 font-bold">Commentaire</td>
+                <td class="border px-4 py-2 whitespace-normal">{{ document.commentaire }}</td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 font-bold">Age du document</td>
+                <td class="border px-4 py-2 whitespace-normal">
+                    {{ document.age_document }} 
+                    {% if document.age_document > 1 %} ans {% else %} an {% endif %}
+                    {% if not document.type_document.permanente %}
+                        sur {{ document.type_document.duree_conservation }}
+                    {% endif %}
+                    {% if document.type_document.permanente %}
+                        <b>(à conserver en permanence)</b>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 font-bold">
+                    {% if document.est_conserve %}
+                        <p class="text-green-600">Le document est encore dans la période de conservation.</p>
+                    {% else %}
+                        <p class="text-red-600">Le document dépasse la période de conservation, vous pouvez le détruire.</p>
+                    {% endif %}
+                </td>
+                <td class="border px-4 py-2 whitespace-normal">{{ document.type_document.precision }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

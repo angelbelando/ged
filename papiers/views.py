@@ -11,10 +11,6 @@ from .models import Document
 import openpyxl
 from openpyxl.utils import get_column_letter
 
-
-def hello(request):
-    return render(request, 'Hello.html')
-
 def generate_thumbnail(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     doc = fitz.open(document.Document_pdf.path)
@@ -58,7 +54,7 @@ def export_to_excel(request):
 class DocumentListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Document
     context_object_name = "documents"
-    template_name = 'liste_documents.html'
+    template_name = 'documents/liste_documents.html'
     permission_required = 'documents.view_Document'
     paginate_by = 10
     
@@ -73,4 +69,4 @@ class DocumentListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     
 class DocumenttDetailView(DetailView):
     model = Document
-    template_name = 'detail_document.html'
+    template_name = 'documents/detail_document.html'

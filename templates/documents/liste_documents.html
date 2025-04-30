@@ -1,0 +1,95 @@
+<!-- liste_documents.html -->
+{% extends 'base.html' %}
+{% block title %}Liste des documents{% endblock %}
+{% load custom_filters %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto p-3 bg-blue-400 rounded-2xl">
+    <div class="flex justify-center">
+        <h1 class="text-4xl font-bold text-center text-white shadow-lg">Liste des documents archivés</h1>
+    </div>
+</div>
+
+<div class="container mx-auto p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+            <a href="{% url 'documents:export_to_excel' %}" 
+            class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition">
+            Exporter <i class="fas fa-file-excel"></i></a>
+        </div>
+       
+        <div class="flex justify-end">
+            <form method="GET" action="" class="flex items-center space-x-2 w-full sm:w-auto">
+                <input class="w-full sm:w-auto border border-gray-300 rounded-xl px-4 py-2 shadow" name="q" type="text" placeholder="Recherche" value="{{ request.GET.q }}">
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-2xl">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<main>
+    <div class="container mx-auto px-4">
+        <div class="container mx-auto  shadow-md rounded-lg overflow-hidden mt-6">
+            <table class="min-w-full">
+                <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
+                    <tr>
+                        <th class="px-4 py-2 rounded-tl-xl">Document</th>
+                        <th class="px-4 py-2 border">Rubrique</th>
+                        <th class="px-4 py-2 border">Type de document</th>
+                        <th class="px-4 py-2 border">Date de référence</th>
+                        <th class="px-4 py-2 border">Document</th>
+                        <th class="px-4 py-2 border">Commentaire</th>
+                        <th class="px-4 py-2 rounded-tr-xl">Conservation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for document in documents %}
+                    <tr>
+                        <td class="px-4 py-2 border text-blue-500 underline">
+                            <a href="{% url 'documents:detail_document' document.id %}">{{ document.document }}</a>
+                        </td>
+                        <td class="px-4 py-2 border">{{ document.rubrique }}</td>
+                        <td class="px-4 py-2 border">{{ document.type_document }}</td>
+                        <td class="px-4 py-2 border">{{ document.date_reference }}</td>
+                        <td class="px-4 py-2 border">
+                            {% if document.url %}
+                                <a href="{{ document.url }}">
+                                    <img src="{% static 'img/onedrive.jpg' %}" alt="OneDrive" class="w-16 max-w-sm object-cover rounded-xl">
+                                </a>
+                            {% else %}
+                                <a href="{{ document.Document_pdf.url }}">
+                                    <img src="{% url 'documents:generate_thumbnail' document.id %}" alt="Miniature du PDF" class="w-16 max-w-sm object-cover rounded-xl">
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2 border">{{ document.commentaire }}</td>
+                        <td class="px-4 py-2 border text-green-600">{{ document.est_conserve|yesno:"Dans période,Hors période" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+{% if is_paginated %}
+<nav>
+    <div class="flex justify-center space-x-2">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" class="px-3 py-1 rounded-l-lg bg-gray-200 hover:bg-gray-300">&laquo;</a>
+        {% endif %}
+        <div class="px-3 py-2 bg-blue-500 text-white">
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </div>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" class="px-3 py-1 rounded-r-lg bg-gray-200 hover:bg-gray-300">&raquo;</a>
+        {% endif %}
+    </div>
+</nav>
+{% endif %}
+
+{% endblock %}
+

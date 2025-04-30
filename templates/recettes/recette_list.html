@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}Mes Recettes{% endblock %}
+{% load custom_filters %}
+{% block content %}
+<div class="container mx-auto p-6 bg-blue-600 rounded-2xl shadow-lg">
+  <div class="text-center">
+      <h1 class="text-4xl font-extrabold text-white">Mes Recettes de Cuisine</h1>
+  </div>
+</div>
+
+<div class="w-full mx-auto text-center mt-6">
+    <h2 class="mb-6 text-4xl font-bold text-gray-900">
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-500">
+        Les meilleures
+      </span>
+    </h2>
+</div>
+
+<!-- Barre de recherche -->
+<div class="flex justify-end mb-6">
+  <form method="GET" action="" class="flex items-center space-x-2">
+      <input class="border border-gray-300 rounded-xl px-3 py-2 shadow-md w-full md:w-auto focus:ring focus:ring-blue-300" 
+             name="q" type="text" placeholder="Recherche..." value="{{ request.GET.q }}">
+      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-xl shadow-md hover:bg-blue-700 transition">
+          <i class="fas fa-search"></i>
+      </button>
+  </form>
+</div>
+
+<!-- Table des recettes -->
+<div class="container mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+  <table class="w-full text-left">
+    <thead class="bg-blue-600 text-white text-sm uppercase tracking-wider">
+      <tr>
+        <th class="px-6 py-4">Titre</th>
+        <th class="px-6 py-4">Catégorie</th>
+        <th class="px-6 py-4 text-center">Descriptif</th>
+        <th class="px-6 py-4 text-center">Temps</th>
+        <th class="px-6 py-4 text-center">Note</th>
+        <th class="px-6 py-4 text-center">Image</th>
+        <th class="px-6 py-4 text-center">Détails</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-300">
+      {% for recette in recettes %}
+      <tr class="hover:bg-gray-100 transition">
+        <td class="px-6 py-4">{{ recette.titre }}</td>
+        <td class="px-6 py-4">{{ recette.categorie.nom }}</td>
+        <td class="px-6 py-4 text-center">{{ recette.description }}</td>
+        <td class="px-6 py-4 text-center">{{ recette.temps_preparation }} min</td>
+        <td class="px-6 py-4 text-center">
+          <div class="flex justify-center text-yellow-400">
+            {% for i in "12345" %}
+              {% if recette.note >= forloop.counter %}
+                <span class="text-2xl">★</span>
+              {% else %}
+                <span class="text-2xl text-gray-300">★</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </td>
+        <td class="px-6 py-4 text-center">
+          {% if recette.image %}
+            <img src="{{ recette.image.url }}" alt="Recette" class="w-32 h-auto rounded-lg shadow-md mx-auto">
+          {% else %}
+            <span class="text-gray-400 italic">Pas d'image</span>
+          {% endif %}
+        </td>
+        <td class="px-6 py-4 text-center">
+          <a href="{% url 'recettes:detail' recette.id %}" 
+             class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+            Voir
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7" class="px-6 py-4 text-center text-gray-500 italic">
+          Aucune recette disponible.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination responsive -->
+{% if is_paginated %}
+<nav class="mt-4 flex justify-center">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" 
+           class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-lg">&laquo;</a>
+    {% endif %}
+    
+    <div class="px-3 py-2 bg-blue-500 text-white">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </div>
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" 
+           class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-lg">&raquo;</a>
+    {% endif %}
+</nav>
+{% endif %}
+
+{% endblock %}

@@ -17,23 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from recettes import views
-from django.contrib.auth import views as auth_views
-from recettes.views import signup_view, logout_view
 
 app_name = 'recettes'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('manage/', views.manage, name='manage'),
-    path('add_category/', views.add_category, name='add_category'),
-    path('recette/<int:pk>', views.details, name='details'),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('signup/', signup_view, name='signup'),
-    path('accounts/profile/', views.profile, name='profile'),
-    path('toggle_favoris/<int:pk>', views.toggle_favoris, name='toggle_favoris'),
-    path('favoris/', views.fav_view, name='favoris'),
-    path('recette/<int:pk>/modifier/', views.modifier_recette, name='modifier_recette'),
-    path('recette/<int:recette_id>/note/', views.ajouter_note, name='ajouter_note'),
-    path('tendances/', views.recettes_tendances, name='recettes_tendances'),
+    path('recettes', views.RecetteListView.as_view(), name='recettes'),
+    path('recettes/<int:pk>/', views.RecetteDetailView.as_view(), name='detail'),
 ]

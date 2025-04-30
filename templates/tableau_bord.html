@@ -5,26 +5,28 @@
 {% load static %}
 {% block content %}
 
-
-<div class="container mx-full p-3 bg-blue-400 rounded-2xl">
+<div class="container mx-auto p-3 bg-blue-400 rounded-2xl">
     <div class="flex justify-center">
-        <h1 class="text-4xl font-bold text-center text-white shadow-3xl">Tableau de bord</h1>
+        <h1 class="text-4xl font-bold text-center text-white shadow-lg">Tableau de bord</h1>
     </div>
 </div>
 
-
-<div class="container mx-auto px-4 mt-2">
+<div class="container mx-auto px-4 mt-4">
     <div class="flex flex-wrap">
-        <div class="w-7/12">
-            <h2 class="text-center text-lg font-semibold">Répartition contrat assurance</h2>
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-gray-100 border border-gray-300 mt-2">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="px-4 py-2 border rounded-tl-xl">Rubrique Assurance</th>
+        <!-- Tableau -->
+        <div class="w-full md:w-7/12">
+            <h2 class="text-center text-lg font-semibold mb-3 leading-none tracking-tight text-gray-900 md:text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500">
+                Répartition contrat assurance
+            </h2>
+
+            <div class="container mx-auto  shadow-md rounded-lg overflow-hidden mt-4">
+                <table class="min-w-full">
+                    <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
+                        <tr>
+                            <th class="px-4 py-2 border">Rubrique Assurance</th>
                             <th class="px-4 py-2 border">Couverture Assurance</th>
                             <th class="px-4 py-2 border">Montant consommé</th>
-                            <th class="px-4 py-2 border rounded-tr-xl">Montant restant</th>
+                            <th class="px-4 py-2 border">Montant restant</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,59 +44,59 @@
                 </table>
             </div>
         </div>
-   
-        <div class="w-5/12 flex justify-center mt-2">
-            <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres" class="w-192 h-auto rounded-2xl ml-8">
+
+        <!-- Graphique -->
+        <div class="w-full md:w-5/12 flex justify-center mt-4 md:mt-0">
+            <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres" class="w-full md:w-96 h-auto rounded-2xl">
         </div>
     </div>
 </div>
 
 <div class="container mx-auto px-4 mt-12">
     <div class="flex flex-wrap">
-  
-    <div class="overflow-x-auto ml-60 ">
-        <h2 class="text-center text-lg font-semibold">Répartition par pièce de l'appartement</h2>
-        <table class="min-w-full bg-gray-100 border border-gray-300 mt-2">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="px-4 py-2 border rounded-tl-xl">Pièce</th>
-                    <th class="px-4 py-2 border rounded-tr-xl">Total pièce</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for piece in pieces %}
-                <tr>
-                    <td class="px-4 py-2 border">{{ piece.piece }}</td>
-                    <td class="px-4 py-2 border text-right">{{ piece.total_montant|format_currency }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <!-- Répartition pièce -->
+        <div class="overflow-x-auto w-full md:w-6/12 ml-0 md:ml-60">
+            <h2 class="text-center text-lg font-semibold">Répartition par pièce de l'appartement</h2>        
+                <table class="min-w-full container mx-auto  shadow-md rounded-lg overflow-hidden mt-4">
+                    <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
+                    <tr>
+                        <th class="px-4 py-2 border">Pièce</th>
+                        <th class="px-4 py-2 border">Total pièce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for piece in pieces %}
+                    <tr>
+                        <td class="px-4 py-2 border">{{ piece.piece }}</td>
+                        <td class="px-4 py-2 border text-right">{{ piece.total_montant|format_currency }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Répartition catégorie -->
+        <div class="overflow-x-auto w-full md:w-6/12 ml-0 md:ml-60 mt-4 md:mt-0">
+            <h2 class="text-center text-lg font-semibold">Répartition par Catégorie</h2>
+            <table class="min-w-full container mx-auto  shadow-md rounded-lg overflow-hidden mt-4">
+                <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
+                    <tr>
+                        <th class="px-4 py-2 border">Catégorie</th>
+                        <th class="px-4 py-2 border">Total Catégorie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for categorie in categories %}
+                    <tr>
+                        <td class="px-4 py-2 border">{{ categorie.categorie__name }}</td>
+                        <td class="px-4 py-2 border text-right">{{ categorie.total_montant|format_currency }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-
-
-    <div class="overflow-x-auto ml-60 ">
-       
-        <h2 class="text-center text-lg font-semibold">Répartition par Catégorie</h2>
-        <table class="min-w-full bg-gray-100 border border-gray-300 mt-2">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="px-4 py-2 border rounded-tl-xl">Catégorie</th>
-                    <th class="px-4 py-2 border rounded-tr-xl">Total Catégorie</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for categorie in categories %}
-                <tr>
-                    <td class="px-4 py-2 border">{{ categorie.categorie__name }}</td>
-                    <td class="px-4 py-2 border text-right">{{ categorie.total_montant|format_currency }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    
-</div>
-</div>
 </div>
 
 {% endblock %}
+
