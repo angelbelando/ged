@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Détail objet{% endblock %}
 {% load custom_filters %}
+{% load static %}
 {% block content %}
 <section class="bg-gray-100 text-gray-800">
 
@@ -63,11 +64,11 @@
           <div class="bg-gray-50 p-4 rounded-md shadow-sm text-center">
             <form method="POST" action="">
               {% csrf_token %}
-              <label for="nombre_couverts" class="block text-2xl font-bold text-blue-600 mb-2">Nombre de couverts :</label>
+              <label for="nombre_couverts" class="block text-2xl font-bold text-blue-600 mb-2">Nombre Personnes:</label>
               <input type="number" id="nombre_couverts" name="nombre_couverts" value="{{ nombre_couverts }}" min="1" required>
               <button type="submit" 
-                      class="bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition mt-4">
-                Recalculer
+                      class="bg-green-600 text-white px-0 py-0 rounded-md shadow hover:bg-green-700 transition mt-4">
+                <image src="{% static 'img/calcul2.jpg' %}" alt="Recalculer" class="inline-block w-12 h-auto ml-0">
               </button>
       
             </form>
@@ -85,9 +86,9 @@
           <section class="bg-gray-50 p-2 rounded-md shadow-sm mb-4">
             <ul class="list-disc pl-5 text-gray-700">
               {% for ingredient in calcul_result %}
-                  <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }} - {{ ingredient.description }}</li>
+                  <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }} de {{ ingredient.description }}</li>
               {% empty %}
-                  <li>Aucun ajustement pour les ingrédients.</li>
+                  <li>Aucun ingrédients.</li>
               {% endfor %}
           </ul>
           </section>
@@ -96,7 +97,15 @@
       <!-- Étapes -->
       <section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">
         <h2 class="text-2xl font-bold text-blue-600 mb-4">Étapes</h2>
-        <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ recette.etapes }}</p>
+        {% for etape in recette.etapes.splitlines %}
+          {% if not etape %}
+          <p class= "text-xl font-bold text-blue-600 mb-2">{{ etape }}</p>
+          {% else %}
+          <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ etape }}</p>
+          {% endif %}
+        {% empty %}
+        <li class="text-gray-500 italic">Aucune étape de spécifier.</li>
+        {% endfor %}
       </section>
 
       <!-- Conseils -->
