@@ -65,7 +65,7 @@
             <form method="POST" action="">
               {% csrf_token %}
               <label for="nombre_couverts" class="block text-2xl font-bold text-blue-600 mb-2">Nombre Personnes:</label>
-              <input type="number" id="nombre_couverts" name="nombre_couverts" value="{{ nombre_couverts }}" min="1" required>
+              <input type="number" id="nombre_couverts" name="nombre_couverts" value="{{ nombre_couverts }}" min="1" max="999" required>
               <button type="submit" 
                       class="bg-green-600 text-white px-0 py-0 rounded-md shadow hover:bg-green-700 transition mt-4">
                 <image src="{% static 'img/calcul2.jpg' %}" alt="Recalculer" class="inline-block w-12 h-auto ml-0">
@@ -92,21 +92,31 @@
               {% endfor %}
           </ul>
           </section>
-      </section>
-
-      <!-- Étapes -->
-      <section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">
-        <h2 class="text-2xl font-bold text-blue-600 mb-4">Étapes</h2>
-        {% for etape in recette.etapes.splitlines %}
-          {% if not etape %}
-          <p class= "text-xl font-bold text-blue-600 mb-2">{{ etape }}</p>
-          {% else %}
-          <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ etape }}</p>
+          {% if recette.ingredients %}
+          <p>{{ recette.ingredients|safe }}</p>
           {% endif %}
-        {% empty %}
-        <li class="text-gray-500 italic">Aucune étape de spécifier.</li>
-        {% endfor %}
       </section>
+     
+      <!-- Étapes -->
+   <!-- Étapes -->
+<section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">
+  <h2 class="text-2xl font-bold text-blue-600 mb-4">Étapes</h2>
+  {% for etape in recette.etapes.splitlines %}
+    <p class="etape">{{ etape }}</p>
+  {% empty %}
+    <p class="text-gray-500 italic">Aucune étape spécifiée.</p>
+  {% endfor %}
+</section>
+
+<script>
+  document.querySelectorAll('.etape').forEach(el => {
+    let text = el.innerText.trim();
+    if (text.startsWith('-')) {
+      el.innerText = text.substring(1).trim(); // Supprime le '-'
+      el.classList.add('font-bold', 'text-blue-500','text-xl'); // Ajoute du style
+    }
+  });
+</script>
 
       <!-- Conseils -->
       <section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">

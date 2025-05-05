@@ -31,11 +31,28 @@ class Recette(models.Model):
 
 
 
-# Modèle intermédiaire
+UNITES = (
+('g', 'Grammes'),
+('kg', 'Kilogrammes'),  
+('l', 'Litres'),
+('cl', 'Centilitres'),
+('ml', 'Millilitres'),
+('u', 'Unité'),
+('bouteille', 'Bouteille'),
+('cuillère à café', 'Cuillère à café'),
+('cuillère à soupe', 'Cuillère à soupe'),
+('pincée', 'Pincée'),
+('sachet', 'Sachet'),
+('boîte', 'Boîte'),
+('tasse', 'Tasse'), 
+('verre', 'Verre'),
+('barquette', 'Barquette'),
+('bocal', 'Bocal'),
+)
 class RecetteIngredientUnit(models.Model):
     recette = models.ForeignKey(Recette, on_delete=models.CASCADE, related_name='recette_ingredient_units')
     qte = models.DecimalField(decimal_places=2, max_digits=10)
-    unit = models.CharField(max_length=200)
+    unit = models.CharField(choices=UNITES, max_length=200)
     description = models.CharField(max_length=200)
 
     def __str__(self):

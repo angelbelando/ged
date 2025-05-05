@@ -10,7 +10,7 @@
 <div class="container mx-auto px-4 mt-6 bg-image bg-cover bg-center rounded-lg shadow-lg">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-20">
         <!-- Cadre 1 -->
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-blue-50 rounded-lg shadow-lg overflow-hidden">
             <img  src="{% static 'img/objets.png' %}" alt="Objets" class="w-full h-auto object-cover">
             <div class="p-4 text-center">
                 <a href="{% url 'objets:liste_objets' %}" class="text-lg font-bold text-blue-500 hover:underline">Mobilier et objets de valeur présents dans l'appartement</a>
@@ -18,15 +18,15 @@
         </div>
 
         <!-- Cadre 2 -->
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-blue-50 rounded-lg shadow-lg overflow-hidden">
             <img src="{% static 'img/documents.png' %}" alt="Documents" class="w-full h-auto  object-cover">
             <div class="p-4 text-center">
-                <a href="{% url 'documents:liste_documents' %}" class="text-lg font-bold text-blue-500 hover:underline">Documents archivés</a>
+                <a href="{% url 'documents:liste_documents' %}" class="text-lg font-bold text-blue-500 hover:underline">Documents à conserver</a>
             </div>
         </div>
 
         <!-- Cadre 3 -->
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-blue-50 rounded-lg shadow-lg overflow-hidden">
             <img src="{% static 'img/photos.png' %}" alt="Galeries Photos" class="w-full h-auto object-cover">
             <div class="p-4 text-center">
                 <a href="{% url 'photos:gallery_list' %}" class="text-lg font-bold text-blue-500 hover:underline">Galeries de photos</a>
@@ -34,7 +34,7 @@
         </div>
 
         <!-- Cadre 4 -->
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-blue-50 rounded-lg shadow-lg overflow-hidden">
             <img src="{% static 'img/recettes.png' %}" alt="Recettes" class="w-full h-auto object-cover">
             <div class="p-4 text-center">
                 <a href="{% url 'recettes:recettes' %}" class="text-lg font-bold text-blue-500 hover:underline">Recettes de cuisine</a>

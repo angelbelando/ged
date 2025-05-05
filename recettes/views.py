@@ -2,14 +2,16 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import Recette, Categorie, RecetteIngredientUnit
 from django.db.models import Q
 
 # Liste des recettes
-class RecetteListView(ListView):
+class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Recette
     template_name = 'recettes/recette_list.html'
     context_object_name = 'recettes'
+    permission_required = 'recettes.view_recettes'
     paginate_by = 10
     
     def get_queryset(self):

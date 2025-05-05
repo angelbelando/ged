@@ -16,5 +16,5 @@ class RecetteAdmin(admin.ModelAdmin):
     list_display = ('titre', 'categorie', 'temps_preparation', 'temps_cuisson', 'note')
     search_fields = ('titre', 'categorie__nom')
     fields = ('titre', 'description', 'categorie', 'temps_preparation', 'temps_cuisson', 'nombre_couverts',
-              'ingredients', 'etapes', 'conseils', 'image', 'video_url_youtube', 'note', 'auteur')
+              'etapes', 'conseils', 'image', 'video_url_youtube', 'note', 'auteur', 'ingredients')
     inlines = [RecetteIngredientUnitInline,]
