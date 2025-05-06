@@ -1,41 +1,40 @@
 {% extends 'base.html' %}
 {% block title %}Répartition Contrat Assurance{% endblock %}
-
 {% load custom_filters %}
 {% load static %}
-{% block content %}
 
-<div class="container mx-auto p-3 bg-blue-400 rounded-2xl">
-    <div class="flex justify-center">
-        <h1 class="text-4xl font-bold text-center text-white shadow-lg">Tableau de bord</h1>
-    </div>
+{% block content %}
+<!-- En-tête modernisé -->
+<div class="container mx-auto px-4 py-6 bg-blue-600 rounded-lg shadow-md">
+    <h1 class="text-4xl font-bold text-white text-center">📊 Tableau de bord</h1>
 </div>
 
-<div class="container mx-auto px-4 mt-4">
+<!-- Section principale -->
+<div class="container mx-auto px-4 mt-6">
     <div class="flex flex-wrap">
-        <!-- Tableau -->
-        <div class="w-full md:w-7/12">
-            <h2 class="text-center text-lg font-semibold mb-3 leading-none tracking-tight text-gray-900 md:text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500">
+        <!-- Tableau principal -->
+        <div class="w-full md:w-7/12 overflow-x-auto">
+            <h2 class="text-center text-xl font-semibold mb-4 text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500">
                 Répartition contrat assurance
             </h2>
-
-            <div class="container mx-auto  shadow-md rounded-lg overflow-hidden mt-4">
-                <table class="min-w-full">
-                    <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
+        
+            <div class="bg-white shadow-md rounded-lg overflow-x-auto p-4">
+                <table class="w-full text-sm border-collapse">
+                    <thead class="bg-blue-600 text-white uppercase">
                         <tr>
-                            <th class="px-4 py-2 border">Rubrique Assurance</th>
-                            <th class="px-4 py-2 border">Couverture Assurance</th>
-                            <th class="px-4 py-2 border">Montant consommé</th>
-                            <th class="px-4 py-2 border">Montant restant</th>
+                            <th class="p-3">Rubrique</th>
+                            <th class="p-3">Couverture</th>
+                            <th class="p-3">Montant consommé</th>
+                            <th class="p-3">Montant restant</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for rubrique in rubriques %}
-                        <tr>
-                            <td class="px-4 py-2 border">{{ rubrique.name }}</td>
-                            <td class="px-4 py-2 border">{{ rubrique.montant_assu|format_currency }}</td>
-                            <td class="px-4 py-2 border">{{ rubrique.total_montant|format_currency }}</td>
-                            <td class="px-4 py-2 border {% if rubrique.montant_assu|subtract:rubrique.total_montant < 0 %}text-red-600{% else %}text-green-600{% endif %}">
+                        <tr class="border-b hover:bg-gray-100 transition">
+                            <td class="p-3 whitespace-nowrap">{{ rubrique.name }}</td>
+                            <td class="p-3 whitespace-nowrap">{{ rubrique.montant_assu|format_currency }}</td>
+                            <td class="p-3 whitespace-nowrap">{{ rubrique.total_montant|format_currency }}</td>
+                            <td class="p-3 whitespace-nowrap {% if rubrique.montant_assu|subtract:rubrique.total_montant < 0 %}text-red-600{% else %}text-green-600{% endif %}">
                                 <b>{{ rubrique.montant_assu|subtract:rubrique.total_montant|format_currency }}</b>
                             </td>
                         </tr>
@@ -44,60 +43,65 @@
                 </table>
             </div>
         </div>
+        
 
         <!-- Graphique -->
-        <div class="w-full md:w-5/12 flex justify-center mt-4 md:mt-0">
-            <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres" class="w-full md:w-96 h-auto rounded-2xl">
+        <div class="w-full md:w-5/12 flex justify-center mt-6 md:mt-0">
+            <img src="data:image/png;base64,{{ barchart }}" alt="Graphique à Barres" class="w-full md:w-96 h-auto rounded-2xl shadow-md">
         </div>
     </div>
 </div>
 
+<!-- Répartition par pièce -->
 <div class="container mx-auto px-4 mt-12">
-    <div class="flex flex-wrap">
-        <!-- Répartition pièce -->
-        <div class="overflow-x-auto w-full md:w-6/12 ml-0 md:ml-60">
-            <h2 class="text-center text-lg font-semibold mb-3 leading-none tracking-tight text-gray-900 md:text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500">Répartition par pièce de l'appartement</h2>        
-                <table class="min-w-full container mx-auto  shadow-md rounded-lg overflow-hidden mt-4">
-                    <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
-                    <tr>
-                        <th class="px-4 py-2 border">Pièce</th>
-                        <th class="px-4 py-2 border">Total pièce</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for piece in pieces %}
-                    <tr>
-                        <td class="px-4 py-2 border">{{ piece.piece }}</td>
-                        <td class="px-4 py-2 border text-right">{{ piece.total_montant|format_currency }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <h2 class="text-center text-xl font-semibold mb-4 text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500">
+        Répartition par pièce de l'appartement
+    </h2>
 
-        <!-- Répartition catégorie -->
-        <div class="overflow-x-auto w-full md:w-6/12 ml-0 md:ml-60 mt-4 md:mt-0">
-            <h2 class="text-center text-lg font-semibold mb-3 leading-none tracking-tight text-gray-900 md:text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500"><h2 class="text-center text-lg font-semibold mb-3 leading-none tracking-tight text-gray-900 md:text-xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500">
-                Répartition par Catégorie</h2>
-            <table class="min-w-full container mx-auto  shadow-md rounded-lg overflow-hidden mt-4">
-                <thead class="bg-blue-500 text-white text-sm uppercase tracking-wider">
-                    <tr>
-                        <th class="px-4 py-2 border">Catégorie</th>
-                        <th class="px-4 py-2 border">Total Catégorie</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for categorie in categories %}
-                    <tr>
-                        <td class="px-4 py-2 border">{{ categorie.categorie__name }}</td>
-                        <td class="px-4 py-2 border text-right">{{ categorie.total_montant|format_currency }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <div class="bg-white shadow-md rounded-lg overflow-x-auto p-4">
+        <table class="w-full text-sm border-collapse">
+            <thead class="bg-blue-600 text-white uppercase">
+                <tr>
+                    <th class="p-3">Pièce</th>
+                    <th class="p-3">Total pièce</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for piece in pieces %}
+                <tr class="border-b hover:bg-gray-100 transition">
+                    <td class="p-3">{{ piece.piece }}</td>
+                    <td class="p-3 text-right">{{ piece.total_montant|format_currency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Répartition par catégorie -->
+<div class="container mx-auto px-4 mt-12">
+    <h2 class="text-center text-xl font-semibold mb-4 text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-500">
+        Répartition par catégorie
+    </h2>
+
+    <div class="bg-white shadow-md rounded-lg overflow-x-auto p-4">
+        <table class="w-full text-sm border-collapse">
+            <thead class="bg-blue-600 text-white uppercase">
+                <tr>
+                    <th class="p-3">Catégorie</th>
+                    <th class="p-3">Total catégorie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categorie in categories %}
+                <tr class="border-b hover:bg-gray-100 transition">
+                    <td class="p-3">{{ categorie.categorie__name }}</td>
+                    <td class="p-3 text-right">{{ categorie.total_montant|format_currency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
 {% endblock %}
-

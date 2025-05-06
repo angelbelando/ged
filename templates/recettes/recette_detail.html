@@ -64,7 +64,7 @@
           <div class="bg-gray-50 p-4 rounded-md shadow-sm text-center">
             <form method="POST" action="">
               {% csrf_token %}
-              <label for="nombre_couverts" class="block text-2xl font-bold text-blue-600 mb-2">Nombre Personnes:</label>
+              <label for="nombre_couverts" class="block text-2xl font-bold text-blue-600 mb-2">Nombre</label>
               <input type="number" id="nombre_couverts" name="nombre_couverts" value="{{ nombre_couverts }}" min="1" max="999" required>
               <button type="submit" 
                       class="bg-green-600 text-white px-0 py-0 rounded-md shadow hover:bg-green-700 transition mt-4">
