@@ -4,13 +4,14 @@
 
 {% block content %}
 <!-- En-tête modernisé -->
-<div class="container mx-auto px-4 py-6 bg-blue-600 rounded-lg shadow-md">
+{% comment %} <div class="max-w-screen-lg mx-auto px-4 py-6 bg-blue-600 rounded-lg shadow-md"> {% endcomment %}
+    <div class="container mx-auto px-4 py-6 bg-blue-600 rounded-lg shadow-md">
     <h1 class="text-4xl font-bold text-white text-center">🍽️ Mes Recettes de Cuisine</h1>
 </div>
 
 <!-- Titre avec effet -->
 <div class="w-full mx-auto text-center mt-6">
-    <h2 class="mb-6 text-4xl font-bold text-gray-900">
+    <h2 class="mb-6 text-3xl md:text-4xl font-bold text-gray-900">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-500">
             Les meilleures créations gourmandes
         </span>
@@ -18,8 +19,8 @@
 </div>
 
 <!-- Barre de recherche -->
-<div class="flex justify-end mb-6">
-    <form method="GET" action="" class="flex items-center space-x-2">
+<div class="flex flex-col md:flex-row justify-end mb-6">
+    <form method="GET" action="" class="flex flex-wrap items-center space-x-2">
         <input class="border border-gray-300 rounded-xl px-4 py-2 shadow-md w-full md:w-auto focus:ring focus:ring-blue-300" name="q" type="text" placeholder="🔍 Rechercher..." value="{{ request.GET.q }}">
         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
             <i class="fas fa-search"></i>
@@ -29,47 +30,49 @@
 
 <!-- Table des recettes -->
 <div class="container mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
-    <table class="w-full text-left">
-        <thead class="bg-blue-600 text-white uppercase">
-            <tr>
-                <th class="p-3 rounded-tl-lg">Titre</th>
-                <th class="p-3">Catégorie</th>
-                <th class="p-3 text-center">Descriptif</th>
-                <th class="p-3 text-center">Temps</th>
-                <th class="p-3 text-center">Note</th>
-                <th class="p-3 text-center">Image</th>
-                <th class="p-3 rounded-tr-lg text-center">Détails</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for recette in recettes %}
-            <tr class="border-b hover:bg-gray-100 transition">
-                <td class="p-3">{{ recette.titre }}</td>
-                <td class="p-3">{{ recette.categorie.nom }}</td>
-                <td class="p-3 text-center">{{ recette.description }}</td>
-                <td class="p-3 text-center">{{ recette.temps_preparation }} min</td>
-                <td class="p-3 text-center text-yellow-400 text-2xl">
-                  {% for _ in ""|rjust:recette.note %}
-                      ★
-                  {% endfor %}
-              </td>
-              
-                <td class="p-3 text-center">
-                    {% if recette.image %}
-                        <img src="{{ recette.image.url }}" alt="Recette" class="w-16 rounded-lg shadow-md mx-auto">
-                    {% else %}
-                        <span class="text-gray-400 italic">Pas d'image</span>
-                    {% endif %}
-                </td>
-                <td class="p-3 text-center">
-                    <a href="{% url 'recettes:detail' recette.id %}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-                        Voir 👀
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-blue-600 text-white uppercase">
+                <tr>
+                    <th class="p-3 rounded-tl-lg">Titre</th>
+                    <th class="p-3">Catégorie</th>
+                    <th class="p-3 text-center hidden md:table-cell">Descriptif</th>
+                    <th class="p-3 text-center">Temps</th>
+                    <th class="p-3 text-center">Note</th>
+                    <th class="p-3 text-center hidden md:table-cell">Image</th>
+                    <th class="p-3 rounded-tr-lg text-center">Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recette in recettes %}
+                <tr class="border-b hover:bg-gray-100 transition">
+                    <td class="p-3">{{ recette.titre }}</td>
+                    <td class="p-3">{{ recette.categorie.nom }}</td>
+                    <td class="p-3 text-center hidden md:table-cell">{{ recette.description }}</td>
+                    <td class="p-3 text-center">{{ recette.temps_preparation }} min</td>
+                    <td class="p-3 text-center text-yellow-400 text-xl">
+                      {% for _ in ""|rjust:recette.note %}
+                          ★
+                      {% endfor %}
+                  </td>
+                    <td class="p-3 text-center hidden md:table-cell">
+                        {% if recette.image %}
+                            <img src="{{ recette.image.url }}" alt="Recette" class="w-16 rounded-lg shadow-md mx-auto">
+                        {% else %}
+                            <span class="text-gray-400 italic">Pas d'image</span>
+                        {% endif %}
+                    </td>
+                    <td class="p-3 text-center">
+                        <a href="{% url 'recettes:detail' recette.id %}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+                            Voir 👀
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}
+
