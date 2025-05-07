@@ -19,7 +19,7 @@ class Recette(models.Model):
     nombre_couverts = models.IntegerField()
     ingredients = models.TextField(blank=True)
     etapes = models.TextField()
-    conseils = models.TextField(default=None)
+    conseils = models.TextField(default=None, blank=True, null=True)
     image = models.ImageField(upload_to=DIR_PHOTOS, null=True, blank=True)
     video_url_youtube = models.URLField(max_length=200, unique=True, blank=True)
     note = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])
