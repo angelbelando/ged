@@ -48,7 +48,7 @@
                 <tr class="border-b hover:bg-gray-100 transition">
                     <td class="p-3">{{ recette.titre }}</td>
                     <td class="p-3">{{ recette.categorie.nom }}</td>
-                    <td class="p-3 text-center hidden md:table-cell">{{ recette.description }}</td>
+                    <td class="p-3 text-left hidden md:table-cell">{{ recette.description }}</td>
                     <td class="p-3 text-center">{{ recette.temps_preparation }} min</td>
                     <td class="p-3 text-center text-yellow-400 text-xl">
                       {% for _ in ""|rjust:recette.note %}
@@ -57,7 +57,7 @@
                   </td>
                     <td class="p-3 text-center hidden md:table-cell">
                         {% if recette.image %}
-                            <img src="{{ recette.image.url }}" alt="Recette" class="w-16 rounded-lg shadow-md mx-auto">
+                            <img src="{{ recette.image.url }}" alt="Recette" class="w-48 rounded-lg shadow-md mx-auto">
                         {% else %}
                             <span class="text-gray-400 italic">Pas d'image</span>
                         {% endif %}
