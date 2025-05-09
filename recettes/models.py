@@ -21,7 +21,7 @@ class Recette(models.Model):
     etapes = models.TextField()
     conseils = models.TextField(default=None, blank=True, null=True)
     image = models.ImageField(upload_to=DIR_PHOTOS, null=True, blank=True)
-    video_url_youtube = models.URLField(max_length=200, unique=True, blank=True)
+    video_url_youtube = models.URLField(max_length=200, unique=False, blank=True, null=True)
     note = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])
     auteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recettes', default=None, null=True)
     date_publication = models.DateTimeField(auto_now_add=True)
@@ -39,6 +39,7 @@ UNITES = (
 ('ml', 'Millilitres'),
 ('dl', 'Décilitres'),
 ('feuille/s', 'Feuille'),
+('branche/s', 'Branche'),
 ('tranche/s', 'Tranche'),
 ('citron/s', 'Citron'),
 ('gousse/s', 'Gousse'),
@@ -53,6 +54,18 @@ UNITES = (
 ('cuillère/s à café', 'Cuillère à café'),
 ('cuillère/s à soupe', 'Cuillère à soupe'),
 ('pincée/s', 'Pincée'),
+('tour/s de moulin', 'Tour de moulin'),
+('poignée/s', 'Poignée'),
+('sachet/s', 'Sachet'),
+('sachets/s', 'Sachets'),
+('barre/s', 'Barre'),
+('barres/s', 'Barres'),
+('pot/s', 'Pot'),
+('pots/s', 'Pots'),
+('boîte/s de conserve', 'Boîte de conserve'),
+('boîtes/s de conserve', 'Boîtes de conserve'),
+('brique/s', 'Brique'),
+('briques/s', 'Briques'),
 ('sachet', 'Sachet'),
 ('boîte/s', 'Boîte'),
 ('tasse/s', 'Tasse'), 
