@@ -63,7 +63,6 @@ UNITES = (
 ('pot/s', 'Pot'),
 ('pots/s', 'Pots'),
 ('boîte/s de conserve', 'Boîte de conserve'),
-('boîtes/s de conserve', 'Boîtes de conserve'),
 ('brique/s', 'Brique'),
 ('briques/s', 'Briques'),
 ('sachet', 'Sachet'),
