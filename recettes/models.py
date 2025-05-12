@@ -72,7 +72,7 @@ UNITES = (
 ('brique/s', 'Brique'),
 ('briques/s', 'Briques'),
 ('sachet', 'Sachet'),
-('boîte/s', 'Boîte')
+('boîte/s', 'Boîte'),
 ('paquet/s', 'Paquet'),
 ('tasse/s', 'Tasse'), 
 ('verre/s', 'Verre'),
