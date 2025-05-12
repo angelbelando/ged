@@ -78,6 +78,7 @@ UNITES = (
 ('verre/s', 'Verre'),
 ('barquette/s', 'Barquette'),
 ('bocal/s', 'Bocal'),
+('brin/s', 'Brin'),
 )
 class RecetteIngredientUnit(models.Model):
     recette = models.ForeignKey(Recette, on_delete=models.CASCADE, related_name='recette_ingredient_units')
