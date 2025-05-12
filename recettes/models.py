@@ -50,6 +50,8 @@ UNITES = (
 ('carotte/s', 'Carotte'),
 ('tomate/s', 'Tomate'),
 ('oignon/s', 'Oignon'),
+('jaune/s', 'Jaune'),
+('blanc/s', 'Blanc'),
 ('ail/s', 'Ail'),
 ('bouteille/s', 'Bouteille'),
 ('cuillère/s à café', 'Cuillère à café'),
