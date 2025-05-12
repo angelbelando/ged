@@ -32,6 +32,7 @@ class Recette(models.Model):
 
 
 UNITES = (
+('','Vide'),
 ('g', 'Grammes'),
 ('kg', 'Kilogrammes'),  
 ('l', 'Litres'),
@@ -63,6 +64,7 @@ UNITES = (
 ('pot/s', 'Pot'),
 ('pots/s', 'Pots'),
 ('boîte/s de conserve', 'Boîte de conserve'),
+
 ('brique/s', 'Brique'),
 ('briques/s', 'Briques'),
 ('sachet', 'Sachet'),
@@ -74,9 +76,9 @@ UNITES = (
 )
 class RecetteIngredientUnit(models.Model):
     recette = models.ForeignKey(Recette, on_delete=models.CASCADE, related_name='recette_ingredient_units')
-    qte = models.DecimalField(decimal_places=2, max_digits=10)
+    qte = models.DecimalField(decimal_places=2, max_digits=10,null=True, blank=True)
     unit = models.CharField(choices=UNITES, max_length=200)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return f"{self.recette.titre} - {self.description}"

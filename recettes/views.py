@@ -40,7 +40,7 @@ class RecetteDetailView(DetailView):
         # Calcul des ingrédients ajustés
         calcul_result = [
             {
-                "qte_adjusted": round(ingredient_unit.qte * nombre_couverts, 0),
+                "qte_adjusted": round(ingredient_unit.qte * nombre_couverts, 1),
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
             }
@@ -65,7 +65,7 @@ class RecetteDetailView(DetailView):
         
         calcul_result = [
             {
-                "qte_adjusted": round(ingredient_unit.qte * nombre_couverts, 0),
+                "qte_adjusted": round(ingredient_unit.qte * nombre_couverts, 1),
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
             }
