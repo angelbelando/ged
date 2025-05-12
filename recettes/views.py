@@ -44,7 +44,7 @@ class RecetteDetailView(DetailView):
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
             }
-            for ingredient_unit in recette.recette_ingredient_units.all()
+            for ingredient_unit in recette.recette_ingredient_units.all().order_by('id')
         ]
 
         # Ajout au contexte
@@ -69,7 +69,7 @@ class RecetteDetailView(DetailView):
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
             }
-            for ingredient_unit in self.object.recette_ingredient_units.all()
+            for ingredient_unit in self.object.recette_ingredient_units.all().order_by('id')
         ]
         
         context = self.get_context_data()
