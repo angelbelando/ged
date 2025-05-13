@@ -87,8 +87,11 @@
             <ul class="list-disc pl-5 text-gray-700">
               {% for ingredient in calcul_result %}
               {% if ingredient.unit != '--' %}
-              <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }} {{ ingredient.description }}</li>
-                  
+                {% if ingredient.description %}
+                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }} {{ ingredient.description }}</li>
+                {% else %}  
+                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }}</li>
+                {% endif %}
               {% else %}
                   <p class="text-blue-600 text-lg">{{ ingredient.description }}</p>
               {% endif %}
