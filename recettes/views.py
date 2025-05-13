@@ -11,7 +11,7 @@ class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Recette
     template_name = 'recettes/recette_list.html'
     context_object_name = 'recettes'
-    permission_required = 'Recettes.view_recette'
+    permission_required = 'recettes.view_recette'
     permission_denied_message = "Vous n'avez pas la permission de voir cette page."
     def get_queryset(self):
         query = self.request.GET.get('q')
