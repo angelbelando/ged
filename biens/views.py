@@ -131,7 +131,8 @@ class ObjetListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Objet
     context_object_name = "objets"
     template_name = 'objets/liste_objets.html'
-    permission_required = 'biens.view_Objet'
+    permission_required = 'biens.view_objet'
+    permission_denied_message = "Vous n'avez pas la permission de voir cette page."
     paginate_by = 10
     
     def get_queryset(self):

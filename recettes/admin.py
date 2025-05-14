@@ -8,8 +8,9 @@ admin.site.register(Categorie, CategorieAdmin)
 
 class RecetteIngredientUnitInline(admin.TabularInline):
     model = RecetteIngredientUnit  # Utilisez le modèle intermédiaire
-    fields = ['qte', 'unit', 'description']  # Champs à afficher
+    fields = ['qte', 'unit', 'description','ordre']  # Champs à afficher
     extra = 1
+    ordering = ['ordre']  # Tri par ordre croissant de l'ordre
 
 @admin.register(Recette)
 class RecetteAdmin(admin.ModelAdmin):

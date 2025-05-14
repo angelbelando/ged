@@ -55,7 +55,8 @@ class DocumentListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Document
     context_object_name = "documents"
     template_name = 'documents/liste_documents.html'
-    permission_required = 'documents.view_Document'
+    permission_required = 'papiers.view_document'
+    permission_denied_message = "Vous n'avez pas la permission de voir cette page."
     paginate_by = 10
     
     def get_queryset(self):

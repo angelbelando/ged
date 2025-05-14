@@ -10,7 +10,7 @@
     <style>
         @media print {
           /* Cacher les éléments inutiles lors de l'impression */
-          iframe, .bg-blue-600, .text-center, button, nav{
+          iframe, button, nav{
             display: none !important;
           }
       
@@ -23,14 +23,14 @@
       
           /* Styles spécifiques pour les éléments imprimés */
           body {
-            font-size: 12px;
+            font-size: 14px;
             color: #000;
           }
           
           /* Améliorer la lisibilité pour les sections */
           section {
             page-break-inside: avoid;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
           }
         }
       </style>

@@ -53,15 +53,15 @@
         
         <!-- Informations Temps -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-gray-50 p-4 rounded-md shadow-sm text-center">
-            <h3 class="text-lg font-semibold text-blue-600">Temps de Préparation</h3>
+          <div class="bg-gray-50 p-4 rounded-md shadow-sm text-left">
+            <h2 class="text-2xl font-bold text-blue-600">Temps de Préparation</h2>
             <p class="text-gray-700">{{ recette.temps_preparation }} minutes</p>
           </div>
-          <div class="bg-gray-50 p-4 rounded-md shadow-sm text-center">
-            <h3 class="text-lg font-semibold text-blue-600">Temps de Cuisson</h3>
+          <div class="bg-gray-50 p-4 rounded-md shadow-sm text-left">
+            <h2 class="text-2xl font-bold text-blue-600">Temps de Cuisson</h2>
             <p class="text-gray-700">{{ recette.temps_cuisson }} minutes</p>
           </div>
-          <div class="bg-gray-50 p-4 rounded-md shadow-sm text-center">
+          <div class="bg-gray-50 p-4 rounded-md shadow-sm text-left">
             <form method="POST" action="">
               {% csrf_token %}
               <label for="nombre_couverts" class="block text-2xl font-bold text-blue-600 mb-2">Nombre</label>
@@ -73,7 +73,7 @@
       
             </form>
           </div>
-          <div class="bg-gray-50 p-6 rounded-md shadow-sm text-center">
+          <div class="bg-gray-50 p-6 rounded-md shadow-sm text-left">
             <h2 class="text-2xl font-bold text-blue-600 mb-2">Catégorie</h2>
             <p class="text-gray-700">{{ recette.categorie.nom }}</p>
           </div>
@@ -158,10 +158,10 @@
 
       <!-- Bouton Retour -->
       <div class="text-center mt-6 mb-6">
-        <a href="{% url 'recettes:recettes' %}" 
+        <button 
            class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition">
-          Retour à la liste des recettes
-        </a>
+           <a href="{% url 'recettes:recettes' %}">Retour à la liste des recettes</a>
+        </button>
       </div>
 
 

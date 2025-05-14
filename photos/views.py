@@ -12,7 +12,8 @@ class GalleryListView(LoginRequiredMixin, PermissionRequiredMixin,ListView):
     model = Gallery
     template_name = "photos/gallery_list.html"  #
     context_object_name = "galleries"
-    permission_required = 'biens.view_Objet'
+    permission_required = 'photologue.view_gallery'
+    permission_denied_message = "Vous n'avez pas la permission de voir cette page."
 
     def get_queryset(self):
         return Gallery.objects.all()

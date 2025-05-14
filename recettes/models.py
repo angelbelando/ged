@@ -51,7 +51,7 @@ UNITES = (
 ('carotte/s', 'Carotte'),
 ('tomate/s', 'Tomate'),
 ('oignon/s', 'Oignon'),
-('oeuf,s', 'Oeuf'),
+('oeuf/s', 'Oeuf'),
 ('jaune/s', 'Jaune'),
 ('blanc/s', 'Blanc'),
 ('ail/s', 'Ail'),
@@ -88,6 +88,7 @@ class RecetteIngredientUnit(models.Model):
     qte = models.DecimalField(decimal_places=2, max_digits=10,null=True)
     unit = models.CharField(choices=UNITES, max_length=200)
     description = models.CharField(max_length=200, blank=True, null=True)
+    ordre = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
         return f"{self.recette.titre} - {self.description}"
