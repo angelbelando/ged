@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms
 from .models import Recette, Categorie, RecetteIngredientUnit
 
 
@@ -11,7 +12,7 @@ class RecetteIngredientUnitInline(admin.TabularInline):
     fields = ['qte', 'unit', 'description','ordre']  # Champs à afficher
     extra = 1
     ordering = ['ordre']  # Tri par ordre croissant de l'ordre
-
+    
 @admin.register(Recette)
 class RecetteAdmin(admin.ModelAdmin):
     list_display = ('titre', 'categorie', 'temps_preparation', 'temps_cuisson', 'note')
