@@ -41,6 +41,7 @@ UNITES = (
 ('poivre', 'Poivre'),
 ('pièce/s', 'Pièce'),
 ('feuille/s', 'Feuille'),
+('brin/s', 'Brin'),
 ('branche/s', 'Branche'),
 ('tranche/s', 'Tranche'),
 ('citron/s', 'Citron'),
@@ -60,10 +61,12 @@ UNITES = (
 ('cuillère/s à soupe', 'Cuillère à soupe'),
 ('pincée/s', 'Pincée'),
 ('tour/s de moulin', 'Tour de moulin'),
+('filet/s', 'Filet'),
 ('morceau/x', 'Morceau'),
 ('poignée/s', 'Poignée'),
 ('sachet/s', 'Sachet'),
 ('rouleaux/s', 'Rouleaux'),
+('Lamelle/s', 'Lamelle'),
 ('barre/s', 'Barre'),
 ('barre/s de chocolat', 'Barre de chocolat'),
 ('barre/s', 'Barre'),
@@ -80,7 +83,6 @@ UNITES = (
 ('verre/s', 'Verre'),
 ('barquette/s', 'Barquette'),
 ('bocal/s', 'Bocal'),
-('brin/s', 'Brin'),
 ('--', 'Paragraphe'),
 )
 class RecetteIngredientUnit(models.Model):
