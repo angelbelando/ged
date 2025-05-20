@@ -15,7 +15,7 @@ class RecetteIngredientUnitInline(admin.TabularInline):
     
 @admin.register(Recette)
 class RecetteAdmin(admin.ModelAdmin):
-    list_display = ('titre', 'categorie', 'temps_preparation', 'temps_cuisson', 'note')
+    list_display = ('titre', 'categorie', 'temps_preparation', 'temps_cuisson', 'note','nombre_couverts')
     search_fields = ('titre', 'categorie__nom')
     fields = ('titre', 'description', 'categorie', 'temps_preparation', 'temps_cuisson', 'nombre_couverts',
               'etapes', 'conseils', 'image', 'video_url_youtube', 'note', 'auteur', 'ingredients')
