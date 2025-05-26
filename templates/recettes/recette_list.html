@@ -50,7 +50,11 @@
             <tbody>
                 {% for recette in recettes %}
                 <tr class="border-b hover:bg-gray-100 transition">
-                    <td class="p-3">{{ recette.titre }}</td>
+                    <td class="p-3">
+                        <a href="{% url 'recettes:detail' recette.id %}" class="text-blue-600 hover:underline">
+                        {{ recette.titre }}
+                        </a>
+                    </td>
                     <td class="p-3">{{ recette.categorie.nom }}</td>
                     <td class="p-3 text-left hidden md:table-cell">{{ recette.description }}</td>
                     <td class="p-3 text-center">{{ recette.temps_preparation }} min</td>
@@ -60,11 +64,13 @@
                       {% endfor %}
                   </td>
                     <td class="p-3 text-center hidden md:table-cell">
+                        <a href="{% url 'recettes:detail' recette.id %}">
                         {% if recette.image %}
                             <img src="{{ recette.image.url }}" alt="Recette" class="w-24 h-auto rounded-lg shadow-md mx-auto">
                         {% else %}
                             <span class="text-gray-400 italic">Pas d'image</span>
                         {% endif %}
+                        </a>
                     </td>
                     <td class="p-3 text-center">
                         <a href="{% url 'recettes:detail' recette.id %}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">

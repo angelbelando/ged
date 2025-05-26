@@ -42,17 +42,23 @@
             <tbody>
                 {% for objet in objets %}
                 <tr class="border-b hover:bg-gray-100 transition">
+                 
                     <td class="p-3 text-center">
                         <a href="{% url 'objets:detail_objet' objet.id %}">
                             <img src="{{ objet.photo.url }}" alt="{{ objet.name }}" class="w-16 rounded-lg shadow-md">
                         </a>
                     </td>
-                    <td class="p-3">{{ objet.name }}</td>
+                    <td class="p-3">
+                         <a href="{% url 'objets:detail_objet' objet.id %}">
+                        {{ objet.name }}
+                        </a>
+                    </td>
                     <td class="p-3">{{ objet.rubrique }}</td>
                     <td class="p-3">{{ objet.categorie }}</td>
                     <td class="p-3">{{ objet.piece }}</td>
                     <td class="p-3 font-bold text-green-600">{{ objet.montant|format_currency }}</td>
                     <td class="p-3">{{ objet.achat_at }}</td>
+                   
                 </tr>
                 {% endfor %}
             </tbody>
