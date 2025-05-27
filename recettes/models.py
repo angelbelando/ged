@@ -37,6 +37,7 @@ UNITES = (
     ('barres/s', 'Barres'),
     ('barquette/s', 'Barquette'),
     ('bocal/s', 'Bocal'),
+    ('bol/s', 'Bol'),
     ('boîte/s', 'Boîte'),
     ('boîte/s de conserve', 'Boîte de conserve'),
     ('bouteille/s', 'Bouteille'),
