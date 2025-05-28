@@ -38,28 +38,39 @@
 <body class="bg-gray-100">
   <header>
     <nav class="bg-blue-500 text-white text-lg font-bold py-3">
-       <div class="container mx-auto flex items-center justify-between px-4">
-          <a class="text-lg font-bold" href="{% url 'home' %}">
-              <i class="fas fa-home"></i>
-          </a>
+    <div class="container mx-auto flex items-center justify-between px-4">
+        <a class="text-lg font-bold" href="{% url 'home' %}">
+            <i class="fas fa-home"></i>
+        </a>
 
-          <!-- Bouton menu mobile (visible uniquement en mobile) -->
-          <button id="menuToggle" class="lg:hidden text-white focus:outline-none">
-             <span class="fas fa-bars"></span>
-          </button>
+        <!-- Bouton menu mobile -->
+        <button id="menuToggle" class="lg:hidden text-white focus:outline-none">
+            <span class="fas fa-bars"></span>
+        </button>
 
-          <!-- Menu Responsive -->
-          <div id="menu" class="hidden flex flex-col lg:flex lg:flex-row lg:space-x-4 lg:relative lg:top-0 lg:w-auto absolute top-14 left-0 w-full bg-blue-500 text-white shadow-md py-2 lg:py-0">
-             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'objets:tableau_bord' %}">📊 Tableau de Bord</a>
-             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'objets:liste_objets' %}">🛍️ Objets</a>
-             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'documents:liste_documents' %}">📄 Documents</a>
-             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'photos:gallery_list' %}">📷 Photos</a>
-             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'recettes:recettes' %}">🍽️ Cuisine</a>
-             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'admin:index' %}" target="_blank">⚙️ Gestion des données</a>       
-          </div>
+        <!-- Menu Responsive -->
+        <div id="menu" class="hidden flex flex-col lg:flex lg:flex-row lg:space-x-4 lg:relative lg:top-0 lg:w-auto absolute top-14 left-0 w-full bg-blue-500 text-white shadow-md py-2 lg:py-0">
+            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'objets:tableau_bord' %}">📊 Tableau de Bord</a>
+            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'objets:liste_objets' %}">🛍️ Objets</a>
+            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'documents:liste_documents' %}">📄 Documents</a>
+    
+          <!-- Sous-menu Photos -->
+                <div class="relative group flex items-center">
+                    <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg cursor-pointer">
+                        📷 Photos ⬇
+                    </a>
+                    <ul class="absolute hidden group-hover:block bg-white text-gray-800 shadow-lg rounded-md mt-28 w-56">
+                        <li><a class="block px-4 py-2 hover:bg-gray-100" href="{% url 'photos:gallery_list' %}">🏞️ Galeries</a></li>
+                        <li><a class="block px-4 py-2 hover:bg-gray-100" href="{% url 'photos:photo_list' %}">📷 Toutes les photos</a></li>
+                    </ul>
+                </div>
 
-          <!-- Profil utilisateur -->
-          <div class="flex items-center space-x-4">
+            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'recettes:recettes' %}">🍽️ Cuisine</a>
+            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'admin:index' %}" target="_blank">⚙️ Gestion des données</a>       
+        </div>
+
+        <!-- Profil utilisateur -->
+        <div class="flex items-center space-x-4">
             <div class="text-white font-bold">{{ user.username }}</div>
             <div class="relative group">
                 <a class="text-white hover:text-gray-300" id="navbarDropdown" href="#" role="button">
@@ -75,9 +86,10 @@
                     </li>
                 </ul>
             </div>
-          </div>
-       </div>
-    </nav>
+        </div>
+    </div>
+</nav>
+
  </header>
 
 <main class="container mx-auto p-4">

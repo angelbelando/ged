@@ -39,3 +39,15 @@ class PhotoDetailView(DetailView):
     model = Photo
     template_name = "photos/photo_detail.html"
     context_object_name = "photo"
+
+class PhotoListView(ListView):
+    model = Photo
+    template_name = "photos/photo_list.html"
+    context_object_name = "photos"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        photos = Photo.objects.all()
+        if query:
+            photos = photos.filter(title__icontains=query)
+        return photos
