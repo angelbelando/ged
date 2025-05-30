@@ -19,7 +19,7 @@
         {% for photo in photos %}
         <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-500">
             <a href="{% url 'photos:photo_detail' photo.pk %}" class="block">
-                <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="w-full h-72 object-contain object-top rounded-md">   
+                <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="w-full h-72 object-contain object-top">   
             </a>
             <div class="p-4">
                 <h3 class="text-lg font-semibold text-blue-600">{{ photo.title }}</h3>
