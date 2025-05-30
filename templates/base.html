@@ -55,15 +55,15 @@
             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'documents:liste_documents' %}">📄 Documents</a>
     
           <!-- Sous-menu Photos -->
-                <div class="relative group flex items-center">
-                    <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg cursor-pointer">
+            <div class="relative group flex items-center">
+                    <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg cursor-pointer" id="navbarDropdown2" href="#" role="button">
                         📷 Photos ⬇
                     </a>
                     <ul class="absolute hidden group-hover:block bg-white text-gray-800 shadow-lg rounded-md mt-28 w-56">
                         <li><a class="block px-4 py-2 hover:bg-gray-100" href="{% url 'photos:gallery_list' %}">🏞️ Galeries</a></li>
                         <li><a class="block px-4 py-2 hover:bg-gray-100" href="{% url 'photos:photo_list' %}">📷 Toutes les photos</a></li>
                     </ul>
-                </div>
+            </div>
 
             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'recettes:recettes' %}">🍽️ Cuisine</a>
             <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'admin:index' %}" target="_blank">⚙️ Gestion des données</a>       
