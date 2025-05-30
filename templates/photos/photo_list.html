@@ -19,9 +19,9 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for photo in photos %}
-        <div class="bg-white rounded-lg shadow-lg p-4 hover:scale-105 transition">
+        <div class="bg-white rounded-lg shadow-lg p-4 hover:scale-105 transition duration-500">
             <a href="{% url 'photos:photo_detail' photo.pk %}">
-                <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="w-full h-64 object-cover rounded-md">
+                <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="w-full h-72 object-contain object-top rounded-md">
             </a>
             <h3 class="text-blue-600 text-2xl font-bold mt-3">{{ photo.title }}</h3>
             <p class="text-gray-700 mt-2">{{ photo.description }}</p>
