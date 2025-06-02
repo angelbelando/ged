@@ -61,6 +61,8 @@ UNITES = (
     ('l', 'Litres'),
     ('ml', 'Millilitres'),
     ('morceau/x', 'Morceau'),
+    ('noix', 'Noix'),
+    ('noisette/s', 'Noisettte'),
     ('oignon/s', 'Oignon'),
     ('oeuf/s', 'Oeuf'),
     ('orange/s', 'Orange'),
