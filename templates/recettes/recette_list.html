@@ -57,7 +57,7 @@
                     </td>
                     <td class="p-3">{{ recette.categorie.nom }}</td>
                     <td class="p-3 text-left hidden md:table-cell">{{ recette.description }}</td>
-                    <td class="p-3 text-center">{{ recette.temps_preparation|add:recette.temps_cuisson }} min</td>
+                    <td class="p-3 text-center">{{ recette.temps_preparation|add:recette.temps_cuisson }} min.</td>
                     <td class="p-3 text-center text-yellow-400 text-xl">
                       {% for _ in ""|rjust:recette.note %}
                           ★
