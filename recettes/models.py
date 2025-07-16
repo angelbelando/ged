@@ -56,6 +56,7 @@ UNITES = (
     ('g', 'Grammes'),
     ('gousse/s', 'Gousse'),
     ('jaune/s', 'Jaune'),
+    ('jus', 'Jus'),
     ('kg', 'Kilogrammes'),
     ('Lamelle/s', 'Lamelle'),
     ('l', 'Litres'),
@@ -83,6 +84,8 @@ UNITES = (
     ('tour/s de moulin', 'Tour de moulin'),
     ('tranche/s', 'Tranche'),
     ('verre/s', 'Verre'),
+    ('Zeste/s', 'Zeste'),
+    ('  ', 'Ingrédient sans unité'),
     ('--', 'Paragraphe'),
 )
 
