@@ -84,7 +84,7 @@ UNITES = (
     ('tour/s de moulin', 'Tour de moulin'),
     ('tranche/s', 'Tranche'),
     ('verre/s', 'Verre'),
-    ('Zeste/s', 'Zeste'),
+    ('zeste/s', 'Zeste'),
     ('  ', 'Ingrédient sans unité'),
     ('--', 'Paragraphe'),
 )
