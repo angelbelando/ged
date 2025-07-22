@@ -88,9 +88,17 @@
               {% for ingredient in calcul_result %}
               {% if ingredient.unit != '--' %}
                 {% if ingredient.description %}
+                {% if ingredient.qte_adjusted %}
                 <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }} {{ ingredient.description }}</li>
+                 {% else %} 
+                 <li>{{ ingredient.unit }} {{ ingredient.description }}</li>
+                  {% endif %}
                 {% else %}  
+                {% if ingredient.qte_adjusted %}
                 <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }}</li>
+                {% else %}
+                {% comment %} <li>{{ ingredient.unit }}</li> {% endcomment %}
+                {% endif %}
                 {% endif %}
               {% else %}
                   <p class="text-blue-600 text-lg">{{ ingredient.description }}</p>
