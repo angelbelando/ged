@@ -21,23 +21,23 @@
         </span>
     </h2>
 </div>
-<select name="categorie" class="border border-gray-300 rounded-xl px-4 py-2 shadow-md focus:ring focus:ring-green-300">
-    <option value="">Toutes les catégories</option>
-    {% for cat in categories %}
+<form method="GET" action="" class="flex flex-wrap justify-end items-center space-x-2 ">
+    <input class="border border-gray-300 rounded-xl px-4 py-2 shadow-md w-full md:w-auto focus:ring focus:ring-blue-300" name="q" type="text" placeholder="🔍 Rechercher..." value="{{ request.GET.q }}">
+    
+    <select name="categorie" class="border border-gray-300 rounded-xl px-4 py-2 shadow-md focus:ring focus:ring-green-300">
+        <option value="">Toutes les catégories</option>
+        {% for cat in categories %}
         <option value="{{ cat.id }}" {% if request.GET.categorie == cat.id|stringformat:"s" %}selected{% endif %}>
             {{ cat.nom }}
         </option>
-    {% endfor %}
-</select>
-<!-- Barre de recherche -->
-<div class="flex flex-col md:flex-row justify-end mb-6">
-    <form method="GET" action="" class="flex flex-wrap items-center space-x-2">
-        <input class="border border-gray-300 rounded-xl px-4 py-2 shadow-md w-full md:w-auto focus:ring focus:ring-blue-300" name="q" type="text" placeholder="🔍 Rechercher..." value="{{ request.GET.q }}">
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
-            <i class="fas fa-search"></i>
-        </button>
-    </form>
-</div>
+        {% endfor %}
+    </select>
+    
+    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
+        <i class="fas fa-search"></i>
+    </button>
+</form>
+
 
 <!-- Table des recettes -->
 <div class="container mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
