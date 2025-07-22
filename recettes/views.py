@@ -16,13 +16,25 @@ class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_denied_message = "Vous n'avez pas la permission de voir cette page."
     def get_queryset(self):
         query = self.request.GET.get('q')
+        categorie_id = self.request.GET.get('categorie')
+        qs = Recette.objects.all()
+
         if query:
-            return Recette.objects.filter(
+            qs = qs.filter(
                 Q(titre__icontains=query) | Q(categorie__nom__icontains=query)
                 | Q(ingredients__icontains=query) | Q(etapes__icontains=query)
                 | Q(conseils__icontains=query) | Q(description__icontains=query)           
             )
-        return Recette.objects.all().order_by('categorie__nom','titre','description')
+
+        if categorie_id:
+            qs = qs.filter(categorie__id=categorie_id)
+
+        return qs.order_by('categorie__nom', 'titre', 'description')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
 
 # Détail d'une recette
 class RecetteDetailView(DetailView):

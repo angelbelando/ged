@@ -21,7 +21,14 @@
         </span>
     </h2>
 </div>
-
+<select name="categorie" class="border border-gray-300 rounded-xl px-4 py-2 shadow-md focus:ring focus:ring-green-300">
+    <option value="">Toutes les catégories</option>
+    {% for cat in categories %}
+        <option value="{{ cat.id }}" {% if request.GET.categorie == cat.id|stringformat:"s" %}selected{% endif %}>
+            {{ cat.nom }}
+        </option>
+    {% endfor %}
+</select>
 <!-- Barre de recherche -->
 <div class="flex flex-col md:flex-row justify-end mb-6">
     <form method="GET" action="" class="flex flex-wrap items-center space-x-2">
