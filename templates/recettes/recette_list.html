@@ -94,13 +94,13 @@
 {% if is_paginated %}
 <nav class="py-4 flex justify-center">
     {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}" class="px-4 py-2 bg-gray-300 rounded-l-lg hover:bg-gray-400">&laquo;</a>
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}&categorie={{ request.GET.categorie }}" class="px-4 py-2 bg-gray-300 rounded-l-lg hover:bg-gray-400">&laquo;</a>
     {% endif %}
     <div class="px-4 py-2 bg-blue-600 text-white rounded-md">
         {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
     </div>
     {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}" class="px-4 py-2 bg-gray-300 rounded-r-lg hover:bg-gray-400">&raquo;</a>
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}&categorie={{ request.GET.categorie }}" class="px-4 py-2 bg-gray-300 rounded-r-lg hover:bg-gray-400">&raquo;</a>
     {% endif %}
 </nav>
 {% endif %}
