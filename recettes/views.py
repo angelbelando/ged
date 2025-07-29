@@ -7,19 +7,16 @@ from .models import Recette, Categorie, RecetteIngredientUnit
 from django.db.models import Q
 import re
 
-def nettoyer_unite(texte,qte):
-    # Supprime le '/s' s'il est collé à un mot ou entre deux mots
-        texte_correct = texte
-        if '/s' in texte and qte > 1:   # Si le texte contient '/s', on le remplace par 's' pour les pluriels
-            texte_correct = re.sub(r'\b/s\b', 's', texte) 
-        if '/x' in texte and qte > 1 :
-             texte_correct = re.sub(r'\b/x\b', 'x', texte)  
-        if '/s' in texte and qte == 1:
-                # Si le texte contient '/s', on le remplace par 's' pour les pluriels
-            texte_correct = re.sub(r'\b/s\b', '', texte)  
-        if '/x' in texte and qte == 1 :
-             texte_correct = re.sub(r'\b/x\b', '', texte)  
-        return texte_correct
+
+def nettoyer_unite(texte, qte):
+    remplacements = {
+        '/s': 's' if qte > 1 else '',
+        '/x': 'x' if qte > 1 else ''
+    }
+    for suffixe, remplacement in remplacements.items():
+        texte = re.sub(rf'\b{re.escape(suffixe)}\b', remplacement, texte)
+    return texte
+
 
 
 # Liste des recettes
