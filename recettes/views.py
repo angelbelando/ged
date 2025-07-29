@@ -17,6 +17,13 @@ def nettoyer_unite(texte, qte):
         texte = re.sub(rf'\b{re.escape(suffixe)}\b', remplacement, texte)
     return texte
 
+def formatter_qte(qte):
+    if qte == 0:
+        return ""
+    elif qte == int(qte):
+        return str(int(qte))
+    else:
+        return str(round(qte, 1))
 
 
 # Liste des recettes
@@ -69,7 +76,7 @@ class RecetteDetailView(DetailView):
         
         calcul_result = [
             {
-                "qte_adjusted": round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1),
+                "qte_adjusted": formatter_qte(round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1)),
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
                 "unit_display": nettoyer_unite(ingredient_unit.unit,round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1)), # simple ajout d'un 's'
@@ -95,7 +102,7 @@ class RecetteDetailView(DetailView):
         
         calcul_result = [
             {
-                "qte_adjusted": round(ingredient_unit.qte/self.object.nombre_couverts * nombre_couverts, 1),
+                "qte_adjusted": formatter_qte(round(ingredient_unit.qte/self.object.nombre_couverts * nombre_couverts, 1)),
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
                 "unit_display": nettoyer_unite(ingredient_unit.unit,round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1)), # simple ajout d'un 's'
