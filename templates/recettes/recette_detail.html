@@ -89,13 +89,13 @@
               {% if ingredient.unit != '--' %}
                 {% if ingredient.description %}
                 {% if ingredient.qte_adjusted %}
-                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }} {{ ingredient.description }}</li>
+                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit_display }} {{ ingredient.description }}</li>
                  {% else %} 
                  <li>{{ ingredient.unit }} {{ ingredient.description }}</li>
                   {% endif %}
                 {% else %}  
                 {% if ingredient.qte_adjusted %}
-                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit }}</li>
+                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit_display }}</li>
                 {% else %}
                 {% comment %} <li>{{ ingredient.unit }}</li> {% endcomment %}
                 {% endif %}

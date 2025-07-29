@@ -5,8 +5,25 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import Recette, Categorie, RecetteIngredientUnit
 from django.db.models import Q
+import re
+
+def nettoyer_unite(texte,qte):
+    # Supprime le '/s' s'il est collé à un mot ou entre deux mots
+        texte_correct = texte
+        if '/s' in texte and qte > 1:   # Si le texte contient '/s', on le remplace par 's' pour les pluriels
+            texte_correct = re.sub(r'\b/s\b', 's', texte) 
+        if '/x' in texte and qte > 1 :
+             texte_correct = re.sub(r'\b/x\b', 'x', texte)  
+        if '/s' in texte and qte == 1:
+                # Si le texte contient '/s', on le remplace par 's' pour les pluriels
+            texte_correct = re.sub(r'\b/s\b', '', texte)  
+        if '/x' in texte and qte == 1 :
+             texte_correct = re.sub(r'\b/x\b', '', texte)  
+        return texte_correct
+
 
 # Liste des recettes
+
 class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Recette
     template_name = 'recettes/recette_list.html'
@@ -41,7 +58,9 @@ class RecetteDetailView(DetailView):
     model = Recette
     template_name = 'recettes/recette_detail.html'
     context_object_name = 'recette'
+    
 
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         recette = self.get_object()  # Récupère la recette en question
@@ -50,11 +69,13 @@ class RecetteDetailView(DetailView):
         nombre_couverts = recette.nombre_couverts
         
         # Calcul des ingrédients ajustés
+        
         calcul_result = [
             {
                 "qte_adjusted": round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1),
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
+                "unit_display": nettoyer_unite(ingredient_unit.unit,round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1)), # simple ajout d'un 's'
             }
             for ingredient_unit in recette.recette_ingredient_units.all().order_by('ordre','id')
         ]
@@ -80,6 +101,7 @@ class RecetteDetailView(DetailView):
                 "qte_adjusted": round(ingredient_unit.qte/self.object.nombre_couverts * nombre_couverts, 1),
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
+                "unit_display": nettoyer_unite(ingredient_unit.unit,round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1)), # simple ajout d'un 's'
             }
             for ingredient_unit in self.object.recette_ingredient_units.all().order_by('ordre','id')
         ]

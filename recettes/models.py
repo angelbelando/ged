@@ -30,6 +30,8 @@ class Recette(models.Model):
         return self.titre
 
 UNITES = (
+    ('  ', 'Ingrédient sans unité'),
+    ('--', 'Paragraphe'),
     ('ail/s', 'Ail'),
     ('banane/s', 'Banane'),
     ('barre/s', 'Barre'),
@@ -75,7 +77,7 @@ UNITES = (
     ('pomme/s', 'Pomme'),
     ('pot/s', 'Pot'),
     ('pots/s', 'Pots'),
-    ('rouleaux/s', 'Rouleaux'),
+    ('rouleau/x', 'Rouleaux'),
     ('sachet', 'Sachet'),
     ('sachet/s', 'Sachet'),
     ('sel', 'Sel'),
@@ -85,8 +87,7 @@ UNITES = (
     ('tranche/s', 'Tranche'),
     ('verre/s', 'Verre'),
     ('zeste/s', 'Zeste'),
-    ('  ', 'Ingrédient sans unité'),
-    ('--', 'Paragraphe'),
+
 )
 
 class RecetteIngredientUnit(models.Model):
