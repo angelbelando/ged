@@ -105,7 +105,7 @@ class RecetteDetailView(DetailView):
                 "qte_adjusted": formatter_qte(round(ingredient_unit.qte/self.object.nombre_couverts * nombre_couverts, 1)),
                 "unit": ingredient_unit.unit,
                 "description": ingredient_unit.description,
-                "unit_display": nettoyer_unite(ingredient_unit.unit,round(ingredient_unit.qte/recette.nombre_couverts * nombre_couverts, 1)), # simple ajout d'un 's'
+                "unit_display": nettoyer_unite(ingredient_unit.unit,round(ingredient_unit.qte/self.object.nombre_couverts * nombre_couverts, 1)), # simple ajout d'un 's'
             }
             for ingredient_unit in self.object.recette_ingredient_units.all().order_by('ordre','id')
         ]
