@@ -26,7 +26,8 @@ def formatter_qte(qte):
         return str(round(qte, 1))
 
 
-# Liste des recettes
+# Liste des recettes de nous
+# modification
 
 class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Recette
