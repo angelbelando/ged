@@ -29,6 +29,7 @@ def formatter_qte(qte):
 # Liste des recettes de nous
 # modification
 
+
 class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Recette
     template_name = 'recettes/recette_list.html'
@@ -58,7 +59,7 @@ class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context['categories'] = Categorie.objects.all().order_by('nom')
         return context
 
-# Détail d'une recette
+# Détail une recette
 class RecetteDetailView(DetailView):
     model = Recette
     template_name = 'recettes/recette_detail.html'
