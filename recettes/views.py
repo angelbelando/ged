@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from .models import Recette, Categorie, RecetteIngredientUnit
 from django.db.models import Q
 import re
-
+from rapidfuzz import fuzz
 
 def nettoyer_unite(texte, qte):
     remplacements = {
@@ -42,17 +42,31 @@ class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         categorie_id = self.request.GET.get('categorie')
         qs = Recette.objects.all()
 
+        # if query:
+        #     qs = qs.filter(
+        #         Q(titre__icontains=query) | Q(categorie__nom__icontains=query)
+        #         | Q(ingredients__icontains=query) | Q(etapes__icontains=query)
+        #         | Q(conseils__icontains=query) | Q(description__icontains=query)           
+        #     )
+
+        # if categorie_id:
+        #     qs = qs.filter(categorie__id=categorie_id)
+
+        # return qs.order_by('categorie__nom', 'titre', 'description')
         if query:
-            qs = qs.filter(
-                Q(titre__icontains=query) | Q(categorie__nom__icontains=query)
-                | Q(ingredients__icontains=query) | Q(etapes__icontains=query)
-                | Q(conseils__icontains=query) | Q(description__icontains=query)           
-            )
+            qs = [r for r in qs if any([
+                fuzz.partial_ratio(query.lower(), r.titre.lower()) > 80,
+                fuzz.partial_ratio(query.lower(), r.ingredients.lower()) > 80,
+                fuzz.partial_ratio(query.lower(), r.etapes.lower()) > 80,
+                fuzz.partial_ratio(query.lower(), r.conseils.lower()) > 80,
+                fuzz.partial_ratio(query.lower(), r.description.lower()) > 80,
+                fuzz.partial_ratio(query.lower(), r.categorie.nom.lower()) > 80,
+            ])]
 
         if categorie_id:
-            qs = qs.filter(categorie__id=categorie_id)
+            qs = [r for r in qs if str(r.categorie.id) == str(categorie_id)]
 
-        return qs.order_by('categorie__nom', 'titre', 'description')
+        return sorted(qs, key=lambda r: (r.categorie.nom, r.titre, r.description))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
