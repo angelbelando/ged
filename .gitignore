@@ -10,5 +10,4 @@ ged/settings/__pycache__/
 staticfiles/
 .vscode/
 .vs/
-.vscodeenv
 .idea/
