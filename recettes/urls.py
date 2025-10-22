@@ -22,4 +22,5 @@ app_name = 'recettes'
 urlpatterns = [
     path('recettes', views.RecetteListView.as_view(), name='recettes'),
     path('recettes/<int:pk>/', views.RecetteDetailView.as_view(), name='detail'),
+    path('recettes/<int:pk>/export-docx/', views.ExportRecetteDocxView.as_view(), name='export_docx'),
 ]

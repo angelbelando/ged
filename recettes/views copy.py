@@ -98,9 +98,203 @@ def find_nutrition(ingredient):
             return NUTRITION_DATA[key]
     return None
 # Génération du document .docx
-
-
 def generate_docx(recette, nombre_couverts=None):
+    document = Document()
+
+    # --- Mise en page ---
+    section = document.sections[0]
+    section.page_width = Inches(8.27)
+    section.page_height = Inches(11.69)
+    section.top_margin = Inches(0.5)
+    section.bottom_margin = Inches(0.5)
+    section.left_margin = Inches(0.5)
+    section.right_margin = Inches(0.5)
+
+    styles = document.styles
+    normal = styles['Normal']
+    normal.font.name = 'Calibri Light'
+    normal.font.size = Pt(12)
+    normal.font.color.rgb = RGBColor(40, 40, 40)
+
+    # --- Titre ---
+    title = document.add_paragraph(recette.titre)
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = title.runs[0]
+    r.font.size = Pt(20)
+    r.font.bold = True
+    r.font.color.rgb = RGBColor(0, 102, 204)
+
+    nb_couv = float(nombre_couverts or recette.nombre_couverts)
+    document.add_paragraph(f"{recette.description or ''}")
+
+    meta = document.add_paragraph(
+        f"📂 {recette.categorie.nom if recette.categorie else 'Non spécifiée'} | 🍽️ {int(nb_couv)} couverts"
+    )
+    meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    meta.runs[0].font.size = Pt(9)
+    meta.runs[0].italic = True
+
+    total = (recette.temps_preparation or 0) + (recette.temps_cuisson or 0)
+    tps = document.add_paragraph(
+        f"⏱️ Préparation : {recette.temps_preparation or 0} min | "
+        f"Cuisson : {recette.temps_cuisson or 0} min | Total : {total} min"
+    )
+    tps.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    tps.runs[0].font.size = Pt(9)
+    document.add_paragraph("")
+
+    # --- Image ---
+    if recette.image and hasattr(recette.image, 'path'):
+        try:
+            run = document.add_paragraph().add_run()
+            run.add_picture(recette.image.path, width=Inches(3))
+            document.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        except Exception:
+            document.add_paragraph("(Image non disponible)").alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    # --- Tableau 2 colonnes : Ingrédients / Étapes ---
+    table_ie = document.add_table(rows=1, cols=2)
+    table_ie.autofit = True
+    table_ie.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    table_ie.style = "Table Grid"
+
+    # Titres colonnes
+    hdr = table_ie.rows[0].cells
+    hdr[0].text = "🥕 Ingrédients"
+    hdr[1].text = "👨‍🍳 Étapes"
+    for c in hdr:
+        for p in c.paragraphs:
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            r = p.runs[0]
+            r.bold = True
+            r.font.color.rgb = RGBColor(0, 102, 204)
+
+    # Remplissage des colonnes
+    row = table_ie.add_row().cells
+    cell_ing, cell_etapes = row
+
+    # --- Calcul nutritionnel ---
+    total_nutrition = {"kcal": 0, "lipides": 0, "glucides": 0, "proteines": 0}
+
+    # Ingrédients
+    for ing in recette.recette_ingredient_units.all().order_by('ordre', 'id'):
+        qte_base = float(ing.qte or 0)
+        nb_ref = float(recette.nombre_couverts or 1)
+        qte = qte_base / nb_ref * nb_couv
+        qte, unite = convertir_unite(qte, ing.unit)
+        qte_fmt = formatter_qte(qte)
+        unite_fmt = nettoyer_unite(unite, qte)
+        cell_ing.add_paragraph(f"• {qte_fmt} {unite_fmt} {ing.description}")
+
+        nutri = find_nutrition(ing.description)
+        if nutri:
+            poids = float(qte) if unite_fmt in ["g", "kg"] else 0.0
+            if unite_fmt == "kg":
+                poids *= 1000
+            factor = poids / 100.0
+            for k in total_nutrition:
+                total_nutrition[k] += nutri[k] * factor
+
+    # Étapes
+    if recette.etapes:
+        for ligne in recette.etapes.splitlines():
+            txt = ligne.strip()
+            if not txt:
+                continue
+            if txt.startswith('-'):
+                cell_etapes.add_paragraph(txt[1:].strip(), style="Heading 3")
+            else:
+                cell_etapes.add_paragraph(txt, style="List Bullet")
+    else:
+        cell_etapes.add_paragraph("Aucune étape spécifiée.")
+
+    # # --- Séparation visuelle ---
+    # document.add_paragraph("")
+    # sep = document.add_paragraph("—" * 60)
+    # sep.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    # for run in sep.runs:
+    #     run.font.color.rgb = RGBColor(180, 180, 180)
+    #     run.font.size = Pt(8)
+
+    # --- Tableau Valeurs nutritionnelles ---
+    p_val = document.add_paragraph("🍎 Valeurs nutritionnelles estimées (pour 1 portion)")
+    p_val.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = p_val.runs[0]
+    r.bold = True
+    r.font.color.rgb = RGBColor(0, 102, 204)
+    r.font.size = Pt(11)
+
+    if total_nutrition["kcal"] > 0:
+        table = document.add_table(rows=1, cols=2)
+        table.style = "Table Grid"
+        table.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+        hdr = table.rows[0].cells
+        hdr[0].text = "Élément"
+        hdr[1].text = "Valeur"
+        for c in hdr:
+            for p in c.paragraphs:
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                run = p.runs[0]
+                run.bold = True
+                run.font.color.rgb = RGBColor(255, 255, 255)
+            c._element.get_or_add_tcPr().append(
+                parse_xml('<w:shd xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" w:fill="5B9BD5"/>')
+            )
+
+        for k, v in total_nutrition.items():
+            row = table.add_row().cells
+            row[0].text = k.capitalize()
+            row[1].text = f"{v / nb_couv:.0f} kcal" if k == "kcal" else f"{v / nb_couv:.1f} g"
+            row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.LEFT
+            row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            for c in row:
+                for run in c.paragraphs[0].runs:
+                    run.font.size = Pt(9)
+
+        tbl = table._element
+        borders = parse_xml('''
+            <w:tblBorders xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+                <w:top w:val="single" w:sz="6" w:color="D9D9D9"/>
+                <w:left w:val="single" w:sz="6" w:color="D9D9D9"/>
+                <w:bottom w:val="single" w:sz="6" w:color="D9D9D9"/>
+                <w:right w:val="single" w:sz="6" w:color="D9D9D9"/>
+            </w:tblBorders>
+        ''')
+        shading = parse_xml('''
+            <w:shd xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" w:fill="F2F2F2"/>
+        ''')
+        tbl.tblPr.append(borders)
+        tbl.tblPr.append(shading)
+
+    # --- Conseils ---
+    document.add_paragraph("")
+    p_conseil = document.add_paragraph("💡 Conseils")
+    p_conseil.runs[0].bold = True
+    p_conseil.runs[0].font.color.rgb = RGBColor(0, 102, 204)
+    document.add_paragraph(recette.conseils or "")
+
+    # --- Note ---
+    p_note = document.add_paragraph("⭐ Note")
+    p_note.runs[0].bold = True
+    p_note.runs[0].font.color.rgb = RGBColor(0, 102, 204)
+    stars = "★" * int(recette.note) + "☆" * (5 - int(recette.note))
+    p_stars = document.add_paragraph(stars)
+    p_stars.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    for run in p_stars.runs:
+        run.font.color.rgb = RGBColor(255, 200, 0)
+
+    # --- Pied de page ---
+    footer = document.sections[-1].footer.paragraphs[0]
+    footer.text = "Document généré automatiquement par ABsite.fr"
+    footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    footer.runs[0].font.size = Pt(8)
+    footer.runs[0].italic = True
+    footer.runs[0].font.color.rgb = RGBColor(150, 150, 150)
+
+    return document
+
+def generate_docx_v1(recette, nombre_couverts=None):
     document = Document()
 
     # --- Mise en page ---
@@ -158,8 +352,8 @@ def generate_docx(recette, nombre_couverts=None):
             document.add_paragraph("(Image non disponible)").alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     # --- Ingrédients & calcul nutritionnel ---
-
-    p_ing = document.add_paragraph("🥕 Ingrédients",  style='Heading 1')
+    # --- Ingrédients & calcul nutritionnel ---
+    p_ing = document.add_paragraph("🥕 Ingrédients")
     p_ing.runs[0].bold = True
     p_ing.runs[0].font.color.rgb = RGBColor(0, 102, 204)
 
@@ -174,24 +368,23 @@ def generate_docx(recette, nombre_couverts=None):
         qte, unite = convertir_unite(qte, ing.unit)
         qte_fmt = formatter_qte(qte)
         unite_fmt = nettoyer_unite(unite, qte)
-        document.add_paragraph(f"• {qte_fmt} {unite_fmt} {ing.description}", style='List')
+        document.add_paragraph(f"• {qte_fmt} {unite_fmt} {ing.description}", style='List Bullet')
 
         # --- Calcul nutritionnel ---
-        # nutri = find_nutrition(ing.description)
-        # if nutri:
-        #     poids = float(qte) if unite_fmt in ["g", "kg"] else 0.0
-        #     if unite_fmt == "kg":
-        #         poids *= 1000
-        #     factor = poids / 100.0
-        #     for k in total_nutrition:
-        #         total_nutrition[k] += nutri[k] * factor
+        nutri = find_nutrition(ing.description)
+        if nutri:
+            poids = float(qte) if unite_fmt in ["g", "kg"] else 0.0
+            if unite_fmt == "kg":
+                poids *= 1000
+            factor = poids / 100.0
+            for k in total_nutrition:
+                total_nutrition[k] += nutri[k] * factor
 
     # --- Saut de colonne ---
     document.add_paragraph()._element.append(parse_xml(r'<w:br xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" w:type="column"/>'))
 
     # --- Étapes ---
-    p_et = document.add_paragraph("👨‍🍳 Étapes", style='Heading 1')
-
+    p_et = document.add_paragraph("👨‍🍳 Étapes")
     p_et.runs[0].bold = True
     p_et.runs[0].font.color.rgb = RGBColor(0, 102, 204)
 
@@ -370,7 +563,7 @@ class ExportRecetteDocxView(View):
         except (TypeError, ValueError):
             nb_couv = recette.nombre_couverts
 
-        document = generate_docx(recette, nombre_couverts=nb_couv)
+        document = generate_docx_v1(recette, nombre_couverts=nb_couv)
 
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
         response['Content-Disposition'] = f'attachment; filename="{recette.titre}.docx"'
