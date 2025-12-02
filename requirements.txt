@@ -9,7 +9,7 @@ django-photologue==3.17
 django-sortedm2m==4.0.0
 et_xmlfile==2.0.0
 ExifRead==3.0.0
-fonttools==4.55.8
+fonttools==4.61.0
 gunicorn==23.0.0
 kiwisolver==1.4.8
 lxml==6.0.2
