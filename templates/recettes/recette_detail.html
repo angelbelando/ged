@@ -149,9 +149,21 @@
       </section>
       
       <!-- Conseils -->
+       
       <section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">
         <h2 class="text-2xl font-bold text-blue-600 mb-4">Conseils</h2>
-        <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ recette.conseils }}</p>
+        <ul class="pl-3 space-y-1">
+          {% for conseil in conseils_formatees %}
+            {% if conseil.important %}
+              <p class="font-bold text-blue-500 text-xl list-none">
+                {{ conseil.texte }}
+              </p>
+            {% else %}
+              <p class="list-disc list-inside">
+                {{ conseil.texte }}
+              </p>
+            {% endif %}
+          {% endfor %}
       </section>
 
       <!--Note -->

@@ -337,6 +337,12 @@ class RecetteDetailView(DetailView):
         {'texte': e[1:].strip(), 'important': True} if e.strip().startswith('-') else {'texte': e.strip(), 'important': False}
         for e in etapes
         ]
+        conseils = self.object.conseils.splitlines()
+        context['conseils_formatees'] = [
+        {'texte': c[1:].strip(), 'important': True} if c.strip().startswith('-') else {'texte': c.strip(), 'important': False}
+        for c in conseils
+        ]
+    
         return context
 
     def post(self, request, *args, **kwargs):
