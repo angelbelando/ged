@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'ged.wsgi.application'
 
 DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
+        'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresqlwhich psql
         'NAME': 'bd_ged', # le nom de notre base de donnees creee precedemment
         'USER': 'angel', # attention : remplacez par votre nom d'utilisateur
         'PASSWORD': 'angel',

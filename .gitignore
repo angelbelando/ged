@@ -11,5 +11,5 @@ staticfiles/
 .vscode/
 .vs/
 .idea/
-dumps
+dumps/
 
