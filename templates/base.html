@@ -48,9 +48,17 @@
   <header>
     <nav class="bg-blue-500 text-white text-lg font-bold py-3">
     <div class="container mx-auto flex items-center justify-between px-4">
-        <a class="text-lg font-bold" href="{% url 'home' %}">
-            <i class="fas fa-home"></i>
-        </a>
+        <div class="flex items-center space-x-3">
+            <a href="{% url 'home' %}" class="flex items-center">
+                <img
+                    src="{% static 'img/favicon.png' %}"
+                    class="h-11 w-11 rounded-xl shadow-sm bg-white p-1"
+                >
+            </a>
+            <a class="text-lg font-bold flex items-center" href="{% url 'home' %}">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
 
         <!-- Bouton menu mobile -->
         <button id="menuToggle" class="lg:hidden text-white focus:outline-none">
