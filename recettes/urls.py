@@ -23,4 +23,6 @@ urlpatterns = [
     path('', views.RecetteListView.as_view(), name='recettes'),
     path('<int:pk>/', views.RecetteDetailView.as_view(), name='detail'),
     path('<int:pk>/export-docx/', views.ExportRecetteDocxView.as_view(), name='export_docx'),
+    path("<int:pk>/pdf/", views.ExportRecettePDFView.as_view(), name="recette_pdf"),
+
 ]

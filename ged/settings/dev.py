@@ -34,6 +34,6 @@ DATABASES = {
         'USER': 'angel', # attention : remplacez par votre nom d'utilisateur
         'PASSWORD': 'angel',
         'HOST': '',
-        'PORT': '5433',
+        'PORT': '5432',
     }
 }

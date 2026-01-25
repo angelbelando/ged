@@ -4,7 +4,7 @@
 {% load static %}
 {% block content %}
 <section class="bg-gray-100 text-gray-800">
-
+<div class="sticky top-0 z-50 bg-gray-100">
   <!-- Header -->
   <header class="bg-blue-600 text-white py-6 rounded-lg shadow-md">
     <div class="container mx-auto px-4 text-center">
@@ -25,13 +25,17 @@
    <a href="{% url 'recettes:export_docx' recette.pk %}?couverts={{ nombre_couverts }}" 
    class="bg-purple-600 text-white px-6 py-3 rounded-md shadow hover:bg-purple-700 transition">
    Exporter en .docx 📄
-</a>
- 
+   </a>
+    <a href="{% url 'recettes:recette_pdf' recette.id %}?couverts={{ nombre_couverts }}"
+   class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
+   📄 Exporter en PDF
+    </a>
+</div>
 </div>
 
 
   <!-- Main Content -->
-  <main class="container mx-auto my-4 px-4">
+  <main class="container mx-auto my-4 px-4 pt-6">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
 
       <!-- Image -->
