@@ -24,5 +24,7 @@ urlpatterns = [
     path('<int:pk>/', views.RecetteDetailView.as_view(), name='detail'),
     path('<int:pk>/export-docx/', views.ExportRecetteDocxView.as_view(), name='export_docx'),
     path("<int:pk>/pdf/", views.ExportRecettePDFView.as_view(), name="recette_pdf"),
+    path('new/', views.RecetteCreateView.as_view(), name='recette_create'),
+    path('<int:pk>/edit/', views.RecetteUpdateView.as_view(), name='recette_update'),
 
 ]

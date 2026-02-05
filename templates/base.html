@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/objet-style.css' %}" />
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon.png' %}">
     <link rel="apple-touch-icon" href="{% static 'img/favicon.png' %}">
@@ -41,9 +42,24 @@
             object-fit: contain;
             }
         }
-        
+        /* Chrome, Safari, Edge */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+           }
+
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
+        }
+        input[name$="-ordre"] { display: none; }
+        .ingredient-row {
+            transition: opacity .2s ease;
+        }
       </style>
 </head>
+{% block extra_js %}{% endblock %}
 <body class="bg-gray-100">
   <header>
     <nav class="bg-blue-500 text-white text-lg font-bold py-3">
@@ -120,10 +136,67 @@
 
 <script src="{% static 'js/fontawesome-all.min.js' %}"></script>
 <script>
-    document.getElementById('menuToggle').addEventListener('click', function() {
-        let menu = document.getElementById('menu');
-        menu.classList.toggle('hidden');
-    });
+document.getElementById("add-ingredient").addEventListener("click", function () {
+    const totalFormsInput = document.querySelector(
+        'input[name="ingredients-TOTAL_FORMS"]'
+    );
+
+    const index = parseInt(totalFormsInput.value, 10);
+    const template = document.getElementById("ingredient-empty-form").innerHTML;
+
+    const html = template.replace(/__prefix__/g, index);
+
+    document.getElementById("ingredient-list")
+        .insertAdjacentHTML("beforeend", html);
+
+    totalFormsInput.value = index + 1;
+});
+    const list = document.getElementById("ingredient-list");
+
+new Sortable(list, {
+    handle: ".cursor-move",
+    animation: 150,
+    onEnd: function () {
+        document
+            .querySelectorAll("#ingredient-list input[name$='-ordre']")
+            .forEach((input, index) => {
+                input.value = index;
+            });
+    }
+});
 </script>
+<script>
+<script>
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("delete-ingredient")) {
+        const row = e.target.closest(".ingredient-row");
+
+        // coche DELETE
+        const deleteInput = row.querySelector("input[name$='-DELETE']");
+        if (deleteInput) {
+            deleteInput.checked = true;
+        }
+
+        // masque visuellement
+        row.style.display = "none";
+
+        // recalcule l’ordre
+        updateOrdre();
+    }
+});
+
+function updateOrdre() {
+    document
+        .querySelectorAll(
+            "#ingredient-list .ingredient-row:not([style*='display: none']) input[name$='-ordre']"
+        )
+        .forEach((input, index) => {
+            input.value = index;
+        });
+}
+row.style.opacity = 0.4;
+
+</script>
+
 </body>
 </html>

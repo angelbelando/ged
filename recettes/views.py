@@ -25,6 +25,13 @@ from .utils.unit_renderer import nettoyer_unite, formatter_qte, convertir_unite
 # from .renderers.pdf_renderer import generate_pdf
 from django.utils.text import slugify
 import io
+# recettes/views.py
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView
+from .models import Recette
+from .forms import RecetteForm, IngredientFormSet
+from django.shortcuts import redirect
+
 
 class RecetteListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Recette
@@ -160,3 +167,86 @@ class ExportRecettePDFView(View):
         response = HttpResponse(buffer.getvalue(), content_type="application/pdf")
         response["Content-Disposition"] = f'attachment; filename="recette_{slugify(recette.titre)}.pdf"'
         return response
+
+# recettes/views.py
+
+# recettes/views.py
+class IngredientInlineMixin:
+    formset_class = IngredientFormSet
+    formset_prefix = "ingredients"
+
+    def get_formset(self):
+        return self.formset_class(
+            self.request.POST or None,
+            instance=getattr(self, "object", None),
+            prefix=self.formset_prefix
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["ingredients"] = self.get_formset()
+        return context
+
+    from django.shortcuts import redirect
+
+    def form_valid(self, form):
+        # 1️⃣ Sauvegarde de la recette
+        self.object = form.save(commit=False)
+
+        if not self.object.pk:
+            self.object.auteur = self.request.user
+
+        self.object.save()
+
+        # 2️⃣ Récupération du formset ingrédients
+        formset = self.get_formset()
+
+        if not formset.is_valid():
+            print("❌ FORMSET ERRORS:", formset.errors)
+            print("❌ NON FORM ERRORS:", formset.non_form_errors())
+            return self.form_invalid(form)
+
+        # 3️⃣ Association à la recette
+        formset.instance = self.object
+
+        # 4️⃣ Sauvegarde Django-standard
+        instances = formset.save(commit=False)
+
+        # 5️⃣ Suppressions
+        for obj in formset.deleted_forms:
+            if obj.instance.pk:
+                obj.instance.delete()
+
+        # 6️⃣ Sauvegarde des ingrédients (avec ordre)
+        for instance in instances:
+            instance.recette = self.object
+            instance.save()
+        # 👉 Enregistrer et continuer
+        if "_continue" in self.request.POST:
+            return redirect(
+                "recettes:recette_update",
+                pk=self.object.pk
+            )
+
+        # 👉 Enregistrer (retour liste)
+        return redirect(self.get_success_url())
+
+
+class RecetteCreateView(IngredientInlineMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Recette
+    form_class = RecetteForm
+    template_name = "recettes/recette_form.html"
+    success_url = reverse_lazy("recettes:recettes")
+    permission_required = "recettes.add_recette"
+    raise_exception = True  # ⭐ CRUCIAL
+
+
+class RecetteUpdateView(IngredientInlineMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Recette
+    form_class = RecetteForm
+    template_name = "recettes/recette_form.html"
+    success_url = reverse_lazy("recettes:recettes")
+    permission_required = "recettes.change_recette"
+    raise_exception = True  # ⭐ CRUCIAL
+
+
