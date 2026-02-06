@@ -202,8 +202,8 @@ class IngredientInlineMixin:
         formset = self.get_formset()
 
         if not formset.is_valid():
-            print("❌ FORMSET ERRORS:", formset.errors)
-            print("❌ NON FORM ERRORS:", formset.non_form_errors())
+            # print("❌ FORMSET ERRORS:", formset.errors)
+            # print("❌ NON FORM ERRORS:", formset.non_form_errors())
             return self.form_invalid(form)
 
         # 3️⃣ Association à la recette

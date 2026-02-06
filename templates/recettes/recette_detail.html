@@ -15,21 +15,22 @@
   </header>
 <!-- Conteneur des boutons -->
 <div class="flex justify-center gap-4 mt-3">
-  <!-- Bouton Imprimer -->
-  <button onclick="window.print()" 
-          class="bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition">
-    Imprimer la recette 🖨️
-  </button>
 
+   <a href="{% url 'recettes:recette_pdf' recette.id %}?couverts={{ nombre_couverts }}"
+   class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
+   📄 Exporter en PDF
+    </a>
   <!-- Bouton Exporter en .docx -->
    <a href="{% url 'recettes:export_docx' recette.pk %}?couverts={{ nombre_couverts }}" 
    class="bg-purple-600 text-white px-6 py-3 rounded-md shadow hover:bg-purple-700 transition">
    Exporter en .docx 📄
    </a>
-    <a href="{% url 'recettes:recette_pdf' recette.id %}?couverts={{ nombre_couverts }}"
-   class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
-   📄 Exporter en PDF
-    </a>
+
+    <!-- Bouton Imprimer -->
+    <button onclick="window.print()"
+            class="bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition">
+      Imprimer la recette 🖨️
+    </button>
     <a href="{% url 'recettes:recette_update' recette.id %}"
        class="inline-flex items-center px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-700 transition">
       ✏️ Modifier

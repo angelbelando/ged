@@ -30,8 +30,8 @@ class Recette(models.Model):
         return self.titre
 
 UNITES = (
+    ('--', 'Groupe Ingrédients'),
     ('  ', 'Ingrédient sans unité'),
-    ('--', 'Paragraphe'),
     ('ail/s', 'Ail'),
     ('banane/s', 'Banane'),
     ('barre/s', 'Barre'),

@@ -13,7 +13,6 @@ FORM_CONTROL = (
     "shadow-sm "
     "focus:border-blue-500 focus:ring-1 focus:ring-blue-200"
 )
-
 class RecetteForm(forms.ModelForm):
     class Meta:
         model = Recette
@@ -33,12 +32,18 @@ class RecetteForm(forms.ModelForm):
             "note",
         ]
         widgets = {
-            "titre": forms.TextInput(attrs={"class": COMMON_INPUT_CLASS + " text-lg"}),
+            "titre": forms.TextInput(attrs={
+                "rows": 1,
+                "class": COMMON_INPUT_CLASS + " text-lg"}),
             "description": forms.Textarea(attrs={
+                "rows": 1,
                 "class": COMMON_TEXTAREA_CLASS}),
             "etapes": forms.Textarea(attrs={
+                "id": "id_etapes",
+                "rows": 14,
                 "class": COMMON_TEXTAREA_CLASS}),
             "conseils": forms.Textarea(attrs={
+                "rows":3,
                 "class": COMMON_TEXTAREA_CLASS}),
             "categorie": forms.Select(attrs={
                 "class": COMMON_FORM_SELECT,}),
@@ -51,7 +56,10 @@ class RecetteForm(forms.ModelForm):
             "note": forms.Select(attrs={
                 "class": COMMON_FORM_SELECT, }),
             "video_url_youtube": forms.Textarea(attrs={
-                "class": COMMON_INPUT_CLASS, }),
+                "rows": 1,
+                "class": COMMON_INPUT_CLASS,
+                "placeholder": "https://www.youtube.com/watch?v=…",
+            }),
 
         }
 
