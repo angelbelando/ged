@@ -59,7 +59,12 @@
         {{ form.description.errors }}
       </div>
     </div>
-
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+      <div>Préparation en minute</div>
+      <div>Cuisson en minute</div>
+      <div>Nombre de couvert</div>
+      <div>Note</div>
+    </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
       <div>{{ form.temps_preparation }}</div>
       <div>{{ form.temps_cuisson }}</div>
@@ -72,7 +77,7 @@
   <section class="bg-white rounded-xl shadow p-6">
     <h2 class="text-lg font-bold text-blue-600 mb-4">
       Ingrédients
-      <span class="text-sm text-gray-400">( Choisir le "Groupe Ingrédients" pour regrouper des ingrédients )</span>
+      <span class="text-sm text-gray-400">(Choisir le "Groupe Ingrédients" pour regrouper des ingrédients)</span>
     </h2>
 
     {% if ingredients.non_form_errors %}
@@ -135,7 +140,7 @@
     <details open class="p-4 border-b">
       <summary class="Text-lg font-bold text-blue-600 font-semibold cursor-pointer">
         Étapes
-        <span class="text-sm text-gray-400">( Commencer la ligne "- " pour définir une étape clé )</span>
+        <span class="text-sm text-gray-400">(Commencer la ligne "- " pour définir une étape clé)</span>
       </summary>
       <div class="relative">
         <pre id="etapes-highlight"
@@ -146,12 +151,12 @@
 
     </details>
 
-    <details class="p-4">
+    <details class="p-4 border-b">
       <summary class="Text-lg font-bold text-blue-600 font-semibold cursor-pointer">
         Conseils
-        <span class="text-sm text-gray-400">( Commencer la ligne "- " pour définir un conseil clé )</span>
+        <span class="text-sm text-gray-400">(Commencer la ligne "- " pour définir un conseil clé)</span>
       </summary>
-      <div class="mt-3">
+      <div class="mt-3 relative">
         {{ form.conseils }}
       </div>
     </details>
