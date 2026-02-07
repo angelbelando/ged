@@ -92,7 +92,7 @@ UNITES = (
 
 class RecetteIngredientUnit(models.Model):
     recette = models.ForeignKey(Recette, on_delete=models.CASCADE, related_name='recette_ingredient_units')
-    qte = models.DecimalField(decimal_places=2, max_digits=10,null=True)
+    qte = models.DecimalField(default=0, decimal_places=2, max_digits=10,null=True)
     unit = models.CharField(choices=UNITES, max_length=200)
     description = models.CharField(max_length=200, blank=True, null=True)
     ordre = models.IntegerField(default=0, blank=True, null=True)
