@@ -176,11 +176,19 @@ class IngredientInlineMixin:
     formset_prefix = "ingredients"
 
     def get_formset(self):
-        return self.formset_class(
+        instance = getattr(self, "object", None)
+
+        formset = self.formset_class(
             self.request.POST or None,
-            instance=getattr(self, "object", None),
-            prefix=self.formset_prefix
+            instance=instance,
+            prefix=self.formset_prefix,
         )
+
+        # 🔥 TRI ICI
+        if instance and instance.pk:
+            formset.queryset = formset.queryset.order_by("ordre")
+
+        return formset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
