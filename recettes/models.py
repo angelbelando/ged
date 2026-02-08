@@ -12,7 +12,7 @@ class Categorie(models.Model):
 
 class Recette(models.Model):
     titre = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(default=None, blank=True, null=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name='recettes')
     temps_preparation = models.IntegerField()
     temps_cuisson = models.IntegerField()
