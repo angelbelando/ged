@@ -11,7 +11,7 @@
 </div>
 
 <div class="w-full">
-        <img src="{% static 'img/cuisine.jpg' %}" alt="Recettes" class="w-full h-96 object-cover rounded-lg shadow-md">
+        <img src="{% static 'img/cuisine.jpg' %}" alt="Recettes" class="w-full h-48 object-cover rounded-lg shadow-md">
 </div>
 <!-- Titre avec effet -->
 <div class="w-full mx-auto text-center mt-6">
@@ -22,6 +22,7 @@
     </h2>
 </div>
 <form method="GET" action="" class="flex flex-wrap justify-end items-center space-x-2 ">
+
     <input class="border border-gray-300 rounded-xl px-4 py-2 shadow-md w-full md:w-auto focus:ring focus:ring-blue-300" name="q" type="text" placeholder="🔍 Rechercher..." value="{{ request.GET.q }}">
     
     <select name="categorie" class="border border-gray-300 rounded-xl px-4 py-2 shadow-md focus:ring focus:ring-green-300">
@@ -38,7 +39,7 @@
     </button>
 </form>
 
-<div class="container mx-auto flex justify-left mb-4">
+<div class="container mx-auto flex justify-left mb-2">
     <a href="{% url 'recettes:recette_create' %}"
        class="inline-flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg shadow hover:bg-green-700 transition">
         ➕ Ajouter une recette
@@ -54,11 +55,11 @@
                 <tr>
                     <th class="p-3 rounded-tl-lg">Titre</th>
                     <th class="p-3">Catégorie</th>
-                    <th class="p-3 text-center hidden md:table-cell">Descriptif</th>
                     <th class="p-3 text-center">Temps total</th>
                     <th class="p-3 text-center">Note</th>
                     <th class="p-3 text-center hidden md:table-cell">Image</th>
                     <th class="p-3 rounded-tr-lg text-center">Détails</th>
+                     <th class="p-3 rounded-tr-lg text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,42 +67,58 @@
                <!-- <tr class="border-b hover:bg-gray-100 transition"> -->
                 <tr class="border-b hover:bg-gray-100 transition group">
 
-                    <td class="p-3">
-                        <a href="{% url 'recettes:detail' recette.id %}" class="text-blue-600 hover:underline">
-                        {{ recette.titre }}
-                        </a>
+                    <tr class="border-b hover:bg-gray-100 transition relative group">
+                    <td class="p-3 relative">
+                        <a href="{% url 'recettes:detail' recette.id %}"
+                           class="absolute inset-0 z-10"
+                           aria-label="Voir la recette"></a>
+
+                        <span class="relative z-20 text-blue-600 group-hover:underline">
+                            {{ recette.titre }}
+                        </span>
                     </td>
+
                     <td class="p-3">{{ recette.categorie.nom }}</td>
-                    <td class="p-3 text-left hidden md:table-cell">{{ recette.description }}</td>
+                    <!-- <td class="p-3 text-left hidden md:table-cell">{{ recette.description }}</td> -->
                     <td class="p-3 text-center">{{ recette.temps_preparation|add:recette.temps_cuisson }} min.</td>
                     <td class="p-3 text-center text-yellow-400 text-xl">
                       {% for _ in ""|rjust:recette.note %}
                           ★
                       {% endfor %}
-                  </td>
+                    </td>
                     <td class="p-3 text-center hidden md:table-cell">
-                        <a href="{% url 'recettes:detail' recette.id %}">
+                        <a href="{% url 'recettes:detail' recette.id %}"
+                        >
                         {% if recette.image %}
-                            <img src="{{ recette.image.url }}" alt="Recette" class="w-36 h-auto rounded-lg shadow-md mx-auto">
+                            <img src="{{ recette.image.url }}" alt="Recette" class="w-32 h-auto rounded-lg shadow-md mx-auto">
                         {% else %}
                             <span class="text-gray-400 italic">Pas d'image</span>
                         {% endif %}
                         </a>
                     </td>
-                   <td class="p-3 text-center">
-                    <div class="flex justify-center gap-3">
+                  <td class="p-3 text-center">
+                    <div class="flex justify-center">
                         <a href="{% url 'recettes:detail' recette.id %}"
-                           class="inline-block bg-blue-500 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+                           class="h-24 w-full max-w-[120px]
+                                  flex items-center justify-center
+                                  bg-blue-500 text-white px-3 rounded-lg
+                                  shadow hover:bg-blue-700 transition">
                             Voir 👀
-                        </a>
-
-                        <a href="{% url 'recettes:recette_update' recette.id %}"
-                           class="inline-block bg-gray-500 text-white px-3 py-2 rounded-lg shadow hover:bg-gray-700 transition">
-                            ✏️ Modifier
                         </a>
                     </div>
                 </td>
 
+                <td class="p-3 text-center">
+                    <div class="flex justify-center">
+                        <a href="{% url 'recettes:recette_update' recette.id %}"
+                           class="h-24 w-full max-w-[120px]
+                                  flex items-center justify-center
+                                  bg-gray-500 text-white px-3 rounded-lg
+                                  shadow hover:bg-gray-700 transition">
+                            ✏️ Modifier
+                        </a>
+                    </div>
+                </td>
 
                 </tr>
                 {% endfor %}
