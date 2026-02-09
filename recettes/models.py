@@ -18,7 +18,7 @@ class Recette(models.Model):
     temps_cuisson = models.IntegerField()
     nombre_couverts = models.IntegerField()
     ingredients = models.TextField(blank=True)
-    etapes = models.TextField()
+    etapes = models.TextField(default=None, blank=True, null=True)
     conseils = models.TextField(default=None, blank=True, null=True)
     image = models.ImageField(upload_to=DIR_PHOTOS, null=True, blank=True)
     video_url_youtube = models.URLField(max_length=200, unique=False, blank=True, null=True)
