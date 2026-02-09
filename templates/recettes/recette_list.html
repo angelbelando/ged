@@ -21,30 +21,50 @@
         </span>
     </h2>
 </div>
-<form method="GET" action="" class="flex flex-wrap justify-end items-center space-x-2 ">
+<div class="container mx-auto flex flex-wrap items-center justify-between mb-4 gap-3">
 
-    <input class="border border-gray-300 rounded-xl px-4 py-2 shadow-md w-full md:w-auto focus:ring focus:ring-blue-300" name="q" type="text" placeholder="🔍 Rechercher..." value="{{ request.GET.q }}">
-    
-    <select name="categorie" class="border border-gray-300 rounded-xl px-4 py-2 shadow-md focus:ring focus:ring-green-300">
-        <option value="">Toutes les catégories</option>
-        {% for cat in categories %}
-        <option value="{{ cat.id }}" {% if request.GET.categorie == cat.id|stringformat:"s" %}selected{% endif %}>
-            {{ cat.nom }}
-        </option>
-        {% endfor %}
-    </select>
-    
-    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
-        <i class="fas fa-search"></i>
-    </button>
-</form>
-
-<div class="container mx-auto flex justify-left mb-2">
+    <!-- Bouton Ajouter -->
     <a href="{% url 'recettes:recette_create' %}"
-       class="inline-flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg shadow hover:bg-green-700 transition">
+       class="inline-flex items-center gap-2
+              bg-green-600 text-white px-5 py-3
+              rounded-lg shadow hover:bg-green-700 transition">
         ➕ Ajouter une recette
     </a>
+
+    <!-- Formulaire de recherche -->
+    <form method="GET" action=""
+          class="flex flex-wrap items-center gap-2">
+
+        <input
+            class="border border-gray-300 rounded-xl px-4 py-2 shadow-md
+                   w-full sm:w-64
+                   focus:ring focus:ring-blue-300"
+            name="q"
+            type="text"
+            placeholder="🔍 Rechercher..."
+            value="{{ request.GET.q }}">
+
+        <select name="categorie"
+                class="border border-gray-300 rounded-xl px-4 py-2 shadow-md
+                       focus:ring focus:ring-green-300">
+            <option value="">Toutes les catégories</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}"
+                        {% if request.GET.categorie == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.nom }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit"
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg
+                       shadow-md hover:bg-blue-700 transition">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+
 </div>
+
 
 
 <!-- Table des recettes -->
@@ -81,7 +101,7 @@
                     <td class="p-3">{{ recette.categorie.nom }}</td>
                     <!-- <td class="p-3 text-left hidden md:table-cell">{{ recette.description }}</td> -->
                     <td class="p-3 text-center">{{ recette.temps_preparation|add:recette.temps_cuisson }} min.</td>
-                    <td class="p-3 text-center text-yellow-400 text-xl">
+                    <td class="p-3 text-center text-yellow-400 text-sm">
                       {% for _ in ""|rjust:recette.note %}
                           ★
                       {% endfor %}
