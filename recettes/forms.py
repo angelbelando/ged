@@ -58,7 +58,7 @@ class RecetteForm(forms.ModelForm):
             "video_url_youtube": forms.Textarea(attrs={
                 "rows": 1,
                 "class": COMMON_INPUT_CLASS,
-                "placeholder": "https://www.youtube.com/watch?v=…",
+                "placeholder": "https://www.youtube.com/embed/1AjVH39YRcA?si=lFseevlAW39czI6v",
             }),
 
         }

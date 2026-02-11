@@ -21,7 +21,7 @@ class Recette(models.Model):
     etapes = models.TextField(default=None, blank=True, null=True)
     conseils = models.TextField(default=None, blank=True, null=True)
     image = models.ImageField(upload_to=DIR_PHOTOS, null=True, blank=True)
-    video_url_youtube = models.URLField(max_length=200, unique=False, blank=True, null=True)
+    video_url_youtube = models.URLField(default='https://www.youtube.com/embed/1AjVH39YRcA?si=lFseevlAW39czI6v', max_length=200, unique=False, blank=True, null=True)
     note = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])
     auteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recettes', default=None, null=True)
     date_publication = models.DateTimeField(auto_now_add=True)
