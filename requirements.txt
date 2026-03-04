@@ -35,7 +35,7 @@ python-dotenv==1.0.1
 RapidFuzz==3.14.1
 reportlab==4.4.9
 six==1.17.0
-sqlparse==0.5.3
+sqlparse==0.5.5
 tablib==3.7.0
 tailwindcss==0.0.1
 tinycss2==1.5.1
