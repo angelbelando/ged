@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django_filters',
     'photologue',
     'sortedm2m',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -168,3 +169,9 @@ LOGOUT_REDIRECT_URL = '/'
 
 # CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 SITE_ID = 1
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS":
+        "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20
+}

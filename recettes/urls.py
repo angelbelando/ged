@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from recettes import views
+from .views_api import RecettesAPIView, RecetteDetailAPIView
 
 app_name = 'recettes'
 urlpatterns = [
@@ -26,5 +27,12 @@ urlpatterns = [
     path("<int:pk>/pdf/", views.ExportRecettePDFView.as_view(), name="recette_pdf"),
     path('new/', views.RecetteCreateView.as_view(), name='recette_create'),
     path('<int:pk>/edit/', views.RecetteUpdateView.as_view(), name='recette_update'),
+    path("api/", RecettesAPIView.as_view(), name="api_recettes"),
+
+    path(
+        "api/<int:pk>/",
+        RecetteDetailAPIView.as_view(),
+        name="api_recette_detail"
+    ),
 
 ]

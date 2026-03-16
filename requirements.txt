@@ -11,6 +11,10 @@ django-filter==24.3
 django-grappelli==4.0.1
 django-photologue==3.17
 django-sortedm2m==4.0.0
+django-stubs==5.2.9
+django-stubs-ext==5.2.9
+djangorestframework==3.16.1
+djangorestframework-stubs==3.16.8
 et_xmlfile==2.0.0
 ExifRead==3.0.0
 fonttools==4.61.0
@@ -40,6 +44,7 @@ tablib==3.7.0
 tailwindcss==0.0.1
 tinycss2==1.5.1
 tinyhtml5==2.0.0
+types-PyYAML==6.0.12.20250915
 typing_extensions==4.15.0
 tzdata==2024.2
 webencodings==0.5.1
