@@ -15,6 +15,7 @@ django-stubs==5.2.9
 django-stubs-ext==5.2.9
 djangorestframework==3.16.1
 djangorestframework-stubs==3.16.8
+djangorestframework_simplejwt==5.5.1
 et_xmlfile==2.0.0
 ExifRead==3.0.0
 fonttools==4.61.0
@@ -30,6 +31,7 @@ psycopg==3.2.3
 psycopg-binary==3.2.3
 pycparser==2.23
 pydyf==0.12.1
+PyJWT==2.12.1
 PyMuPDF==1.25.2
 pyparsing==3.2.1
 pyphen==0.17.2
