@@ -39,7 +39,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('protected/', biens_views.ProtectedView.as_view(), name='protected'),
     path('photologue/', include('photologue.urls', namespace='photologue')),
-    path('api-token-auth/', obtain_auth_token),
+    #path('api-token-auth/', obtain_auth_token),
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
