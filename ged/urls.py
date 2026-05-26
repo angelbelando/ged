@@ -19,7 +19,9 @@ from django.conf import settings
 from django.conf.urls import include
 from django.urls import path
 from django.views.generic import TemplateView
-from biens import views as biens_views 
+from rest_framework.authtoken.views import obtain_auth_token
+
+from biens import views as biens_views
 from django.conf.urls.static import static
 from django.views import generic
 from django.contrib.auth import views as auth_views
@@ -41,9 +43,10 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('protected/', biens_views.ProtectedView.as_view(), name='protected'),
     path('photologue/', include('photologue.urls', namespace='photologue')),
+    #path('api-token-auth/', obtain_auth_token),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 sitemaps = {
