@@ -4,8 +4,8 @@ from .models import Recette
 from .utils.utils_api import build_recette_payload
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-class RecettesAPIView(LoginRequiredMixin, PermissionRequiredMixin, APIView):
-#class RecettesAPIView(APIView):
+#class RecettesAPIView(LoginRequiredMixin, PermissionRequiredMixin, APIView):
+class RecettesAPIView(APIView):
     permission_required = 'recettes.view_recette'
     permission_denied_message = "Vous n'avez pas la permission de voir cette page."
     def get(self, request):
@@ -26,8 +26,8 @@ class RecettesAPIView(LoginRequiredMixin, PermissionRequiredMixin, APIView):
 
         return Response(data)
 
-class RecetteDetailAPIView(LoginRequiredMixin, PermissionRequiredMixin, APIView):
-#class RecetteDetailAPIView(APIView):
+#class RecetteDetailAPIView(LoginRequiredMixin, PermissionRequiredMixin, APIView):
+class RecetteDetailAPIView(APIView):
     permission_required = 'recettes.view_recette'
     permission_denied_message = "Vous n'avez pas la permission de voir cette page."
     def get(self, request, pk):
