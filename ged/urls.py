@@ -24,7 +24,10 @@ from django.conf.urls.static import static
 from django.views import generic
 from django.contrib.auth import views as auth_views
 from photologue.sitemaps import GallerySitemap, PhotoSitemap
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('', biens_views.home, name='home'),
@@ -38,7 +41,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('protected/', biens_views.ProtectedView.as_view(), name='protected'),
     path('photologue/', include('photologue.urls', namespace='photologue')),
-    
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
