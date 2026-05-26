@@ -19,6 +19,7 @@ from django.urls import path
 from recettes import views
 from .views_api import RecettesAPIView, RecetteDetailAPIView
 
+
 app_name = 'recettes'
 urlpatterns = [
     path('', views.RecetteListView.as_view(), name='recettes'),
