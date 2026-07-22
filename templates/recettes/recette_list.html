@@ -107,8 +107,7 @@
                       {% endfor %}
                     </td>
                     <td class="p-3 text-center hidden md:table-cell">
-                        <a href="{% url 'recettes:detail' recette.id %}"
-                        >
+                        <a href="{% url 'recettes:detail' recette.id %}">
                         {% if recette.image %}
                             <img src="{{ recette.image.url }}" alt="Recette" class="w-32 h-auto rounded-lg shadow-md mx-auto">
                         {% else %}
