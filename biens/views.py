@@ -9,6 +9,8 @@ import fitz  # PyMuPDF
 from PIL import Image
 from io import BytesIO
 from django.db.models import Sum
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import base64
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -115,8 +117,13 @@ class TableauBordView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
         # Sauvegarder le graphique dans un buffer
         buffer = BytesIO()
-        plt.savefig(buffer, format='png')
+
+        plt.tight_layout()
+        plt.savefig(buffer, format="png", dpi=150)
+
         buffer.seek(0)
+
+        plt.close()
 
         # Ajouter le graphique au contexte
         # Encoder le graphique en base64

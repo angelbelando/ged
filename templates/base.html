@@ -66,69 +66,199 @@
 </head>
 {% block extra_js %}{% endblock %}
 <body class="bg-gray-100">
-  <header>
-    <nav class="bg-blue-500 text-white text-lg font-bold py-3">
-    <div class="container mx-auto flex items-center justify-between px-4">
-        <div class="flex items-center space-x-3">
-            <a href="{% url 'home' %}" class="flex items-center">
-                <img
-                    src="{% static 'img/favicon.png' %}"
-                    class="h-11 w-11 rounded-xl shadow-sm bg-white p-1"
-                >
-            </a>
-            <a class="text-lg font-bold flex items-center" href="{% url 'home' %}">
-                <i class="fas fa-home"></i>
-            </a>
-        </div>
+<header class="sticky top-0 z-50 shadow-lg">
+    <nav class="bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto">
 
-        <!-- Bouton menu mobile -->
-        <button id="menuToggle" class="lg:hidden text-white focus:outline-none">
-            <span class="fas fa-bars"></span>
-        </button>
+            <div class="flex items-center justify-between h-16 px-4">
 
-        <!-- Menu Responsive -->
-        <div id="menu" class="hidden flex flex-col lg:flex lg:flex-row lg:space-x-4 lg:relative lg:top-0 lg:w-auto absolute top-14 left-0 w-full bg-blue-500 text-white shadow-md py-2 lg:py-0">
-            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'objets:tableau_bord' %}">📊 Tableau de Bord</a>
-            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'objets:liste_objets' %}">🛍️ Objets</a>
-            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'documents:liste_documents' %}">📄 Documents</a>
-    
-          <!-- Sous-menu Photos -->
-            <div class="relative group flex items-center">
-                    <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg cursor-pointer" id="navbarDropdown2" href="#" role="button">
-                        📷 Photos ⬇
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+
+                    <a href="{% url 'home' %}" class="flex items-center">
+                        <img src="{% static 'img/favicon.png' %}"
+                             class="h-10 w-10 rounded-lg bg-white p-1"
+                             alt="Logo">
                     </a>
-                    <ul class="absolute hidden group-hover:block bg-white text-gray-800 shadow-lg rounded-md mt-28 w-56">
-                        <li><a class="block px-4 py-2 hover:bg-gray-100" href="{% url 'photos:gallery_list' %}">🏞️ Galeries</a></li>
-                        <li><a class="block px-4 py-2 hover:bg-gray-100" href="{% url 'photos:photo_list' %}">📷 Toutes les photos</a></li>
-                    </ul>
-            </div>
 
-            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'recettes:recettes' %}">🍽️ Cuisine</a>
-            <a class="py-2 px-4 hover:bg-blue-600 block rounded-lg" href="{% url 'admin:index' %}" target="_blank">⚙️ Gestion des données</a>       
-        </div>
+                    <span class="font-bold text-xl">
+                        ABSite
+                    </span>
 
-        <!-- Profil utilisateur -->
-        <div class="flex items-center space-x-4">
-            <div class="text-white font-bold">{{ user.username }}</div>
-            <div class="relative group">
-                <a class="text-white hover:text-gray-300" id="navbarDropdown" href="#" role="button">
-                    <i class="fas fa-user fa-fw"></i>
-                </a>
-                <ul class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
-                    <li><a href="{% url 'login' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Se connecter</a></li>
-                    <li>
+                </div>
+
+                <!-- Menu Desktop -->
+
+                <div class="hidden lg:flex items-center space-x-2">
+
+                    <a href="{% url 'objets:tableau_bord' %}"
+                       class="px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        📊 Tableau de bord
+                    </a>
+
+                    <a href="{% url 'objets:liste_objets' %}"
+                       class="px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        🛍️ Objets
+                    </a>
+
+                    <a href="{% url 'documents:liste_documents' %}"
+                       class="px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        📄 Documents
+                    </a>
+
+                    <!-- Photos -->
+
+                    <div class="relative">
+
+                        <button
+                            id="photosButtonDesktop"
+                            class="px-4 py-2 rounded-lg hover:bg-blue-700">
+                            📷 Photos
+                        </button>
+
+                        <div
+                            id="photosMenuDesktop"
+                            class="hidden absolute right-0 mt-2 w-60 rounded-lg bg-white text-gray-800 shadow-xl">
+
+                            <a href="{% url 'photos:gallery_list' %}"
+                               class="block px-4 py-3 hover:bg-gray-100">
+                                🏞️ Galeries
+                            </a>
+
+                            <a href="{% url 'photos:photo_list' %}"
+                               class="block px-4 py-3 hover:bg-gray-100">
+                                📷 Toutes les photos
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'recettes:recettes' %}"
+                       class="px-4 py-2 rounded-lg hover:bg-blue-700">
+                        🍽 Cuisine
+                    </a>
+
+                </div>
+
+                <!-- Profil -->
+
+                <div class="hidden lg:flex items-center ml-6">
+
+                    <button id="profileButton"
+                            class="flex items-center space-x-2 hover:bg-blue-700 rounded-lg px-3 py-2">
+
+                        <span>{{ user.username }}</span>
+
+                        <i class="fas fa-user-circle text-xl"></i>
+
+                    </button>
+
+                    <div id="profileMenu"
+                         class="hidden absolute right-4 top-16 bg-white text-gray-800 rounded-lg shadow-xl w-56">
+
+                        <a href="{% url 'login' %}"
+                           class="block px-4 py-3 hover:bg-gray-100">
+                            Connexion
+                        </a>
+
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Se déconnecter</button>
+                            <button
+                                class="w-full text-left px-4 py-3 hover:bg-gray-100">
+                                Déconnexion
+                            </button>
                         </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
 
- </header>
+                    </div>
+
+                </div>
+
+                <!-- Hamburger -->
+
+                <button id="mobileButton"
+                        class="lg:hidden">
+
+                    <svg class="w-8 h-8"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         viewBox="0 0 24 24">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4 6h16M4 12h16M4 18h16"/>
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <!-- Menu Mobile -->
+
+            <div id="mobileMenu"
+                 class="hidden lg:hidden bg-blue-700">
+
+                <a href="{% url 'objets:tableau_bord' %}"
+                   class="block px-5 py-3 border-b border-blue-500">
+                    📊 Tableau de bord
+                </a>
+
+                <a href="{% url 'objets:liste_objets' %}"
+                   class="block px-5 py-3 border-b border-blue-500">
+                    🛍️ Objets
+                </a>
+
+                <a href="{% url 'documents:liste_documents' %}"
+                   class="block px-5 py-3 border-b border-blue-500">
+                    📄 Documents
+                </a>
+
+                <button id="mobilePhotosButton"
+                        class="w-full text-left px-5 py-3 border-b border-blue-500">
+
+                    📷 Photos ▼
+
+                </button>
+
+                <div id="mobilePhotosMenu"
+                     class="hidden bg-blue-800">
+
+                    <a href="{% url 'photos:gallery_list' %}"
+                       class="block px-8 py-3">
+
+                        🏞️ Galeries
+
+                    </a>
+
+                    <a href="{% url 'photos:photo_list' %}"
+                       class="block px-8 py-3">
+
+                        📷 Toutes les photos
+
+                    </a>
+
+                </div>
+
+                <a href="{% url 'recettes:recettes' %}"
+                   class="block px-5 py-3 border-b border-blue-500">
+                    🍽 Cuisine
+                </a>
+
+                <a href="{% url 'admin:index' %}"
+                   class="block px-5 py-3 border-b border-blue-500">
+                    ⚙ Administration
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</header>
 
 <main class="container mx-auto p-4">
     {% block content %}
@@ -171,7 +301,6 @@ new Sortable(list, {
 });
 </script>
 <script>
-<script>
 document.addEventListener("click", function (e) {
     if (e.target.classList.contains("delete-ingredient")) {
         const row = e.target.closest(".ingredient-row");
@@ -201,6 +330,42 @@ function updateOrdre() {
 }
 row.style.opacity = 0.4;
 
+</script>
+<script>
+ const mobileButton = document.getElementById('mobileButton');
+const mobileMenu = document.getElementById('mobileMenu');
+
+mobileButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+});
+
+const mobilePhotosButton = document.getElementById('mobilePhotosButton');
+const mobilePhotosMenu = document.getElementById('mobilePhotosMenu');
+
+mobilePhotosButton.addEventListener('click', () => {
+    mobilePhotosMenu.classList.toggle('hidden');
+});
+
+const photosButtonDesktop = document.getElementById('photosButtonDesktop');
+const photosMenuDesktop = document.getElementById('photosMenuDesktop');
+
+photosButtonDesktop.addEventListener('click', (e) => {
+    e.stopPropagation();
+    photosMenuDesktop.classList.toggle('hidden');
+});
+
+const profileButton = document.getElementById('profileButton');
+const profileMenu = document.getElementById('profileMenu');
+
+profileButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    profileMenu.classList.toggle('hidden');
+});
+
+document.addEventListener('click', () => {
+    photosMenuDesktop.classList.add('hidden');
+    profileMenu.classList.add('hidden');
+});
 </script>
 </body>
 </html>
