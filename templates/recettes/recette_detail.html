@@ -1,247 +1,620 @@
 {% extends 'base.html' %}
-{% block title %}Détail objet{% endblock %}
-{% load custom_filters %}
 {% load static %}
+{% load custom_filters %}
+
+{% block title %}
+{{ recette.titre }}
+{% endblock %}
+
 {% block content %}
-<section class="bg-gray-100 text-gray-800">
-<div class="sticky top-0 z-50 bg-gray-100">
-  <!-- Header -->
-  <header class="bg-blue-600 text-white py-6 rounded-lg shadow-md">
-    <div class="container mx-auto px-4 text-center">
-      <h1 class="text-4xl font-extrabold">{{ recette.titre }}</h1>
-      <p class="text-lg font-light mt-2">Découvrez tous les détails de cette recette</p>
+
+<div class="max-w-6xl mx-auto px-4 py-6">
+
+    <!-- ================================================= -->
+    <!-- HERO -->
+    <!-- ================================================= -->
+
+    <section class="bg-white rounded-3xl overflow-hidden shadow-xl">
+
+        {% if recette.image %}
+
+        <div class="relative h-72 md:h-96">
+
+            <img
+                src="{{ recette.image.url }}"
+                alt="{{ recette.titre }}"
+                class="w-full h-full object-cover">
+
+            <div
+                class="absolute inset-0 bg-gradient-to-t
+                       from-black/70 via-black/20 to-transparent">
+
+            </div>
+
+            <div
+                class="absolute bottom-0 left-0 right-0 p-8">
+
+                <h1
+                    class="text-4xl md:text-5xl
+                           font-bold text-white">
+
+                    {{ recette.titre }}
+
+                </h1>
+
+                <div
+                    class="flex flex-wrap gap-3 mt-5">
+
+                    <span
+                        class="bg-white/90 px-4 py-2 rounded-full">
+
+                        ⏱ {{ recette.temps_preparation|add:recette.temps_cuisson }} min
+
+                    </span>
+
+                    <span
+                        class="bg-white/90 px-4 py-2 rounded-full">
+
+                        📂 {{ recette.categorie.nom }}
+
+                    </span>
+
+                    <span
+                        class="bg-yellow-300 px-4 py-2 rounded-full">
+
+                        ★ {{ recette.note }}/5
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div
+            class="bg-gradient-to-r
+                   from-blue-700
+                   to-blue-500
+                   p-12">
+
+            <h1
+                class="text-5xl font-bold text-white">
+
+                {{ recette.titre }}
+
+            </h1>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- ACTIONS -->
+    <!-- ================================================= -->
+
+    <section class="mt-6">
+
+        <div
+            class="grid
+                   grid-cols-2
+                   md:grid-cols-5
+                   gap-3">
+
+            <a
+                href="{% url 'recettes:recette_pdf' recette.id %}?couverts={{ nombre_couverts }}"
+                class="rounded-xl
+                       bg-red-600
+                       text-white
+                       py-3
+                       text-center
+                       font-semibold
+                       hover:bg-red-700">
+
+                📄 PDF
+
+            </a>
+
+            <a
+                href="{% url 'recettes:export_docx' recette.pk %}?couverts={{ nombre_couverts }}"
+                class="rounded-xl
+                       bg-purple-600
+                       text-white
+                       py-3
+                       text-center
+                       font-semibold
+                       hover:bg-purple-700">
+
+                📝 Word
+
+            </a>
+
+            <button
+                onclick="window.print()"
+                class="rounded-xl
+                       bg-green-600
+                       text-white
+                       py-3
+                       font-semibold
+                       hover:bg-green-700">
+
+                🖨 Imprimer
+
+            </button>
+
+            <a
+                href="{% url 'recettes:recette_update' recette.id %}"
+                class="rounded-xl
+                       bg-gray-700
+                       text-white
+                       py-3
+                       text-center
+                       font-semibold
+                       hover:bg-gray-800">
+
+                ✏ Modifier
+
+            </a>
+
+            <a
+                href="{% url 'recettes:recettes' %}"
+                class="rounded-xl
+                       bg-blue-600
+                       text-white
+                       py-3
+                       text-center
+                       font-semibold
+                       hover:bg-blue-700">
+
+                ← Retour
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- CONTENU -->
+    <!-- ================================================= -->
+
+    <section class="mt-8">
+    <!-- ================================================= -->
+<!-- DESCRIPTION + INFORMATIONS -->
+<!-- ================================================= -->
+
+<section class="mt-8 space-y-6">
+
+    <!-- Description compacte -->
+
+    <div class="bg-white rounded-2xl shadow-lg p-5">
+
+        <div class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-xl">
+                🍽️
+            </div>
+
+            <div class="flex-1">
+
+                <h2 class="font-bold text-blue-700">
+                    Description
+                </h2>
+
+                {% if recette.description %}
+
+                    <p class="text-gray-700 mt-1">
+
+                        {{ recette.description }}
+
+                    </p>
+
+                {% else %}
+
+                    <p class="italic text-gray-400 mt-1">
+
+                        Aucune description.
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
     </div>
 
-  </header>
-<!-- Conteneur des boutons -->
-<div class="flex justify-center gap-4 mt-3">
 
-   <a href="{% url 'recettes:recette_pdf' recette.id %}?couverts={{ nombre_couverts }}"
-   class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
-   📄 Exporter en PDF
-    </a>
-  <!-- Bouton Exporter en .docx -->
-   <a href="{% url 'recettes:export_docx' recette.pk %}?couverts={{ nombre_couverts }}" 
-   class="bg-purple-600 text-white px-6 py-3 rounded-md shadow hover:bg-purple-700 transition">
-   Exporter en .docx 📄
-   </a>
+    <!-- Cartes d'informations -->
 
-    <!-- Bouton Imprimer -->
-    <button onclick="window.print()"
-            class="bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition">
-      Imprimer la recette 🖨️
-    </button>
-    <a href="{% url 'recettes:recette_update' recette.id %}"
-       class="inline-flex items-center px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-700 transition">
-      ✏️ Modifier
-    </a>
-</div>
-</div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <div class="bg-white rounded-2xl shadow-lg p-5 text-center">
+
+            <div class="text-3xl">⏱</div>
+
+            <p class="text-xs uppercase text-gray-500 mt-2">
+
+                Préparation
+
+            </p>
+
+            <p class="text-2xl font-bold text-blue-700">
+
+                {{ recette.temps_preparation }} min
+
+            </p>
+
+        </div>
 
 
-  <!-- Main Content -->
-  <main class="container mx-auto my-4 px-4 pt-6">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-5 text-center">
 
-      <!-- Image -->
-      {% if recette.image %}
-      <div class="w-full">
-        <img src="{{ recette.image.url }}" alt="Image de {{ recette.titre }}" 
-             class="w-full h-64 object-cover rounded-t-lg">
-      </div>
-      {% endif %}
+            <div class="text-3xl">🔥</div>
 
-     <!-- Contenu principal compact -->
-<!-- Contenu principal compact -->
-<section class="grid grid-cols-1 lg:grid-cols-2 gap-3 p-3">
+            <p class="text-xs uppercase text-gray-500 mt-2">
 
-  <!-- Description + vidéo -->
-  <div class="bg-gray-50 p-3 rounded-md shadow-sm">
+                Cuisson
 
-    <h2 class="text-base font-semibold text-blue-700 uppercase mb-1">
-      Description
-    </h2>
-        <p class="text-gray-700 text-sm leading-snug mt-2">
-      {{ recette.description }}
-    </p>
-    {% if recette.video_url_youtube %}
-    <details class="mt-2">
-      <summary
-        class="cursor-pointer text-xs font-medium text-blue-600 hover:text-blue-800">
-        Vidéo
-      </summary>
+            </p>
 
-      <div class="mt-1">
-          <iframe
-                    class="w-full h-52 rounded-md items-center"
-                    src="{{ recette.video_url_youtube }}"
+            <p class="text-2xl font-bold text-orange-600">
+
+                {{ recette.temps_cuisson }} min
+
+            </p>
+
+        </div>
+
+
+        <div class="bg-white rounded-2xl shadow-lg p-5 text-center">
+
+            <div class="text-3xl">📂</div>
+
+            <p class="text-xs uppercase text-gray-500 mt-2">
+
+                Catégorie
+
+            </p>
+
+            <span class="inline-block mt-2 rounded-full bg-green-100 px-3 py-1 text-green-800">
+
+                {{ recette.categorie.nom }}
+
+            </span>
+
+        </div>
+
+
+        <div class="bg-white rounded-2xl shadow-lg p-5 text-center">
+
+            <div class="text-3xl text-yellow-400">
+
+                ★
+
+            </div>
+
+            <p class="text-xs uppercase text-gray-500 mt-2">
+
+                Note
+
+            </p>
+
+            <p class="text-2xl font-bold">
+
+                {{ recette.note }}/5
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- INGRÉDIENTS -->
+<!-- ================================================= -->
+
+<section class="mt-10">
+
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+
+        <!-- En-tête -->
+        <div class="bg-gradient-to-r from-green-600 to-green-500 text-white p-6">
+
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+
+                <div>
+
+                    <h2 class="text-3xl font-bold">
+                        🥚 Ingrédients
+                    </h2>
+
+                    <p class="text-green-100 mt-2">
+                        Ajustez automatiquement les quantités.
+                    </p>
+
+                </div>
+
+                <!-- Nombre de personnes -->
+
+                <form method="POST" class="flex items-center gap-3">
+
+                    {% csrf_token %}
+
+                    <label
+                        for="nombre_couverts"
+                        class="font-semibold whitespace-nowrap">
+
+                        👥 Personnes
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="nombre_couverts"
+                        name="nombre_couverts"
+                        value="{{ nombre_couverts }}"
+                        min="1"
+                        max="999"
+                        required
+                        class="w-24 rounded-xl text-center
+                               border-gray-300 text-gray-800">
+
+                    <button
+                        type="submit"
+                        class="rounded-xl bg-white
+                               text-green-700
+                               px-4 py-2
+                               font-semibold
+                               hover:bg-green-100">
+
+                        ↻ Recalculer
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- Liste des ingrédients -->
+
+        <div class="p-6 space-y-3">
+
+            {% for ingredient in calcul_result %}
+
+                {% if ingredient.unit != '--' %}
+
+                    <label
+                        class="flex items-center gap-4
+                               rounded-2xl border border-gray-200
+                               p-4 hover:bg-green-50 transition
+                               cursor-pointer">
+
+                        <input
+                            type="checkbox"
+                            class="w-5 h-5 rounded text-green-600">
+
+                        <div class="flex-1">
+
+                            {% if ingredient.qte_adjusted %}
+
+                                <span class="font-bold text-green-700">
+
+                                    {{ ingredient.qte_adjusted }}
+
+                                </span>
+
+                                <span class="text-gray-700">
+
+                                    {{ ingredient.unit_display }}
+
+                                </span>
+
+                            {% endif %}
+
+                            {% if ingredient.description %}
+
+                                <span class="ml-2 text-gray-800">
+
+                                    {{ ingredient.description }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </label>
+
+                {% else %}
+
+                    <!-- Sous-titre -->
+
+                    <h3 class="mt-6 mb-2 text-xl font-bold text-blue-700">
+
+                        {{ ingredient.description }}
+
+                    </h3>
+
+                {% endif %}
+
+            {% empty %}
+
+                <div class="text-center text-gray-500 py-8">
+
+                    Aucun ingrédient.
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- PRÉPARATION -->
+<!-- ================================================= -->
+
+<section class="mt-10">
+
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+
+        <div class="bg-blue-600 text-white p-6">
+
+            <h2 class="text-3xl font-bold">
+
+                👨‍🍳 Préparation
+
+            </h2>
+
+        </div>
+
+        <div class="p-6 space-y-5">
+
+            {% for etape in etapes_formatees %}
+
+                {% if etape %}
+
+                <div class="flex gap-5">
+
+
+                    {% if etape.important %}
+                    <div class="font-bold text-blue-500 text-xl list-none">
+                        {{ etape.texte }}
+                    </div>
+                    {% else %}
+                     <div
+                        class="w-12 h-12 rounded-full
+                               bg-blue-600 text-white
+                               flex items-center justify-center
+                               font-bold text-lg
+                               shrink-0">
+
+                        {{ forloop.counter }}
+
+                    </div>
+                    <div
+                        class="flex-1 rounded-2xl
+                               bg-blue-50
+                               p-5">
+
+                        {{ etape.texte }}
+
+                    </div>
+                     {% endif %}
+
+                </div>
+
+                {% endif %}
+
+            {% empty %}
+
+                <p class="italic text-gray-500">
+
+                    Aucune étape renseignée.
+
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section><!-- ================================================= -->
+<!-- CONSEILS -->
+<!-- ================================================= -->
+
+{% if recette.conseils %}
+
+<section class="mt-10">
+
+    <div class="bg-yellow-50 border-l-8 border-yellow-400 rounded-3xl shadow-lg p-6">
+
+        <div class="flex items-center gap-4 mb-5">
+
+            <div class="text-4xl">
+
+                💡
+
+            </div>
+
+            <h2 class="text-2xl font-bold text-yellow-700">
+
+                Conseils du chef
+
+            </h2>
+
+        </div>
+
+        <div class="leading-8 text-gray-700">
+
+            {{ recette.conseils|linebreaks }}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+  <!-- ================================================= -->
+<!-- VIDÉO -->
+<!-- ================================================= -->
+
+
+
+<section class="mt-10">
+
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+
+        <div class="bg-red-600 text-white p-6">
+
+            <h2 class="text-3xl font-bold">
+
+                🎬 Vidéo de la recette
+
+            </h2>
+
+        </div>
+
+        <div class="p-6">
+
+            <div class="aspect-video rounded-2xl overflow-hidden shadow-lg">
+
+                <iframe
+                    class="w-full h-full"
+                    src="{{ recette.video_url_youtube}}"
+                    title="Vidéo"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen>
                 </iframe>
-      </div>
-    </details>
-    {% endif %}
 
-  </div>
+            </div>
 
-  <!-- Infos ultra-compactes -->
-  <div class="bg-gray-50 p-3 rounded-md shadow-sm">
-
-
-    <div class="grid grid-cols-3 gap-2 text-sm">
-
-      <div>
-        <p class="text-xs font-semibold text-blue-700 uppercase">Préparation</p>
-        <p>{{ recette.temps_preparation }} min</p>
-      </div>
-
-      <div>
-        <p class="text-xs font-semibold text-blue-700 uppercase">Cuisson</p>
-        <p>{{ recette.temps_cuisson }} min</p>
-      </div>
-
-      <div>
-        <p class="text-xs font-semibold text-blue-700 uppercase">Catégorie</p>
-        <p>{{ recette.categorie.nom }}</p>
-      </div>
+        </div>
 
     </div>
-  </div>
 
 </section>
 
 
 
-      <!-- Ingrédients -->
-     <section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">
-
-  <!-- Titre + nombre de couverts -->
-  <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-
-    <h2 class="text-lg font-semibold text-blue-700 uppercase">
-      Ingrédients
-    </h2>
-
-    <form method="POST" class="flex items-center gap-2">
-      {% csrf_token %}
-
-      <label for="nombre_couverts"
-             class="text-xs font-semibold text-blue-700 uppercase whitespace-nowrap">
-        Personnes
-      </label>
-
-      <input
-        type="number"
-        id="nombre_couverts"
-        name="nombre_couverts"
-        value="{{ nombre_couverts }}"
-        min="1"
-        max="999"
-        required
-        class="w-20 border border-gray-300 rounded-md px-2 py-1 text-sm">
-
-      <button type="submit"
-              class="bg-green-600 text-white px-3 py-1 rounded-md
-                     shadow hover:bg-green-700 transition">
-        ↻
-      </button>
-    </form>
-
-  </div>
-
-          <section class="bg-gray-50 p-2 rounded-md shadow-sm mb-4">
-            <ul class="list-disc pl-5 text-gray-700">
-              {% for ingredient in calcul_result %}
-              {% if ingredient.unit != '--' %}
-                {% if ingredient.description %}
-                {% if ingredient.qte_adjusted %}
-                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit_display }} {{ ingredient.description }}</li>
-                 {% else %}
-                 <li>{{ ingredient.unit }} {{ ingredient.description }}</li>
-                  {% endif %}
-                {% else %}
-                {% if ingredient.qte_adjusted %}
-                <li>{{ ingredient.qte_adjusted }} {{ ingredient.unit_display }}</li>
-                {% else %}
-                {% comment %} <li>{{ ingredient.unit }}</li> {% endcomment %}
-                {% endif %}
-                {% endif %}
-              {% else %}
-                  <p class="text-blue-600 text-lg">{{ ingredient.description }}</p>
-              {% endif %}
-              {% empty %}
-                  <li>Aucun ingrédients.</li>
-              {% endfor %}
-          </ul>
-          </section>
-          {% if recette.ingredients %}
-          {% for ingredient in recette.ingredients.splitlines %}
-          <p>{{ ingredient }}</p>
-          {% empty %}
-          <li class="text-gray-500 italic">Aucun ingrédient spécifié.</li>
-          {% endfor %}
-          {% endif %}
-      </section>  
-     
-
-      <!-- Étapes -->
-      <section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">
-        <h2 class="text-lg font-semibold text-blue-700 uppercase mb-2">Étapes</h2>
-        <ul class="pl-3 space-y-1">
-          {% for etape in etapes_formatees %}
-            {% if etape.important %}
-              <li class="font-bold text-blue-500 text-xl list-none">
-                {{ etape.texte }}
-              </li>
-            {% else %}
-              <li class="list-disc list-inside">
-                {{ etape.texte }}
-              </li>
-            {% endif %}
-          {% empty %}
-            <p class="text-gray-500 italic">Aucune étape spécifiée.</p>
-          {% endfor %}
-        </ul>
-      </section>
-      
-      <!-- Conseils -->
-       
-      <section class="bg-gray-50 p-6 rounded-md shadow-sm mb-6">
-        <h2 class="text-lg font-semibold text-blue-700 uppercase mb-2">Conseils</h2>
-        <ul class="pl-3 space-y-1">
-          {% for conseil in conseils_formatees %}
-            {% if conseil.important %}
-              <p class="font-bold text-blue-500 text-xl list-none">
-                {{ conseil.texte }}
-              </p>
-            {% else %}
-              <p class="list-disc list-inside">
-                {{ conseil.texte }}
-              </p>
-            {% endif %}
-          {% endfor %}
-      </section>
-
-      <!--Note -->
-      <section class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
-      
-        <div class="bg-gray-50 p-6 rounded-md shadow-sm">
-          <h2 class="text-lg font-semibold text-blue-700 uppercase mb-2">Note</h2>
-          <div class="flex items-center space-x-1 text-yellow-400">
-            {% for i in "12345" %}
-              {% if i|add:"0" <= recette.note %}
-                <span class="text-2xl">★</span>
-              {% else %}
-                <span class="text-2xl text-gray-300">★</span>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-
-      </section>
-         <!-- Formulaire pour Nombre de Couverts -->
    
 
       <!-- Bouton Retour -->
