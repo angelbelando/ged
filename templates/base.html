@@ -138,7 +138,7 @@
                        class="px-4 py-2 rounded-lg hover:bg-blue-700">
                         🍽 Cuisine
                     </a>
-                    <a href="{% url 'admin:index' %}" `
+                    <a href="{% url 'admin:index' %}"
                        class="px-4 py-2 rounded-lg hover:bg-blue-700">
                     ⚙ Administration
                     </a>
@@ -204,6 +204,55 @@
 
             <div id="mobileMenu"
                  class="hidden lg:hidden bg-blue-700">
+                <!-- ================================================= -->
+                <!-- Profil utilisateur -->
+                <!-- ================================================= -->
+
+                <div class="px-5 py-5 bg-blue-800 border-b border-blue-500">
+
+                    {% if user.is_authenticated %}
+
+                        <div class="flex items-center gap-4">
+
+                            <div
+                                class="w-12 h-12 rounded-full
+                                       bg-white text-blue-700
+                                       flex items-center justify-center
+                                       font-bold text-xl">
+
+                                {{ user.username|first|upper }}
+
+                            </div>
+
+                            <div>
+
+                                <p class="font-semibold">
+
+                                    {{ user.username }}
+
+                                </p>
+
+                                <p class="text-sm text-blue-200">
+
+                                    Connecté
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        <p>
+
+                            Utilisateur non connecté
+
+                        </p>
+
+                    {% endif %}
+
+                </div>
 
                 <a href="{% url 'objets:tableau_bord' %}"
                    class="block px-5 py-3 border-b border-blue-500">
@@ -255,6 +304,37 @@
                    class="block px-5 py-3 border-b border-blue-500">
                     ⚙ Administration
                 </a>
+
+                {% if user.is_authenticated %}
+                <form
+                    method="post"
+                    action="{% url 'logout' %}"
+                    class="border-t border-blue-500">
+
+                    {% csrf_token %}
+
+                    <button
+                        class="w-full text-left
+                               px-5 py-4
+                               hover:bg-blue-800">
+
+                        🚪 Déconnexion
+
+                    </button>
+
+                </form>
+
+                {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    class="block px-5 py-4 hover:bg-blue-800">
+
+                    🔐 Connexion
+
+                </a>
+
+                {% endif %}
 
             </div>
 

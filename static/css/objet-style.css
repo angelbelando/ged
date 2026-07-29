@@ -14,12 +14,12 @@
     background-size: cover; 
     background-repeat: no-repeat;
     background-position: center center;
-    height: 100vh; /* Assurez-vous que l'image couvre toute la hauteur de la page */
+    height: 140vh; /* Assurez-vous que l'image couvre toute la hauteur de la page */
     width: 100%;
 }
 
 .travaux { 
-    background-image: url(../img/construction.jpg); 
+    background-image: url(../img/construction.jpg);
     /* background-color: rgb(233, 9, 39); */
     background-size: cover; 
     background-repeat: no-repeat;
