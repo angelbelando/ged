@@ -545,58 +545,53 @@
 
         </div>
 
-        <div class="p-6 space-y-5">
+        <div class="p-6 space-y-2">
 
-            {% for etape in etapes_formatees %}
+    {% for etape in etapes_formatees %}
 
-                {% if etape %}
+        {% if etape.important %}
 
-                <div class="flex gap-5">
+            <div class="font-bold text-blue-500 text-2xl list-none mt-6 mb-3">
+                {{ etape.texte }}
+            </div>
 
+        {% else %}
 
-                    {% if etape.important %}
-                    <div class="font-bold text-blue-500 text-2xl list-none">
-                        {{ etape.texte }}
+            <div class="flex gap-5">
 
-                    </div>
-                    {% else %}
-                <!--  <div
-                        class="w-12 h-12 rounded-full
-                               bg-blue-600 text-white
-                               flex items-center justify-center
-                               font-bold text-lg
-                               shrink-0">
+                <div
+                    class="w-12 h-12 rounded-full
+                           bg-blue-600 text-white
+                           flex items-center justify-center
+                           font-bold text-lg
+                           shrink-0">
 
-                        {{ forloop.counter }}
-
-                    </div> -->
-
-                    <div
-
-                        class="flex-1 rounded-2xl
-                               bg-blue-50
-                               p-5">
-
-                        {{ etape.texte }}
-
-                    </div>
-                     {% endif %}
+                    {{ etape.numero }}
 
                 </div>
 
-                {% endif %}
+                <div
+                    class="flex-1 rounded-2xl
+                           bg-blue-50
+                           p-5">
 
-            {% empty %}
+                    {{ etape.texte }}
 
-                <p class="italic text-gray-500">
+                </div>
 
-                    Aucune étape renseignée.
+            </div>
 
-                </p>
+        {% endif %}
 
-            {% endfor %}
+    {% empty %}
 
-        </div>
+        <p class="italic text-gray-500">
+            Aucune étape renseignée.
+        </p>
+
+    {% endfor %}
+
+</div>
 
     </div>
 

@@ -97,10 +97,34 @@ class RecetteDetailView(DetailView):
             "nombre_couverts": nombre_couverts,
         })
         etapes = self.object.etapes.splitlines()
-        context['etapes_formatees'] = [
-        {'texte': e[1:].strip(), 'important': True} if e.strip().startswith('-') else {'texte': e.strip(), 'important': False}
-        for e in etapes
-        ]
+
+        etapes_formatees = []
+        numero = 0
+
+        for e in etapes:
+            ligne = e.strip()
+
+            if not ligne:
+                continue
+
+            if ligne.startswith('-'):
+                # Nouvelle étape importante : on remet le compteur à zéro
+                numero = 0
+                etapes_formatees.append({
+                    'texte': ligne[1:].strip(),
+                    'important': True,
+                    'numero': None,
+                })
+            else:
+                # Étape normale : on incrémente
+                numero += 1
+                etapes_formatees.append({
+                    'texte': ligne,
+                    'important': False,
+                    'numero': numero,
+                })
+
+        context['etapes_formatees'] = etapes_formatees
         conseils = self.object.conseils.splitlines()
         context['conseils_formatees'] = [
         {'texte': c[1:].strip(), 'important': True} if c.strip().startswith('-') else {'texte': c.strip(), 'important': False}
