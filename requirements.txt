@@ -13,7 +13,7 @@ django-photologue==3.17
 django-sortedm2m==4.0.0
 django-stubs==5.2.9
 django-stubs-ext==5.2.9
-djangorestframework==3.16.1
+djangorestframework==3.18.1
 djangorestframework-stubs==3.16.8
 djangorestframework_simplejwt==5.5.1
 et_xmlfile==2.0.0
@@ -42,7 +42,7 @@ RapidFuzz==3.14.1
 reportlab==4.4.9
 six==1.17.0
 sqlparse==0.6.0
-tablib==3.7.0
+tablib==3.10.0
 tailwindcss==0.0.1
 tinycss2==1.5.1
 tinyhtml5==2.0.0
