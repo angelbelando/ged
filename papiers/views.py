@@ -66,7 +66,7 @@ class DocumentListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
                 Q(document__icontains=query) | Q(rubrique__icontains=query)
                 | Q(commentaire__icontains=query)
             )
-        return Document.objects.all().order_by('rubrique','document')
+        return Document.objects.all().order_by('-date_reference','rubrique','document')
     
 class DocumenttDetailView(DetailView):
     model = Document
