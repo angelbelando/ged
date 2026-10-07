@@ -90,12 +90,70 @@ UNITES = (
 
 )
 
-class RecetteIngredientUnit(models.Model):
-    recette = models.ForeignKey(Recette, on_delete=models.CASCADE, related_name='recette_ingredient_units')
-    qte = models.DecimalField(default=0, decimal_places=2, max_digits=10,null=True)
-    unit = models.CharField(choices=UNITES, max_length=200)
-    description = models.CharField(max_length=200, blank=True, null=True)
-    ordre = models.IntegerField(default=0, blank=True, null=True)
+class Rayon(models.Model):
+    nom = models.CharField(max_length=100, unique=True)
+    ordre = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["ordre", "nom"]
 
     def __str__(self):
-        return f"{self.recette.titre} - {self.description}"
+        return self.nom
+
+class Ingredient(models.Model):
+    nom = models.CharField(max_length=150, unique=True)
+    rayon = models.ForeignKey(
+        Rayon,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="ingredients",
+    )
+
+    class Meta:
+        ordering = ["nom"]
+
+    def __str__(self):
+        return self.nom
+
+class RecetteIngredientUnit(models.Model):
+    recette = models.ForeignKey(
+        Recette,
+        on_delete=models.CASCADE,
+        related_name='recette_ingredient_units',
+    )
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.PROTECT,
+        related_name="recette_ingredients",
+        null=True,
+        blank=True,
+    )
+    qte = models.DecimalField(
+        default=0,
+        decimal_places=2,
+        max_digits=10,
+        null=True
+    )
+    unit = models.CharField(
+        choices=UNITES,
+        max_length=200
+    )
+    description = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+    libelle_affichage = models.CharField(
+        max_length=300,
+        blank=True,
+        default="",
+    )
+    ordre = models.IntegerField(
+        default=0,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return self.libelle_affichage or self.description or ""
