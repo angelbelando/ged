@@ -102,6 +102,11 @@ class Rayon(models.Model):
 
 class Ingredient(models.Model):
     nom = models.CharField(max_length=150, unique=True)
+    nom_pluriel = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+    )
     rayon = models.ForeignKey(
         Rayon,
         on_delete=models.SET_NULL,
