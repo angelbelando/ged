@@ -90,7 +90,7 @@ class RecetteDetailView(DetailView):
             }
             for ingredient_unit in recette.recette_ingredient_units.all().order_by('ordre','id')
         ]
-
+        print(calcul_result)
         # Ajout au contexte
         context.update({
             "calcul_result": calcul_result,
