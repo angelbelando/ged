@@ -27,7 +27,7 @@ CORRECTIONS = {
     "de Champignons de Paris": "de champignons de Paris",
 
     # Cognac
-    "de Cognac": "de cognac",
+    "de cognac": "de Cognac",
 
     # Crème fraîche
     "de crème fraiche": "de crème fraîche",
@@ -66,7 +66,7 @@ CORRECTIONS = {
     "de Rhum brun": "de rhum brun",
 
     # Safran
-    "de Safran": "de safran",
+    "de safran": "de Safran",
 
     # Sauce soja
     "De sauce soja salé": "de sauce soja salé",
@@ -106,7 +106,7 @@ CORRECTIONS = {
     "merguez": "Merguez",
 
     # Mozzarella
-    "Mozzarella rapée": "Mozzarella râpée",
+    "Mozzarella rapée": "de Mozzarella râpée",
 
     # Oignons
     "oignons": "Oignons",
